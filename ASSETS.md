@@ -1,0 +1,119 @@
+# ASSETS — SS Delphine
+
+Phase 0 inventory. Video, logo and type. Photography inventory is in `ASSETS-PHOTOS.md`.
+
+## Video masters
+
+All drone footage is 4K (3840x2160), H.264, no usable audio. None is committed; `.gitignore` excludes `*.MP4`.
+
+| File | Resolution | Duration | FPS | Size | Bitrate |
+|---|---|---|---|---|---|
+| DJI_20260808103538_0018_D.MP4 | 3840x2160 | 19.7s | 48 | 255 MB | 109.2 Mb/s |
+| **DJI_20260808170912_0026_D.MP4** | 3840x2160 | 158.0s | 60 | 1715 MB | 91.0 Mb/s |
+| DJI_20260808171215_0027_D.MP4 | 3840x2160 | 31.2s | 50 | 397 MB | 106.8 Mb/s |
+| DJI_20260808202454_0096_D.MP4 | 3840x2160 | 17.2s | 30 | 185 MB | 90.3 Mb/s |
+| DJI_20260808202557_0098_D.MP4 | 3840x2160 | 79.6s | 30 | 786 MB | 82.9 Mb/s |
+| DJI_20260808203149_0068_D.MP4 | 3840x2160 | 78.3s | 30 | 773 MB | 82.9 Mb/s |
+| DJI_20260808205742_0080_D.MP4 | 3840x2160 | 68.6s | 48 | 846 MB | 103.4 Mb/s |
+| ssdvideo.mp4 | 1920x1080 | 8.0s | 24 | 35 MB | 37.1 Mb/s |
+
+### Hero: DJI_20260808170912_0026_D.MP4, t=39.0 to t=49.0
+
+Chosen because it is the only clip that delivers the brief's "three-quarter side angle" with the
+yacht **isolated on open water**. Every other exterior puts the Monaco coastline, other
+superyachts or a tender directly behind the hull, which reads as a marina snapshot rather than a
+portrait. In this window the sea and sky are the only backdrop, the funnel and both masts read
+clearly, and the hull occupies the frame without competition.
+
+Frame-by-frame checks that shaped the in-point:
+- There is a **fast pan away from the yacht between t=35 and t=37**. Starting earlier than t=38
+  puts a shot of empty sea and sun glare inside the loop.
+- A dark tender enters frame left around t=48 and the coastline reappears by t=52, so the window
+  closes at t=49.
+- The drone is in a slow orbit through the whole window, so the motion is continuous with no cut.
+
+**Runners-up, in order:**
+1. `DJI_20260808202557_0098_D.MP4` t=20-44. A genuinely beautiful dusk orbit, and the strongest
+   *mood* in the set. Rejected as hero because the usable portion is dark enough that the navy
+   scrim plus cream type over it would either wash the picture out or fail the contrast floor.
+   It descends into deck close-ups after t=50. Strong candidate for a section backdrop.
+2. `DJI_20260808103538_0018_D.MP4`. Correct angle and daylight, but a white superyacht and a
+   tender sit in frame throughout, and the coastline is busy.
+3. `ssdvideo.mp4`. A top-down of the yacht underway in deep blue water with a full wake, and the
+   single most striking image in the whole set. **Not the hero because it is not a three-quarter
+   side angle**, which the brief specifies. It is 1080p and already web-encoded. Recommended for
+   the gallery opener.
+4. `DJI_20260808205742_0080_D.MP4`. Night/dusk with Monaco lit behind. Atmospheric, too dark, and
+   the city dominates.
+5. `DJI_20260808171215_0027_D.MP4`. Top-down at anchor. Useful for the deck-plan or layout
+   context, not for a hero.
+
+### Hero derivatives, in `media/hero/`
+
+| File | Purpose | Size |
+|---|---|---|
+| `delphine-hero-1080.mp4` | H.264, 1920x1080, CRF 28, faststart, no audio | 4.23 MB |
+| `delphine-hero-1080.webm` | VP9, 1920x1080, CRF 46 | 3.60 MB |
+| `delphine-hero-720.mp4` | H.264, 1280x720, CRF 29, for small screens | 1.65 MB |
+| `delphine-hero-poster.jpg` | Poster, first frame of the loop (t=39) | 0.17 MB |
+| `delphine-hero-poster.webp` | Poster | 0.09 MB |
+| `delphine-hero-poster.avif` | Poster | 0.07 MB |
+
+Budget was "under 6 MB for the hero". H.264 at CRF 25 came out at 6.79 MB and was rejected; CRF 28
+lands at 4.23 MB with no visible blocking in the water or softening of the rigging, checked on a
+1:1 crop. The poster is pulled from the clip itself so first paint is never black.
+
+VP9 needed CRF 46, not the 36 first tried, which produced a 9.76 MB file **larger than the H.264**.
+VP9's CRF scale is not comparable to x264's.
+
+Mobile: no separate portrait crop. The yacht is a long horizontal object and any 9:16 crop cuts off
+bow or stern. The brief permits `object-fit: cover` with a focal point instead, so the hero holds a
+centre focal point that keeps the funnel and midships in frame at 375px.
+
+## Logo — MISSING, ESCALATED
+
+**There is no SS Delphine logo file anywhere in the supplied materials.** Searched the project
+folder, `_source/`, `~/Downloads` and `~/Desktop`.
+
+The brief states a raster logo exists ("Yellow, stays yellow. Raster only ... no original artwork
+survives"), so one is expected, but it has not been supplied. What does exist:
+
+- `~/Downloads/delphine-ref-clean.png` and `delphine-ref-2x.png` — despite the names these are
+  **photographic reference stills** (top-down of the yacht underway), not artwork.
+- `~/Downloads/logo-matilde-studio.png` — a different studio's mark, unrelated to this client.
+- The previous version of this site set the wordmark **typographically**, in type, with no image
+  asset. The prior handover document describes splitting "the wordmark into character spans",
+  which confirms it was always live text.
+
+**Decision, pending the client:** the hero wordmark is set as live text in the display face at the
+gold token, not as an image. This is honest to how the previous site worked, keeps the mark crisp
+at every density, costs no bytes, and is trivially swapped for a raster once one is supplied.
+Flagged in `NOTES.md` as the first thing the client will ask about.
+
+## Type
+
+Self-hosted, no CDN call at runtime. All OFL.
+
+| Role | Face | Files |
+|---|---|---|
+| Display | Archivo, width axis at 118 | `archivo-wdth-latin.woff2` (88 KB), `-latin-ext` (84 KB) |
+| Body | Archivo, width axis at 100 | same files |
+| Utility | IBM Plex Mono 400/500 | `plexmono-{400,500}-{latin,latin-ext}.woff2` (~9 KB each) |
+
+Archivo's variable font carries a **width axis (`font-stretch: 62%-125%`)**, so one file supplies
+both the expanded display cut the brief asks for and a normal-width body. The Archivo already in
+the project was the weight-only build and does not expand; it has been superseded by the width-axis
+build. `archivo-var-*.woff2` and the Instrument Serif files are unused by the new build.
+
+IBM Plex Mono for the utility face over JetBrains Mono and Space Mono: the brief asks for "a ship's
+builder plate and an engine room gauge label, not a code editor". JetBrains Mono is explicitly a
+code face; Space Mono is a 1960s pastiche that turns quirky at the wide tracking this design uses.
+Plex Mono is drawn from industrial signage and holds up uppercase at 11px with 0.16em tracking.
+
+## Not used
+
+- `1 UPPER DECK HD.zip` through `5 ORLOP DECK HD.zip` and their extracted folders — deck plans, ~360 MB.
+  No section in the brief calls for a deck plan, and the brief forbids inventing one.
+- `assets/fonts/instrument-serif-*.woff2` — the previous design's display serif. The brief calls for
+  a sans display.
+- `_source/manifest/` — production paperwork, not site content.

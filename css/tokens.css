@@ -1,41 +1,171 @@
+/* ============================================================
+   SS DELPHINE — DESIGN TOKENS
+   Phase 0 output. FROZEN.
+
+   No stylesheet outside this file may declare a raw colour,
+   font size, spacing value or layout width. Everything is
+   var(--token). If a section appears to need a new value it
+   does not; use an existing token, or raise it.
+
+   Palette derived from the source photography on 2026-08-29:
+     sea (ref still)      #1F3B73 / #1A4187 / #112E6C
+     funnel (4K frame)    #D3B37C mean, hue ~38deg
+     teak deck            #B19984
+   Reconciled against the client's pinned navy / gold / cream.
+   ============================================================ */
+
+/* ---------- Faces ---------- */
+/* Archivo variable carries BOTH display and body roles via its
+   width axis (font-stretch 62%-125%). Display is the expanded
+   cut; body is normal width. One file, two voices, less weight
+   on the wire. */
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url('/assets/fonts/archivo-wdth-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url('/assets/fonts/archivo-wdth-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/assets/fonts/plexmono-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/assets/fonts/plexmono-400-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/assets/fonts/plexmono-500-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/assets/fonts/plexmono-500-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 :root {
-  --paper: #ede8de;
-  --paper-warm: #e3dcce;
-  --ink: #1a1d1f;
-  --ink-soft: #55595c;
-  --ink-soft-inverse: #a8adb1;
-  --brass: #8a6a3b;
-  --brass-ink: #7b5b30;
-  --sea: #0b3b66;
-  --line: #c9c1b2;
-  --white: #fff;
+  /* ---------- Colour: the six. Frozen. ----------
+     Contrast on --navy-deep (verified):
+       cream        15.54:1
+       cream-muted   8.30:1
+       gold          7.51:1
+     Body floor 4.5:1, large-heading floor 3:1. All pass. */
+  --navy-deep:   #0A1628;  /* page ground, hero overlay */
+  --navy:        #12213A;  /* section grounds, alternating panels */
+  --navy-soft:   #1C3050;  /* borders, dividers, dimmed statement text */
+  --cream:       #F2EDE3;  /* primary text on navy, light panel grounds */
+  --cream-muted: #A8B0BE;  /* secondary text, captions, labels */
+  --gold:        #C7A24C;  /* logo, hairline rules, small accents ONLY */
 
-  --font-display: "Instrument Serif", "EB Garamond", Georgia, serif;
-  --font-body: "Archivo", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  /* ---------- Derived opacity variants ----------
+     The palette is six colours. These are the ONLY sanctioned
+     transparency variants; declare new ones here, never inline. */
+  --hairline:        rgb(28 48 80 / 0.85);   /* navy-soft */
+  --hairline-strong: rgb(28 48 80 / 1);
+  --hairline-gold:   rgb(199 162 76 / 0.40); /* gold, for rules only */
+  --hero-scrim:      rgb(10 22 40 / 0.42);   /* over the hero video */
+  --hero-scrim-deep: rgb(10 22 40 / 0.72);   /* foot of hero, for legibility */
+  --statement-dim:   rgb(242 237 227 / 0.16);/* unlit words. Reads as unlit, not disabled. */
+  --focus-ring:      rgb(199 162 76 / 0.85);
 
-  --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
-  --step-0: clamp(1rem, 0.95rem + 0.25vw, 1.13rem);
-  --step-1: clamp(1.3rem, 1.2rem + 0.5vw, 1.6rem);
-  --step-2: clamp(1.9rem, 1.6rem + 1.5vw, 2.8rem);
-  --step-3: clamp(2.6rem, 2rem + 3vw, 4.5rem);
-  --step-4: clamp(3.5rem, 2.4rem + 5.5vw, 7rem);
+  /* ---------- Type ---------- */
+  --font-display: 'Archivo', ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --font-body:    'Archivo', ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono:    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-  --measure-max: 1440px;
-  --measure-copy: 68ch;
-  --gutter: clamp(1.5rem, 4vw, 5rem);
-  --rhythm: clamp(6rem, 12vh, 10rem);
-  --touch-target: 2.75rem;
-  --hairline: 1px;
-  --tracking-eyebrow: 0.18em;
+  /* Width axis: display is expanded, body is normal. */
+  --wdth-display: 118;
+  --wdth-body: 100;
 
-  --duration-fast: 180ms;
-  --duration-reveal: 600ms;
-  --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+  /* Scale. Fluid between the mobile and desktop ends so there is
+     no separate mobile scale to drift out of sync. */
+  --fs-statement:  clamp(1.875rem, 4.6vw, 4.25rem);  /*  30 ->  68 */
+  --fs-display-l:  clamp(2.5rem,   5.2vw, 6rem);     /*  40 ->  96  section titles */
+  --fs-display-m:  clamp(1.75rem,  3vw,   2.75rem);  /*  28 ->  44 */
+  --fs-body-l:     clamp(1.125rem, 1.15vw, 1.25rem); /*  18 ->  20 */
+  --fs-body:       1.125rem;                          /*  18 */
+  --fs-body-s:     1rem;                              /*  16 */
+  --fs-mono:       0.8125rem;                         /*  13 */
+  --fs-mono-s:     0.6875rem;                         /*  11 eyebrows, labels */
+
+  --lh-display: 1.04;
+  --lh-statement: 1.18;
+  --lh-body: 1.6;
+  --lh-mono: 1.5;
+
+  --tr-display: -0.022em;   /* tight tracking at large sizes */
+  --tr-body: 0em;
+  --tr-mono: 0.16em;        /* wide, for uppercase builder-plate labels */
+
+  --wt-display: 600;
+  --wt-body: 400;
+  --wt-body-strong: 500;
+  --wt-mono: 400;
+  --wt-mono-strong: 500;
+
+  /* ---------- Space ----------
+     8px base. Nothing else may define spacing. */
+  --sp-1: 0.5rem;
+  --sp-2: 1rem;
+  --sp-3: 1.5rem;
+  --sp-4: 2rem;
+  --sp-5: 2.5rem;
+  --sp-6: 3rem;
+  --sp-8: 4rem;
+  --sp-10: 5rem;
+  --sp-12: 6rem;
+  --sp-16: 8rem;
+
+  /* Vertical space is the luxury signal. Deliberately generous. */
+  --section-pad: clamp(6rem, 11vw, 12.5rem);   /*  96 -> 200 */
+  --section-pad-tight: clamp(4rem, 7vw, 8rem); /*  64 -> 128 */
+
+  /* ---------- Layout ---------- */
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --content-max: 87.5rem;  /* 1400 */
+  --measure: 68ch;         /* text never exceeds ~70 characters */
+  --header-h: 4.5rem;
+
+  /* ---------- Lines & motion ---------- */
+  --rule: 1px;             /* hairline. Never thicker. */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur-expand: 420ms;     /* Read more height transition */
+  --dur-hover: 180ms;
+
+  --z-header: 100;
+  --z-menu: 200;
 }
 
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --duration-fast: 1ms;
-    --duration-reveal: 1ms;
+    --dur-expand: 1ms;
+    --dur-hover: 1ms;
   }
 }
