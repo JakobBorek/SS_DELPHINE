@@ -34,7 +34,7 @@ for (const [pathname, html] of pages) {
   assert.doesNotMatch(html, /\son[a-z]+=/i, `${pathname} cannot contain inline event handlers`);
   assert.doesNotMatch(html, /<iframe\b/i, `${pathname} cannot contain iframes`);
   assert.doesNotMatch(html, /(?:_source\/|ssdvideo\.mp4)/i, `${pathname} cannot reference source-only media`);
-  assert.doesNotMatch(html, /(?:mailto:|tel:|<form\b)/i, `${pathname} cannot ship contact details or a form`);
+  assert.doesNotMatch(html, /(?:mailto:|tel:)/i, `${pathname} cannot ship unapproved contact links`);
 
   const visibleCopy = document.body.textContent.replace(/\s+/g, ' ').trim();
   assert.doesNotMatch(visibleCopy, /—/, `${pathname} visible copy cannot contain em dashes`);
@@ -86,7 +86,24 @@ assert.equal(home.querySelector('#cabins'), null, 'cabin detail must not remain 
 assert.equal(home.querySelector('#toys-and-tenders'), null, 'tender detail must not remain in the main-page scroll');
 assert.equal(home.querySelector('#contact'), null, 'the closing section must not be named Contact');
 assert.equal(home.querySelector('#inquiry-title')?.textContent.trim(), 'Inquiry', 'the closing section must be Inquiry');
-assert.match(home.body.textContent, /Inquiry details to be confirmed\./, 'the inquiry placeholder must be visible');
+assert.equal(discover.querySelectorAll('form').length, 0, 'the deeper page must not contain an inquiry form');
+const inquiryForm = home.querySelector('.inquiry-form');
+assert.equal(home.querySelectorAll('form').length, 1, 'the homepage must contain one safely inactive inquiry form');
+assert.ok(inquiryForm, 'the inquiry form must be present');
+assert.equal(inquiryForm.hasAttribute('action'), false, 'the inactive inquiry form must not have an action');
+assert.equal(inquiryForm.hasAttribute('method'), false, 'the inactive inquiry form must not have a method');
+assert.ok(inquiryForm.querySelector('fieldset[disabled]'), 'the inactive inquiry form must use a disabled fieldset');
+assert.ok(inquiryForm.querySelector('button[type="submit"][disabled]'), 'the inactive inquiry submit button must be disabled');
+assert.ok(
+  [...inquiryForm.querySelectorAll('input, select, textarea, button')].every((control) => control.disabled || control.closest('fieldset')?.disabled),
+  'every inquiry form control must be disabled'
+);
+assert.match(home.body.textContent, /Online inquiry submissions will open when the direct contact route is confirmed\./, 'the inactive state must be explained');
+assert.equal(home.querySelector('.inquiry__signature img')?.getAttribute('src'), '/assets/logo/ss-delphine-d.svg', 'the inquiry signature must use the official monogram');
+assert.equal(home.querySelector('.inquiry__signature p')?.textContent.trim(), 'SS Delphine', 'the inquiry signature must use the correct name');
+for (const unapprovedContact of ['charter@ssdelphne.com', '+377 97 97 97 97', 'Monaco', 'Within 24 Hours']) {
+  assert.doesNotMatch(home.body.textContent, new RegExp(unapprovedContact.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'), `unapproved mock contact must not ship: ${unapprovedContact}`);
+}
 assert.equal(discover.querySelectorAll('[data-gallery-slide]').length, 9, 'the explore page must retain the nine selected photographs');
 
 const combinedCopy = [...doms.values()]
@@ -115,6 +132,7 @@ assert.equal(heroVideo?.getAttribute('preload'), 'metadata', 'hero video must pr
 
 for (const dom of doms.values()) {
   for (const image of dom.window.document.querySelectorAll('main img')) {
+    if (image.src.includes('/assets/logo/')) continue;
     assert.equal(image.getAttribute('loading'), 'lazy', `below-fold image ${image.src} must lazy-load`);
     assert.ok(image.hasAttribute('width') && image.hasAttribute('height'), `below-fold image ${image.src} needs dimensions`);
     assert.ok(image.closest('picture')?.querySelector('source[type="image/avif"]'), `below-fold image ${image.src} needs AVIF`);

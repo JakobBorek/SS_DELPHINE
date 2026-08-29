@@ -15,6 +15,10 @@
     display: none !important;
   }
 
+  .inquiry__panel {
+    display: none !important;
+  }
+
   .hero,
   .statement,
   .editorial,
@@ -45,6 +49,7 @@
 
   .editorial__frame,
   .inquiry__inner,
+  .inquiry__frame,
   .discover-intro__inner,
   .discover-panel__frame,
   .discover-panel__manifest {
@@ -62,8 +67,13 @@
     padding-block: var(--section-pad-tight);
   }
 
-  .inquiry__content {
-    width: 100%;
+  .inquiry__frame {
+    border-color: var(--navy-deep);
+    box-shadow: none;
+  }
+
+  .inquiry__intro {
+    padding: var(--sp-4);
   }
 
   .discover-panel {
@@ -91,7 +101,7 @@
   .plate__key,
   .manifest dt,
   .gallery__counter,
-  .inquiry__placeholder,
+  .inquiry__details dt,
   .site-footer a,
   .site-footer p {
     color: var(--navy-soft) !important;

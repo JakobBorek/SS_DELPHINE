@@ -167,12 +167,78 @@
 
   <section class="inquiry" id="inquiry" aria-labelledby="inquiry-title">
     <div class="wrap inquiry__inner">
-      <div class="inquiry__content">
+      <header class="inquiry__header">
         <h2 class="section-title" id="inquiry-title">Inquiry</h2>
-        <div class="inquiry__prose prose">
-          <p>SS Delphine is available for private charter and quayside events.</p>
-          <p class="inquiry__placeholder">Inquiry details to be confirmed.</p>
-          <p><a class="inquiry__link" href="https://www.instagram.com/ssdelphine" rel="noopener">Follow SS Delphine on Instagram</a></p>
+        <div class="inquiry__ornament" aria-hidden="true"><span></span></div>
+        <p class="inquiry__kicker">Send us an inquiry</p>
+      </header>
+
+      <div class="inquiry__frame">
+        <div class="inquiry__intro">
+          <h3 class="inquiry__welcome">We would love to hear from you</h3>
+          <p class="inquiry__lede">Whether you are considering a private charter or a quayside event, the SS Delphine team will be pleased to assist once the direct inquiry details are confirmed.</p>
+
+          <dl class="inquiry__details">
+            <div>
+              <dt>Email</dt>
+              <dd>To be confirmed</dd>
+            </div>
+            <div>
+              <dt>Telephone</dt>
+              <dd>To be confirmed</dd>
+            </div>
+            <div>
+              <dt>Office</dt>
+              <dd>To be confirmed</dd>
+            </div>
+            <div>
+              <dt>Instagram</dt>
+              <dd><a href="https://www.instagram.com/ssdelphine" rel="noopener">@ssdelphine</a></dd>
+            </div>
+          </dl>
+
+          <div class="inquiry__signature">
+            <img src="/assets/logo/ss-delphine-d.svg" alt="" width="44" height="51" loading="lazy" aria-hidden="true">
+            <p>SS Delphine</p>
+          </div>
+        </div>
+
+        <div class="inquiry__panel">
+          <h3 class="inquiry__form-title" id="inquiry-form-title">Send an Inquiry</h3>
+          <div class="inquiry__ornament inquiry__ornament--compact" aria-hidden="true"><span></span></div>
+          <p class="inquiry__status" id="inquiry-form-status">Online inquiry submissions will open when the direct contact route is confirmed.</p>
+
+          <form class="inquiry-form" aria-labelledby="inquiry-form-title" aria-describedby="inquiry-form-status">
+            <fieldset disabled>
+              <legend class="visually-hidden">Inquiry details</legend>
+              <div class="inquiry-form__row">
+                <label>Full name <span>(required)</span>
+                  <input type="text" name="name" autocomplete="name" required>
+                </label>
+                <label>Email address <span>(required)</span>
+                  <input type="email" name="email" autocomplete="email" inputmode="email" required>
+                </label>
+              </div>
+              <label>Telephone <span>(optional)</span>
+                <input type="tel" name="telephone" autocomplete="tel" inputmode="tel">
+              </label>
+              <label>Preferred timing <span>(optional)</span>
+                <input type="text" name="timing" autocomplete="off">
+              </label>
+              <label>Interest <span>(required)</span>
+                <select name="interest" required>
+                  <option value="">Select an inquiry type</option>
+                  <option value="private-charter">Private charter</option>
+                  <option value="quayside-event">Quayside event</option>
+                  <option value="other">Other inquiry</option>
+                </select>
+              </label>
+              <label>Your message <span>(required)</span>
+                <textarea name="message" rows="5" required></textarea>
+              </label>
+              <button type="submit" disabled>Send Inquiry</button>
+            </fieldset>
+          </form>
         </div>
       </div>
     </div>

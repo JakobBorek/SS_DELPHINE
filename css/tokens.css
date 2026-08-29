@@ -96,6 +96,7 @@
   --focus-ring:      rgb(199 162 76 / 0.85);
   --modal-backdrop:  rgb(10 22 40 / 0.84);
   --modal-shadow:    rgb(10 22 40 / 0.72);
+  --disabled-opacity: 0.64;
 
   /* ---------- Type ---------- */
   --font-display: 'Archivo', ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
