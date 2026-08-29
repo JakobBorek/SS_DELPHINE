@@ -87,20 +87,26 @@ assert.equal(home.querySelector('#toys-and-tenders'), null, 'tender detail must 
 assert.equal(home.querySelector('#contact'), null, 'the closing section must not be named Contact');
 assert.equal(home.querySelector('#inquiry-title')?.textContent.trim(), 'Inquiry', 'the closing section must be Inquiry');
 assert.equal(discover.querySelectorAll('form').length, 0, 'the deeper page must not contain an inquiry form');
-const inquiryForm = home.querySelector('.inquiry-form');
-assert.equal(home.querySelectorAll('form').length, 1, 'the homepage must contain one safely inactive inquiry form');
-assert.ok(inquiryForm, 'the inquiry form must be present');
-assert.equal(inquiryForm.hasAttribute('action'), false, 'the inactive inquiry form must not have an action');
-assert.equal(inquiryForm.hasAttribute('method'), false, 'the inactive inquiry form must not have a method');
-assert.ok(inquiryForm.querySelector('fieldset[disabled]'), 'the inactive inquiry form must use a disabled fieldset');
-assert.ok(inquiryForm.querySelector('button[type="submit"][disabled]'), 'the inactive inquiry submit button must be disabled');
+assert.equal(home.querySelectorAll('form').length, 0, 'the homepage must contain no form: contact is display only until a route is approved');
+assert.equal(home.querySelectorAll('input, select, textarea').length, 0, 'no input controls may ship before a handler and privacy copy exist');
+const inquiryTerms = [...home.querySelectorAll('.inquiry__details dt')].map((n) => n.textContent.trim());
+assert.deepEqual(inquiryTerms, ['Email', 'Telephone', 'Location'], 'inquiry must list email, telephone and location');
 assert.ok(
-  [...inquiryForm.querySelectorAll('input, select, textarea, button')].every((control) => control.disabled || control.closest('fieldset')?.disabled),
-  'every inquiry form control must be disabled'
+  [...home.querySelectorAll('.inquiry__details dd')].every((n) => n.textContent.trim() === 'To be confirmed'),
+  'every inquiry detail must remain an explicit placeholder'
 );
-assert.match(home.body.textContent, /Online inquiry submissions will open when the direct contact route is confirmed\./, 'the inactive state must be explained');
-assert.equal(home.querySelector('.inquiry__signature img')?.getAttribute('src'), '/assets/logo/ss-delphine-d.svg', 'the inquiry signature must use the official monogram');
-assert.equal(home.querySelector('.inquiry__signature p')?.textContent.trim(), 'SS Delphine', 'the inquiry signature must use the correct name');
+const footerTerms = [...home.querySelectorAll('.site-footer__contact dt')].map((n) => n.textContent.trim());
+assert.deepEqual(footerTerms, ['Email', 'Telephone', 'Location'], 'the footer must carry the same placeholder details');
+assert.ok(home.querySelector('.site-footer__social .icon-instagram'), 'the footer must carry a clickable Instagram icon');
+assert.equal(
+  home.querySelector('.site-footer__social')?.getAttribute('href'),
+  'https://www.instagram.com/ssdelphine',
+  'the footer Instagram icon must link to the approved account'
+);
+assert.equal(home.querySelectorAll('.site-footer__legal a').length, 3, 'the footer must carry the placeholder legal links');
+assert.ok(home.querySelector('.nav-toggle__bars'), 'the menu control must use the two-rule mark');
+assert.ok(home.querySelector('[data-menu-close] .site-menu__close-bars'), 'the open menu must close with the crossed mark');
+
 for (const unapprovedContact of ['charter@ssdelphne.com', '+377 97 97 97 97', 'Monaco', 'Within 24 Hours']) {
   assert.doesNotMatch(home.body.textContent, new RegExp(unapprovedContact.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'), `unapproved mock contact must not ship: ${unapprovedContact}`);
 }

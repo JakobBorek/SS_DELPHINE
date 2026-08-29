@@ -41,14 +41,14 @@
     <img class="site-mark__logo" src="/assets/logo/ss-delphine-d.svg" alt="" width="24" height="28" aria-hidden="true">
     <span class="site-mark__text">SS Delphine</span>
   </a>
-  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-haspopup="dialog">Menu</button>
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-haspopup="dialog"><span class="nav-toggle__bars" aria-hidden="true"><span></span><span></span></span><span class="visually-hidden">Menu</span></button>
 </header>
 
 <dialog class="site-menu" id="site-menu" aria-labelledby="site-menu-title">
   <div class="site-menu__shell">
     <div class="site-menu__header">
       <p class="site-menu__brand">SS Delphine</p>
-      <button class="site-menu__close" type="button" data-menu-close>Close</button>
+      <button class="site-menu__close" type="button" data-menu-close><span class="site-menu__close-bars" aria-hidden="true"><span></span><span></span></span><span class="visually-hidden">Close menu</span></button>
     </div>
     <h2 class="visually-hidden" id="site-menu-title">Site navigation</h2>
     <nav class="site-menu__nav" aria-label="Primary">
@@ -159,7 +159,11 @@
             <p>Every departure is confirmed at least six hours in advance, giving the steam boilers time to reach pressure.</p>
             <p>Rates are on request.</p>
           </div>
-          <a class="editorial__link" href="/discover.html#charter">Charter details</a>
+          <a class="specs-trigger" href="/discover.html#charter">
+            <span class="specs-trigger__label">Charter Information</span>
+            <svg class="specs-trigger__icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 10h12M11 5l5 5-5 5"/></svg>
+          </a>
+
         </div>
       </div>
     </div>
@@ -169,77 +173,33 @@
     <div class="wrap inquiry__inner">
       <header class="inquiry__header">
         <h2 class="section-title" id="inquiry-title">Inquiry</h2>
-        <div class="inquiry__ornament" aria-hidden="true"><span></span></div>
-        <p class="inquiry__kicker">Send us an inquiry</p>
+        <p class="inquiry__kicker">Private charter and quayside events</p>
       </header>
 
-      <div class="inquiry__frame">
-        <div class="inquiry__intro">
-          <h3 class="inquiry__welcome">We would love to hear from you</h3>
-          <p class="inquiry__lede">Whether you are considering a private charter or a quayside event, the SS Delphine team will be pleased to assist once the direct inquiry details are confirmed.</p>
+      <div class="inquiry__body">
+        <p class="inquiry__lede">Whether you are considering a private charter or a quayside event, the SS Delphine team will be pleased to assist.</p>
 
-          <dl class="inquiry__details">
-            <div>
-              <dt>Email</dt>
-              <dd>To be confirmed</dd>
-            </div>
-            <div>
-              <dt>Telephone</dt>
-              <dd>To be confirmed</dd>
-            </div>
-            <div>
-              <dt>Office</dt>
-              <dd>To be confirmed</dd>
-            </div>
-            <div>
-              <dt>Instagram</dt>
-              <dd><a href="https://www.instagram.com/ssdelphine" rel="noopener">@ssdelphine</a></dd>
-            </div>
-          </dl>
-
-          <div class="inquiry__signature">
-            <img src="/assets/logo/ss-delphine-d.svg" alt="" width="44" height="51" loading="lazy" aria-hidden="true">
-            <p>SS Delphine</p>
+        <dl class="inquiry__details">
+          <div>
+            <dt>Email</dt>
+            <dd>To be confirmed</dd>
           </div>
-        </div>
+          <div>
+            <dt>Telephone</dt>
+            <dd>To be confirmed</dd>
+          </div>
+          <div>
+            <dt>Location</dt>
+            <dd>To be confirmed</dd>
+          </div>
+        </dl>
 
-        <div class="inquiry__panel">
-          <h3 class="inquiry__form-title" id="inquiry-form-title">Send an Inquiry</h3>
-          <div class="inquiry__ornament inquiry__ornament--compact" aria-hidden="true"><span></span></div>
-          <p class="inquiry__status" id="inquiry-form-status">Online inquiry submissions will open when the direct contact route is confirmed.</p>
+        <p class="inquiry__note">Direct inquiry details will be published once confirmed. Until then SS Delphine can be reached on Instagram.</p>
 
-          <form class="inquiry-form" aria-labelledby="inquiry-form-title" aria-describedby="inquiry-form-status">
-            <fieldset disabled>
-              <legend class="visually-hidden">Inquiry details</legend>
-              <div class="inquiry-form__row">
-                <label>Full name <span>(required)</span>
-                  <input type="text" name="name" autocomplete="name" required>
-                </label>
-                <label>Email address <span>(required)</span>
-                  <input type="email" name="email" autocomplete="email" inputmode="email" required>
-                </label>
-              </div>
-              <label>Telephone <span>(optional)</span>
-                <input type="tel" name="telephone" autocomplete="tel" inputmode="tel">
-              </label>
-              <label>Preferred timing <span>(optional)</span>
-                <input type="text" name="timing" autocomplete="off">
-              </label>
-              <label>Interest <span>(required)</span>
-                <select name="interest" required>
-                  <option value="">Select an inquiry type</option>
-                  <option value="private-charter">Private charter</option>
-                  <option value="quayside-event">Quayside event</option>
-                  <option value="other">Other inquiry</option>
-                </select>
-              </label>
-              <label>Your message <span>(required)</span>
-                <textarea name="message" rows="5" required></textarea>
-              </label>
-              <button type="submit" disabled>Send Inquiry</button>
-            </fieldset>
-          </form>
-        </div>
+        <a class="specs-trigger" href="https://www.instagram.com/ssdelphine" rel="noopener">
+          <span class="specs-trigger__label">@ssdelphine</span>
+          <svg class="specs-trigger__icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 10h12M11 5l5 5-5 5"/></svg>
+        </a>
       </div>
     </div>
   </section>
@@ -271,11 +231,26 @@
 
 <footer class="site-footer">
   <div class="wrap site-footer__inner">
-    <p>SS Delphine</p>
-    <div class="site-footer__legal">
-      <a href="https://www.instagram.com/ssdelphine" rel="noopener">Instagram</a>
-      <a href="/privacy.html">Privacy</a>
-      <a href="/imprint.html">Imprint</a>
+    <div class="site-footer__brand">
+      <img class="site-footer__mark" src="/assets/logo/ss-delphine-d.svg" alt="" width="28" height="32" loading="lazy" aria-hidden="true">
+      <p class="site-footer__name">SS Delphine</p>
+    </div>
+
+    <dl class="site-footer__contact">
+      <div><dt>Email</dt><dd>To be confirmed</dd></div>
+      <div><dt>Telephone</dt><dd>To be confirmed</dd></div>
+      <div><dt>Location</dt><dd>To be confirmed</dd></div>
+    </dl>
+
+    <div class="site-footer__end">
+      <a class="site-footer__social" href="https://www.instagram.com/ssdelphine" rel="noopener">
+        <svg class="icon-instagram" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" class="icon-instagram__dot"/></svg><span class="visually-hidden">SS Delphine on Instagram</span>
+      </a>
+      <nav class="site-footer__legal" aria-label="Legal">
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/imprint.html">Imprint</a>
+        <a href="/imprint.html">Terms</a>
+      </nav>
     </div>
   </div>
 </footer>

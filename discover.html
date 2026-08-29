@@ -25,14 +25,14 @@
     <img class="site-mark__logo" src="/assets/logo/ss-delphine-d.svg" alt="" width="24" height="28" aria-hidden="true">
     <span class="site-mark__text">SS Delphine</span>
   </a>
-  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-haspopup="dialog">Menu</button>
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-haspopup="dialog"><span class="nav-toggle__bars" aria-hidden="true"><span></span><span></span></span><span class="visually-hidden">Menu</span></button>
 </header>
 
 <dialog class="site-menu" id="site-menu" aria-labelledby="site-menu-title">
   <div class="site-menu__shell">
     <div class="site-menu__header">
       <p class="site-menu__brand">SS Delphine</p>
-      <button class="site-menu__close" type="button" data-menu-close>Close</button>
+      <button class="site-menu__close" type="button" data-menu-close><span class="site-menu__close-bars" aria-hidden="true"><span></span><span></span></span><span class="visually-hidden">Close menu</span></button>
     </div>
     <h2 class="visually-hidden" id="site-menu-title">Site navigation</h2>
     <nav class="site-menu__nav" aria-label="Primary">
@@ -283,11 +283,26 @@
 
 <footer class="site-footer">
   <div class="wrap site-footer__inner">
-    <p>SS Delphine</p>
-    <div class="site-footer__legal">
-      <a href="https://www.instagram.com/ssdelphine" rel="noopener">Instagram</a>
-      <a href="/privacy.html">Privacy</a>
-      <a href="/imprint.html">Imprint</a>
+    <div class="site-footer__brand">
+      <img class="site-footer__mark" src="/assets/logo/ss-delphine-d.svg" alt="" width="28" height="32" loading="lazy" aria-hidden="true">
+      <p class="site-footer__name">SS Delphine</p>
+    </div>
+
+    <dl class="site-footer__contact">
+      <div><dt>Email</dt><dd>To be confirmed</dd></div>
+      <div><dt>Telephone</dt><dd>To be confirmed</dd></div>
+      <div><dt>Location</dt><dd>To be confirmed</dd></div>
+    </dl>
+
+    <div class="site-footer__end">
+      <a class="site-footer__social" href="https://www.instagram.com/ssdelphine" rel="noopener">
+        <svg class="icon-instagram" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" class="icon-instagram__dot"/></svg><span class="visually-hidden">SS Delphine on Instagram</span>
+      </a>
+      <nav class="site-footer__legal" aria-label="Legal">
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/imprint.html">Imprint</a>
+        <a href="/imprint.html">Terms</a>
+      </nav>
     </div>
   </div>
 </footer>

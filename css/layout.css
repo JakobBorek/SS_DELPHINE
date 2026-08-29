@@ -52,21 +52,6 @@
   display: block;
 }
 
-.nav-toggle,
-.site-menu__close {
-  min-inline-size: var(--sp-6);
-  min-block-size: var(--sp-6);
-  appearance: none;
-  border: 0;
-  background: none;
-  padding: var(--sp-1);
-  cursor: pointer;
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono-s);
-  letter-spacing: var(--tr-mono);
-  text-transform: uppercase;
-  color: var(--cream);
-}
 
 .site-menu {
   position: fixed;
@@ -206,14 +191,6 @@ html.no-js .nojs-nav {
   background: var(--navy-deep);
 }
 
-.site-footer__inner {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--sp-4);
-  align-items: baseline;
-  justify-content: space-between;
-}
-
 .site-footer__legal {
   display: flex;
   gap: var(--sp-3);
@@ -262,3 +239,49 @@ html.no-js .nojs-nav {
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- Menu control: two rules that become a diagonal X ----------
+   The closed state is two hairlines. The open state is the dialog's own
+   close control, sitting in the same place, with the two rules crossed
+   at 45 degrees so it reads as an X rather than a plus. */
+.nav-toggle,
+.site-menu__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: var(--sp-6);
+  min-block-size: var(--sp-6);
+  padding: 0;
+  appearance: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: var(--cream);
+}
+
+.nav-toggle__bars,
+.site-menu__close-bars {
+  position: relative;
+  display: block;
+  width: 1.5rem;
+  height: 0.75rem;
+}
+.nav-toggle__bars > span,
+.site-menu__close-bars > span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: var(--rule);
+  background: currentColor;
+  transition: transform var(--dur-hover) var(--ease);
+}
+/* Closed: two rules, apart. */
+.nav-toggle__bars > span:first-child { top: 0; }
+.nav-toggle__bars > span:last-child  { bottom: 0; }
+
+/* Open: both rules centred and rotated into a diagonal cross. */
+.site-menu__close-bars > span { top: 50%; }
+.site-menu__close-bars > span:first-child { transform: translateY(-50%) rotate(45deg); }
+.site-menu__close-bars > span:last-child  { transform: translateY(-50%) rotate(-45deg); }
+
+.nav-toggle:hover, .site-menu__close:hover { color: var(--gold); }
