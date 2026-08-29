@@ -1,0 +1,409 @@
+html {
+  scroll-padding-top: 5.5rem;
+}
+
+.site-header {
+  align-items: center;
+  border-bottom: var(--hairline) solid transparent;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: auto 1fr auto;
+  height: 4.75rem;
+  left: 0;
+  padding-inline: var(--gutter);
+  position: fixed;
+  right: 0;
+  top: 0;
+  transition: background-color var(--duration-fast) ease, border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
+  z-index: 100;
+}
+
+.site-header.is-scrolled,
+.site-header:focus-within {
+  background: var(--paper);
+  border-color: var(--line);
+  box-shadow: 0 0.5rem 1.5rem rgb(26 29 31 / 8%);
+}
+
+.site-mark {
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  min-height: var(--touch-target);
+  align-items: center;
+  display: inline-flex;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.primary-navigation {
+  grid-column: 3;
+}
+
+.primary-navigation ul {
+  align-items: center;
+  display: flex;
+  gap: clamp(0.75rem, 1.5vw, 1.75rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.primary-navigation a {
+  align-items: center;
+  display: inline-flex;
+  font-size: var(--step--1);
+  min-height: var(--touch-target);
+  text-decoration: none;
+}
+
+.primary-navigation a:hover,
+.primary-navigation a:focus-visible {
+  color: var(--brass);
+}
+
+.nav-toggle {
+  align-items: center;
+  background: transparent;
+  border: var(--hairline) solid currentColor;
+  display: none;
+  justify-content: center;
+  min-height: var(--touch-target);
+  min-width: 4.75rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.hero {
+  align-items: end;
+  background: var(--paper);
+  display: grid;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  padding: 7rem max(var(--gutter), calc((100vw - var(--measure-max)) / 2 + var(--gutter))) var(--gutter);
+  position: relative;
+  grid-template-rows: 1fr auto;
+  row-gap: 2rem;
+}
+
+.hero::before,
+.hero::after {
+  content: "";
+  pointer-events: none;
+}
+
+/* The frame is a grid item so its lower edge tracks the copy block instead of a
+   fixed reserve, which previously let the border cut through the wordmark. */
+.hero::before {
+  align-self: stretch;
+  border: var(--hairline) solid var(--line);
+  grid-area: 1 / 1;
+  margin-inline: calc(var(--gutter) - max(var(--gutter), calc((100vw - var(--measure-max)) / 2 + var(--gutter))));
+}
+
+/* Centred inside the frame rather than the whole hero, so it neither drifts off
+   the frame's centre on desktop nor collides with the eyebrow at 320px. */
+.hero::after {
+  align-self: center;
+  background: var(--brass);
+  grid-area: 1 / 1;
+  height: var(--hairline);
+  justify-self: center;
+  width: clamp(3rem, 8vw, 7rem);
+}
+
+.hero-media-status {
+  font-size: var(--step--1);
+  left: max(var(--gutter), calc((100vw - var(--measure-max)) / 2 + var(--gutter)));
+  margin: 0;
+  position: absolute;
+  right: var(--gutter);
+  top: 8rem;
+}
+
+.hero-content {
+  display: grid;
+  gap: 0;
+  grid-area: 2 / 1;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  isolation: isolate;
+  max-width: var(--measure-max);
+  width: 100%;
+  z-index: 1;
+}
+
+.hero .eyebrow,
+.hero h1,
+.hero-position {
+  grid-column: 1 / 10;
+}
+
+.hero .eyebrow {
+  margin-bottom: 1rem;
+}
+
+.hero h1 {
+  letter-spacing: -0.035em;
+  margin-bottom: 0.75rem;
+}
+
+.hero-position {
+  font-size: var(--step-1);
+  line-height: 1.35;
+  margin-bottom: 0;
+}
+
+.hero-next {
+  align-items: center;
+  align-self: end;
+  display: inline-flex;
+  font-size: var(--step--1);
+  gap: 0.75rem;
+  grid-column: 10 / -1;
+  grid-row: 1 / 4;
+  justify-self: end;
+  min-height: var(--touch-target);
+  text-decoration: none;
+}
+
+.section {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 5rem) clamp(1rem, 2vw, 2rem);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  padding: var(--rhythm) max(var(--gutter), calc((100vw - var(--measure-max)) / 2 + var(--gutter)));
+  position: relative;
+}
+
+.section > :not(.section-header) {
+  grid-column: 4 / -1;
+}
+
+.section-header {
+  display: grid;
+  gap: clamp(2rem, 4vw, 4rem);
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.section-header > .record-label {
+  grid-column: 1 / 3;
+}
+
+.section-header > div {
+  grid-column: 4 / -1;
+}
+
+.record-label {
+  align-self: start;
+  border-bottom: var(--hairline) solid currentColor;
+  margin: 0;
+  padding-bottom: 0.8rem;
+}
+
+.section h2 {
+  letter-spacing: -0.025em;
+  margin-bottom: 1.5rem;
+  max-width: 16ch;
+}
+
+.section-lede {
+  color: var(--ink-soft);
+  font-size: var(--step-1);
+  line-height: 1.5;
+}
+
+.site-footer {
+  align-items: start;
+  background: var(--ink);
+  color: var(--paper);
+  display: grid;
+  gap: 3rem;
+  grid-template-columns: 3fr 4fr 5fr;
+  padding: clamp(4rem, 8vw, 7rem) max(var(--gutter), calc((100vw - var(--measure-max)) / 2 + var(--gutter)));
+}
+
+.site-footer p {
+  margin-bottom: 0.5rem;
+}
+
+/* The default muted ink is tuned for the paper surface; on the dark footer it
+   falls to 2.4:1, so the inverse companion carries the same role at AA. */
+.site-footer .tbc {
+  color: var(--ink-soft-inverse);
+}
+
+.site-footer nav {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.error-page {
+  align-content: center;
+  display: grid;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: var(--rhythm) max(var(--gutter), calc((100vw - var(--measure-max)) / 2 + var(--gutter)));
+}
+
+.error-page h1 {
+  font-size: var(--step-3);
+  max-width: 12ch;
+}
+
+.error-page .text-link {
+  align-items: center;
+  border: var(--hairline) solid currentColor;
+  display: inline-flex;
+  font-size: var(--step--1);
+  font-weight: 650;
+  justify-self: start;
+  letter-spacing: 0.08em;
+  min-height: var(--touch-target);
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+@media (max-width: 75rem) {
+  .primary-navigation li:nth-child(4),
+  .primary-navigation li:nth-child(6) {
+    display: none;
+  }
+}
+
+@media (max-width: 60rem) {
+  html {
+    scroll-padding-top: 4.5rem;
+  }
+
+  .site-header {
+    height: 4.25rem;
+  }
+
+  .js .nav-toggle {
+    display: inline-flex;
+    grid-column: 3;
+    position: relative;
+    z-index: 2;
+  }
+
+  .primary-navigation {
+    grid-column: 2 / -1;
+  }
+
+  .primary-navigation ul {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .js .primary-navigation {
+    align-items: center;
+    background: var(--paper);
+    display: none;
+    inset: 0;
+    justify-content: center;
+    position: fixed;
+    z-index: 1;
+  }
+
+  .js .primary-navigation ul {
+    align-items: stretch;
+    display: grid;
+    gap: 0.25rem;
+    justify-items: center;
+  }
+
+  .js .primary-navigation li:nth-child(n) {
+    display: block;
+  }
+
+  .js .primary-navigation a {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    justify-content: center;
+    min-height: 3.25rem;
+  }
+
+  .js.nav-open,
+  .js.nav-open body {
+    overflow: hidden;
+  }
+
+  .js.nav-open .primary-navigation {
+    display: flex;
+  }
+
+  .section > :not(.section-header) {
+    grid-column: 3 / -1;
+  }
+
+  .section-header > .record-label {
+    grid-column: 1 / 3;
+  }
+
+  .section-header > div {
+    grid-column: 3 / -1;
+  }
+
+  .site-footer {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .site-footer nav {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 45rem) {
+  .hero {
+    padding-top: 5.5rem;
+  }
+
+  .hero::before {
+    margin-inline: calc(1rem - var(--gutter));
+  }
+
+  .hero-media-status {
+    top: 6.25rem;
+  }
+
+  .hero .eyebrow,
+  .hero h1,
+  .hero-position,
+  .hero-next {
+    grid-column: 1 / -1;
+  }
+
+  .hero h1 {
+    font-size: clamp(3.3rem, 18vw, 6rem);
+  }
+
+  .hero-next {
+    grid-row: auto;
+    justify-self: start;
+    margin-top: 2rem;
+  }
+
+  .section {
+    display: block;
+  }
+
+  .section-header {
+    display: block;
+    margin-bottom: 2.5rem;
+  }
+
+  .section-header > .record-label {
+    margin-bottom: 2rem;
+  }
+
+  .site-footer {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .site-footer nav {
+    grid-column: 1;
+  }
+}

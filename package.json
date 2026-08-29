@@ -1,0 +1,21 @@
+{
+  "name": "ss-delphine-static-site",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Validation tooling for the static SS Delphine charter presentation.",
+  "scripts": {
+    "test": "npm run validate && node tests/behavior-check.mjs",
+    "test:served": "node tests/server-check.mjs",
+    "validate": "npm run validate:html && npm run validate:css && npm run validate:js && npm run validate:data && node tests/site-check.mjs",
+    "validate:html": "html-validate index.html 404.html",
+    "validate:css": "stylelint 'css/*.css'",
+    "validate:js": "eslint js tests",
+    "validate:data": "jq -e . vercel.json site.webmanifest >/dev/null && xmllint --noout sitemap.xml"
+  },
+  "devDependencies": {
+    "eslint": "9.35.0",
+    "html-validate": "10.10.0",
+    "jsdom": "26.1.0",
+    "stylelint": "16.23.1"
+  }
+}

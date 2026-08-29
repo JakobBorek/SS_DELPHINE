@@ -1,0 +1,41 @@
+/* Design tokens — handover Part E. Single source of truth for palette,
+   type scale, grid and rhythm. Nothing below this file hardcodes a value. */
+
+:root {
+  /* --- Palette (E3). Brass is an accent, never a fill. --- */
+  --paper:      #EDE8DE;  /* bone — page ground */
+  --paper-warm: #E3DCCE;  /* alternating bands */
+  --ink:        #1A1D1F;  /* primary text */
+  --ink-soft:   #55595C;  /* secondary, captions */
+  --brass:      #8A6A3B;  /* rules, eyebrows, focus — sparingly */
+  --sea:        #0B3B66;  /* intro and machinery band only */
+  --line:       #C9C1B2;  /* hairlines */
+
+  /* --- Type (E4) --- */
+  --font-display: 'Instrument Serif', 'EB Garamond', Georgia, serif;
+  --font-body:    'Archivo', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+
+  --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
+  --step-0:  clamp(1rem, 0.95rem + 0.25vw, 1.13rem);
+  --step-1:  clamp(1.3rem, 1.2rem + 0.5vw, 1.6rem);
+  --step-2:  clamp(1.9rem, 1.6rem + 1.5vw, 2.8rem);
+  --step-3:  clamp(2.6rem, 2rem + 3vw, 4.5rem);
+  --step-4:  clamp(3.5rem, 2.4rem + 5.5vw, 7rem);
+
+  --tracking-eyebrow: 0.18em;
+
+  /* --- Layout (E6) --- */
+  --measure-max: 1440px;
+  --gutter: clamp(1.5rem, 4vw, 5rem);
+  --rhythm: clamp(6rem, 12vh, 10rem);  /* vertical section spacing — do not compress */
+  --hairline: 1px;
+
+  /* --- Motion (E7). The intro is the one orchestrated moment. --- */
+  --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --dur-reveal: 600ms;
+}
+
+/* Reduced motion: neutralise every duration site-wide (Part C). */
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur-reveal: 1ms; }
+}

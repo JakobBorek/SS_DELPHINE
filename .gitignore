@@ -1,0 +1,45 @@
+# Source materials — originals, never committed (handover D7, G23)
+_source/
+*.zip
+
+# Video masters — commit only compressed web derivatives
+ssdvideo.mp4
+*.master.mp4
+
+# Secrets — nothing client-side is private (handover D1)
+.env*
+*.pem
+*.key
+
+# OS / tooling
+.DS_Store
+node_modules/
+.agentbridge/
+.agent/
+.claude/settings.local.json
+.vercel/
+npm-debug.log*
+
+# Ruflo local secrets and runtime data
+.env
+.env.local
+.env.*.local
+.claude-flow/data/
+.claude-flow/logs/
+.claude-flow/sessions/
+
+# Codex local configuration
+.codex/
+# Claude Flow runtime data
+# Environment variables
+
+# Drone masters and extracted deck plan folders — originals, never committed
+DJI_*.MP4
+*.MP4
+[0-9]" "*DECK*/
+1 UPPER DECK HD/
+2 PROMENADE DECK HD/
+3 MAIN DECK HD (1)/
+4 LOWER DECK HD/
+5 ORLOP DECK HD/
+.ruflo-init-backup-*/

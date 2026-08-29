@@ -1,0 +1,131 @@
+@page {
+  margin: 15mm;
+  size: auto;
+}
+
+@media print {
+  :root {
+    --paper: #fff;
+    --paper-warm: #fff;
+    --ink: #000;
+    --ink-soft: #222;
+    --line: #777;
+  }
+
+  html {
+    font-size: 9.5pt;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .site-header,
+  .skip-link,
+  .hero-next,
+  .enquiry-form,
+  .button-disabled {
+    display: none !important;
+  }
+
+  .hero {
+    align-items: end;
+    background: #fff;
+    border-bottom: 1pt solid #000;
+    min-height: 80mm;
+    overflow: visible;
+    padding: 10mm 0;
+  }
+
+  .hero::before,
+  .hero::after {
+    display: none;
+  }
+
+  .hero h1 {
+    font-size: 50pt;
+  }
+
+  .section {
+    background: #fff !important;
+    break-before: page;
+    color: #000 !important;
+    display: block;
+    padding: 12mm 0 0;
+  }
+
+  .section-header {
+    display: grid;
+    gap: 8mm;
+    grid-template-columns: 35mm 1fr;
+    margin-bottom: 8mm;
+  }
+
+  .section-header > .record-label,
+  .section-header > div {
+    grid-column: auto;
+  }
+
+  .section h2 {
+    font-size: 28pt;
+  }
+
+  .section h3 {
+    break-after: avoid;
+  }
+
+  .section p,
+  .section li,
+  .section table,
+  .section figure,
+  .section article,
+  .section dl {
+    break-inside: avoid;
+  }
+
+  .machinery-section .record-label,
+  .machinery-section .eyebrow,
+  .machinery-section .section-lede,
+  .machinery-section figcaption,
+  .machinery-section .tbc,
+  .machinery-section dt {
+    color: #000;
+  }
+
+  .table-scroll {
+    overflow: visible;
+  }
+
+  .data-table {
+    min-width: 0;
+  }
+
+  .media-placeholder,
+  .map-placeholder {
+    max-height: 80mm;
+  }
+
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-family: var(--font-body);
+    font-size: 8pt;
+    font-weight: 400;
+    overflow-wrap: anywhere;
+  }
+
+  .site-footer {
+    background: #fff;
+    border-top: 1pt solid #000;
+    color: #000;
+    display: grid;
+    gap: 8mm;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 12mm;
+    padding: 8mm 0 0;
+  }
+
+  .site-footer nav {
+    grid-column: 1 / -1;
+  }
+}

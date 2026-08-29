@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /
+
+# Pre-launch safeguard. Allow crawling and add the absolute Sitemap directive only
+# when the canonical production domain is confirmed and launch is approved.
