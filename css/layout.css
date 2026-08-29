@@ -31,6 +31,9 @@
 .site-header[data-scrolled='true']::after { opacity: 1; }
 
 .site-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
   font-family: var(--font-display);
   font-variation-settings: 'wdth' var(--wdth-display);
   font-weight: var(--wt-display);
@@ -43,6 +46,12 @@
 }
 
 /* ---------- Primary navigation ---------- */
+.site-mark__logo {
+  width: auto;
+  height: 1.55em;
+  display: block;
+}
+
 .nav { margin-left: auto; }
 .nav__list {
   display: flex;
@@ -165,3 +174,11 @@
   transition: color var(--dur-hover) var(--ease);
 }
 .site-footer a:hover { color: var(--cream); }
+
+/* On narrow screens the header row cannot hold the full mark plus the
+   menu control without pushing the control off-screen. The monogram
+   alone carries it; the wordmark is in the hero directly below. */
+@media (max-width: 520px) {
+  .site-mark__text { display: none; }
+  .site-header { gap: var(--sp-2); }
+}
