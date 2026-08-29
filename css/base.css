@@ -18,10 +18,7 @@
 
 /* ---------- Reset ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-}
+html { -webkit-text-size-adjust: 100%; }
 body, h1, h2, h3, h4, p, figure, blockquote, dl, dd, ul, ol { margin: 0; }
 ul[class], ol[class] { list-style: none; padding: 0; }
 img, picture, video { max-width: 100%; display: block; }
@@ -62,7 +59,6 @@ body {
   letter-spacing: var(--tr-mono);
   text-transform: uppercase;
   text-decoration: none;
-  transition: top var(--dur-hover) var(--ease);
 }
 .skip-link:focus { top: var(--sp-2); }
 
@@ -177,9 +173,9 @@ body {
 }
 .readmore__toggle:hover { color: var(--cream); }
 /* No JS: the panel is open and the control is hidden. */
-html:not(.js) .readmore__panel { grid-template-rows: 1fr; }
-html:not(.js) .readmore__inner { padding-top: var(--sp-3); }
-html:not(.js) .readmore__toggle { display: none; }
+html.no-js .readmore__panel { grid-template-rows: 1fr; }
+html.no-js .readmore__inner { padding-top: var(--sp-3); }
+html.no-js .readmore__toggle { display: none; }
 
 /* ============================================================
    PRIMITIVE — .fullbleed

@@ -1,131 +1,138 @@
-@page {
-  margin: 15mm;
-  size: auto;
-}
-
 @media print {
-  :root {
-    --paper: #fff;
-    --paper-warm: #fff;
-    --ink: #000;
-    --ink-soft: #222;
-    --line: #777;
-  }
-
-  html {
-    font-size: 9.5pt;
-  }
-
   body {
-    background: #fff;
-    color: #000;
+    background: var(--cream);
+    color: var(--navy-deep);
   }
 
   .site-header,
+  .site-menu,
+  .specs-modal,
+  .nojs-nav,
   .skip-link,
-  .hero-next,
-  .enquiry-form,
-  .button-disabled {
+  .hero__video,
+  .hero__scrim,
+  .gallery__controls {
     display: none !important;
   }
 
+  .hero,
+  .statement,
+  .editorial,
+  .inquiry,
+  .discover-intro,
+  .discover-panel,
+  .site-footer {
+    min-height: auto;
+    background: var(--cream) !important;
+    color: var(--navy-deep) !important;
+  }
+
   .hero {
-    align-items: end;
-    background: #fff;
-    border-bottom: 1pt solid #000;
-    min-height: 80mm;
-    overflow: visible;
-    padding: 10mm 0;
+    height: auto;
+    padding: var(--section-pad-tight) var(--gutter);
+    break-after: page;
   }
 
-  .hero::before,
-  .hero::after {
-    display: none;
+  .statement {
+    padding-block: var(--section-pad-tight);
+    break-after: page;
   }
 
-  .hero h1 {
-    font-size: 50pt;
+  .statement__text {
+    position: static;
+    min-height: auto;
   }
 
-  .section {
-    background: #fff !important;
-    break-before: page;
-    color: #000 !important;
+  .editorial__frame,
+  .inquiry__inner,
+  .discover-intro__inner,
+  .discover-panel__frame,
+  .discover-panel__manifest {
+    min-height: auto;
     display: block;
-    padding: 12mm 0 0;
   }
 
-  .section-header {
-    display: grid;
-    gap: 8mm;
-    grid-template-columns: 35mm 1fr;
-    margin-bottom: 8mm;
+  .editorial__copy,
+  .inquiry__inner,
+  .discover-intro,
+  .discover-panel__copy,
+  .discover-panel__manifest,
+  .discover-panel--gallery {
+    min-height: auto;
+    padding-block: var(--section-pad-tight);
   }
 
-  .section-header > .record-label,
-  .section-header > div {
-    grid-column: auto;
+  .inquiry__content {
+    width: 100%;
   }
 
-  .section h2 {
-    font-size: 28pt;
+  .discover-panel {
+    display: block;
+    break-before: page;
   }
 
-  .section h3 {
-    break-after: avoid;
+  .hero__wordmark,
+  .hero__tagline,
+  .statement__text,
+  .statement__char,
+  .section-title,
+  .prose,
+  .plate__val,
+  .manifest dd,
+  .editorial__link,
+  .specs-trigger,
+  .inquiry__link,
+  .legal__link,
+  .discover-panel__back {
+    color: var(--navy-deep) !important;
   }
 
-  .section p,
-  .section li,
-  .section table,
-  .section figure,
-  .section article,
-  .section dl {
+  .eyebrow,
+  .plate__key,
+  .manifest dt,
+  .gallery__counter,
+  .inquiry__placeholder,
+  .site-footer a,
+  .site-footer p {
+    color: var(--navy-soft) !important;
+  }
+
+  details:not([open]) > :not(summary) {
+    display: block !important;
+  }
+
+  .editorial__media,
+  .discover-panel__media {
+    max-height: 50vh;
     break-inside: avoid;
   }
 
-  .machinery-section .record-label,
-  .machinery-section .eyebrow,
-  .machinery-section .section-lede,
-  .machinery-section figcaption,
-  .machinery-section .tbc,
-  .machinery-section dt {
-    color: #000;
+  .editorial__media img,
+  .discover-panel__media img {
+    width: 100%;
+    height: 50vh;
+    min-height: auto;
+    object-fit: cover;
   }
 
-  .table-scroll {
-    overflow: visible;
+  .gallery__track {
+    display: block;
   }
 
-  .data-table {
-    min-width: 0;
+  .gallery__slide:not(:first-child) {
+    display: none;
   }
 
-  .media-placeholder,
-  .map-placeholder {
-    max-height: 80mm;
+  .plate__row,
+  .manifest > div,
+  figure,
+  p {
+    break-inside: avoid;
   }
 
-  a[href^="http"]::after {
-    content: " (" attr(href) ")";
+  a[href^='http']::after {
+    content: ' (' attr(href) ')';
     font-family: var(--font-body);
-    font-size: 8pt;
-    font-weight: 400;
     overflow-wrap: anywhere;
-  }
-
-  .site-footer {
-    background: #fff;
-    border-top: 1pt solid #000;
-    color: #000;
-    display: grid;
-    gap: 8mm;
-    grid-template-columns: 1fr 1fr;
-    margin-top: 12mm;
-    padding: 8mm 0 0;
-  }
-
-  .site-footer nav {
-    grid-column: 1 / -1;
   }
 }

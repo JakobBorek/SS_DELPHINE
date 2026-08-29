@@ -43,3 +43,12 @@ DJI_*.MP4
 4 LOWER DECK HD/
 5 ORLOP DECK HD/
 .ruflo-init-backup-*/
+
+# Ruflo runtime state and local agent scratch
+.claude-flow/
+.swarm/
+ruvector.db
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+.agent/

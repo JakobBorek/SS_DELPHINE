@@ -1,5 +1,5 @@
-<!doctype html>
-<html lang="en" id="top">
+<!DOCTYPE html>
+<html lang="en" id="top" class="no-js">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,135 +23,185 @@
 
 <link rel="preload" href="/assets/fonts/archivo-wdth-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/plexmono-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/media/hero/delphine-hero-poster.webp" as="image" type="image/webp" fetchpriority="high">
 
+<script src="/js/root.js" defer></script>
 <link rel="stylesheet" href="/css/tokens.css">
 <link rel="stylesheet" href="/css/base.css">
 <link rel="stylesheet" href="/css/layout.css">
 <link rel="stylesheet" href="/css/hero.css">
-<link rel="stylesheet" href="/css/track-b.css">
-<link rel="stylesheet" href="/css/track-c.css">
-<link rel="stylesheet" href="/css/track-d.css">
+<link rel="stylesheet" href="/css/sections.css">
 <link rel="stylesheet" href="/css/print.css" media="print">
-<script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to content</a>
 
 <header class="site-header" data-site-header>
-  <a class="site-mark" href="#top">
+  <a class="site-mark" href="#top" aria-label="SS Delphine, top of page">
     <img class="site-mark__logo" src="/assets/logo/ss-delphine-d.svg" alt="" width="24" height="28" aria-hidden="true">
     <span class="site-mark__text">SS Delphine</span>
   </a>
-
-  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">Menu</button>
-
-  <nav class="nav" id="primary-navigation" aria-label="Primary">
-    <button class="nav__close" type="button" aria-label="Close menu">Close</button>
-    <ul class="nav__list">
-      <li><a class="nav__link" href="#the-yacht">The Yacht</a></li>
-      <li><a class="nav__link" href="#the-refit">The Refit</a></li>
-      <li><a class="nav__link" href="#interiors">Interiors</a></li>
-      <li><a class="nav__link" href="#cabins">Cabins</a></li>
-      <li><a class="nav__link" href="#toys-and-tenders">Toys and Tenders</a></li>
-      <li><a class="nav__link" href="#charter">Charter</a></li>
-      <li><a class="nav__link" href="#gallery">Gallery</a></li>
-      <li><a class="nav__link" href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-haspopup="dialog">Menu</button>
 </header>
 
-<main id="main-content">
+<dialog class="site-menu" id="site-menu" aria-labelledby="site-menu-title">
+  <div class="site-menu__shell">
+    <div class="site-menu__header">
+      <p class="site-menu__brand">SS Delphine</p>
+      <button class="site-menu__close" type="button" data-menu-close>Close</button>
+    </div>
+    <h2 class="visually-hidden" id="site-menu-title">Site navigation</h2>
+    <nav class="site-menu__nav" aria-label="Primary">
+      <div>
+        <p class="site-menu__label">Main</p>
+        <ul class="site-menu__primary">
+          <li><a href="/" aria-current="page">Home</a></li>
+          <li><a href="/#the-yacht">The Yacht</a></li>
+          <li><a href="/#private-charter">Private Charter</a></li>
+          <li><a href="/#inquiry">Inquiry</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="site-menu__label">Explore further</p>
+        <ul class="site-menu__secondary">
+          <li><a href="/discover.html#technical-specifications">Technical Specifications</a></li>
+          <li><a href="/discover.html#the-refit">The Refit</a></li>
+          <li><a href="/discover.html#interiors">Interiors</a></li>
+          <li><a href="/discover.html#cabins">Cabins</a></li>
+          <li><a href="/discover.html#toys-and-tenders">Toys and Tenders</a></li>
+          <li><a href="/discover.html#charter">Charter Details</a></li>
+          <li><a href="/discover.html#gallery">Gallery</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</dialog>
 
-  <!-- 1. HERO - video, wordmark, tagline. Nothing else. TRACK A -->
+<noscript>
+  <nav class="nojs-nav" aria-label="Site index">
+    <ul class="nojs-nav__list">
+      <li><a href="/">Home</a></li>
+      <li><a href="/#the-yacht">The Yacht</a></li>
+      <li><a href="/#private-charter">Private Charter</a></li>
+      <li><a href="/discover.html">Explore SS Delphine</a></li>
+      <li><a href="/#inquiry">Inquiry</a></li>
+    </ul>
+  </nav>
+</noscript>
+
+<main id="main-content">
   <section class="hero" id="hero" aria-label="SS Delphine">
-    <video class="hero__video" data-hero-video
-           muted autoplay loop playsinline preload="metadata"
-           poster="/media/hero/delphine-hero-poster.jpg"
-           aria-hidden="true" tabindex="-1">
+    <video class="hero__video" data-hero-video muted autoplay loop playsinline preload="metadata"
+           poster="/media/hero/delphine-hero-poster.webp" aria-hidden="true" tabindex="-1">
+      <source src="/media/hero/delphine-hero-480.mp4" type="video/mp4" media="(max-width: 560px)">
       <source src="/media/hero/delphine-hero-1080.webm" type="video/webm">
       <source src="/media/hero/delphine-hero-1080.mp4" type="video/mp4">
     </video>
     <div class="hero__scrim" aria-hidden="true"></div>
     <div class="hero__mark">
-      <h1 class="hero__lockup">
-        <img class="hero__logo" src="/assets/logo/ss-delphine-d.svg"
-             alt="" aria-hidden="true" width="72" height="83">
-        <span class="hero__wordmark">SS Delphine</span>
-      </h1>
+      <h1 class="hero__lockup"><span class="hero__wordmark">SS Delphine</span></h1>
       <p class="hero__tagline">The Golden Age Returns</p>
     </div>
   </section>
 
-  <!-- 2. THE STATEMENT - the signature. TRACK A -->
   <section class="statement" id="statement" aria-label="About SS Delphine">
-    <p class="statement__text" data-statement>Built in 1921 for the Dodge family. More than a century later she remains the last operational privately owned steam yacht of her size, sailing under the original engines she was designed for. She still needs six hours to raise steam before she can leave a berth.</p>
+    <p class="statement__text" data-statement>Built in 1921 for the Dodge family, SS Delphine still sails under the original engines she was designed for.</p>
   </section>
 
-  <!-- 3. THE YACHT - TRACK B -->
-  <section class="section section--deep" id="the-yacht" aria-labelledby="the-yacht-title">
-    <div class="wrap">
-      <p class="eyebrow">Zero One</p>
-      <h2 class="section-title" id="the-yacht-title">The Yacht</h2>
+  <section class="editorial editorial--yacht" id="the-yacht" aria-labelledby="the-yacht-title">
+    <div class="editorial__frame">
+      <div class="editorial__copy">
+        <div class="editorial__copy-inner">
+          <h2 class="section-title" id="the-yacht-title">The Yacht</h2>
+          <div class="editorial__prose prose">
+            <p>Built in 1921 for the Dodge family, SS Delphine is the last operational privately owned steam yacht of her size.</p>
+            <p>Her original Horace Dodge quadruple expansion steam engines remain at the heart of a vessel restored for modern operation.</p>
+            <p>She accommodates twenty-six overnight guests across twelve cabins and is available for private charter and quayside events.</p>
+          </div>
+          <a class="specs-trigger" href="/discover.html#technical-specifications" data-specs-open
+             aria-haspopup="dialog" aria-controls="technical-specifications-dialog">
+            <span class="specs-trigger__label">Technical Specifications</span>
+            <svg class="specs-trigger__icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+              <path d="M5 15 15 5M7 5h8v8"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <figure class="editorial__media editorial__media--aerial">
+        <picture>
+          <source type="image/avif" srcset="/media/gallery/yacht-topview-640.avif 640w, /media/gallery/yacht-topview-959.avif 959w" sizes="(max-width: 768px) 100vw, 50vw">
+          <img src="/media/gallery/yacht-topview-959.webp"
+               srcset="/media/gallery/yacht-topview-640.webp 640w, /media/gallery/yacht-topview-959.webp 959w"
+               sizes="(max-width: 768px) 100vw, 50vw" width="959" height="1644" loading="lazy"
+               alt="SS Delphine seen directly from above in dark blue water.">
+        </picture>
+      </figure>
     </div>
   </section>
 
-  <!-- 4. THE REFIT - TRACK B -->
-  <section class="section section--panel" id="the-refit" aria-labelledby="the-refit-title">
-    <div class="wrap">
-      <p class="eyebrow">Zero Two</p>
-      <h2 class="section-title" id="the-refit-title">The Refit</h2>
+  <section class="editorial editorial--reverse" id="private-charter" aria-labelledby="private-charter-title">
+    <div class="editorial__frame">
+      <figure class="editorial__media editorial__media--promenade">
+        <picture>
+          <source type="image/avif" srcset="/media/gallery/promenade-deck-960.avif 960w, /media/gallery/promenade-deck-1600.avif 1600w" sizes="(max-width: 768px) 100vw, 50vw">
+          <img src="/media/gallery/promenade-deck-1600.webp"
+               srcset="/media/gallery/promenade-deck-960.webp 960w, /media/gallery/promenade-deck-1600.webp 1600w"
+               sizes="(max-width: 768px) 100vw, 50vw" width="1600" height="1067" loading="lazy"
+               alt="Covered teak promenade deck with wicker seating aboard SS Delphine.">
+        </picture>
+      </figure>
+      <div class="editorial__copy">
+        <div class="editorial__copy-inner">
+          <h2 class="section-title" id="private-charter-title">Private Charter</h2>
+          <div class="editorial__prose prose">
+            <p>SS Delphine is available for private charter and for quayside events for more than 180 guests.</p>
+            <p>Pets are welcome; parties, events and night navigation are subject to prior approval by the captain and management.</p>
+            <p>Every departure is confirmed at least six hours in advance, giving the steam boilers time to reach pressure.</p>
+            <p>Rates are on request.</p>
+          </div>
+          <a class="editorial__link" href="/discover.html#charter">Charter details</a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- 5. INTERIORS AND AMENITIES - TRACK B -->
-  <section class="section section--deep" id="interiors" aria-labelledby="interiors-title">
-    <div class="wrap">
-      <p class="eyebrow">Zero Three</p>
-      <h2 class="section-title" id="interiors-title">Interiors and Amenities</h2>
+  <section class="inquiry" id="inquiry" aria-labelledby="inquiry-title">
+    <div class="wrap inquiry__inner">
+      <div class="inquiry__content">
+        <h2 class="section-title" id="inquiry-title">Inquiry</h2>
+        <div class="inquiry__prose prose">
+          <p>SS Delphine is available for private charter and quayside events.</p>
+          <p class="inquiry__placeholder">Inquiry details to be confirmed.</p>
+          <p><a class="inquiry__link" href="https://www.instagram.com/ssdelphine" rel="noopener">Follow SS Delphine on Instagram</a></p>
+        </div>
+      </div>
     </div>
   </section>
-
-  <!-- 6. CABINS - TRACK C -->
-  <section class="section section--panel" id="cabins" aria-labelledby="cabins-title">
-    <div class="wrap">
-      <p class="eyebrow">Zero Four</p>
-      <h2 class="section-title" id="cabins-title">Cabins</h2>
-    </div>
-  </section>
-
-  <!-- 7. TOYS AND TENDERS - TRACK C -->
-  <section class="section section--deep" id="toys-and-tenders" aria-labelledby="toys-title">
-    <div class="wrap">
-      <p class="eyebrow">Zero Five</p>
-      <h2 class="section-title" id="toys-title">Toys and Tenders</h2>
-    </div>
-  </section>
-
-  <!-- 8. CHARTER INFORMATION - TRACK C -->
-  <section class="section section--panel" id="charter" aria-labelledby="charter-title">
-    <div class="wrap">
-      <p class="eyebrow">Zero Six</p>
-      <h2 class="section-title" id="charter-title">Charter Information</h2>
-    </div>
-  </section>
-
-  <!-- 9. GALLERY - TRACK D -->
-  <section class="section section--deep" id="gallery" aria-labelledby="gallery-title">
-    <div class="wrap">
-      <p class="eyebrow">Zero Seven</p>
-      <h2 class="section-title" id="gallery-title">Gallery</h2>
-    </div>
-  </section>
-
-  <!-- 10. CONTACT - TRACK D -->
-  <section class="section section--panel" id="contact" aria-labelledby="contact-title">
-    <div class="wrap">
-      <p class="eyebrow">Zero Eight</p>
-      <h2 class="section-title" id="contact-title">Contact</h2>
-    </div>
-  </section>
-
 </main>
+
+<dialog class="specs-modal" id="technical-specifications-dialog" aria-labelledby="technical-specifications-dialog-title">
+  <div class="specs-modal__header">
+    <h2 class="section-title section-title--m" id="technical-specifications-dialog-title" tabindex="-1">Technical Specifications</h2>
+    <button class="specs-modal__close" type="button" data-specs-close aria-label="Close technical specifications">Close</button>
+  </div>
+  <div class="specs-modal__body">
+    <dl class="plate">
+      <div class="plate__row"><dt class="plate__key">Year built</dt><dd class="plate__val">1921</dd></div>
+      <div class="plate__row"><dt class="plate__key">Engines</dt><dd class="plate__val">2 × Horace Dodge quadruple expansion steam engines, Great Lakes Engineering, N° 578 ST and 577 PS</dd></div>
+      <div class="plate__row"><dt class="plate__key">Power</dt><dd class="plate__val">1,500 HP per engine</dd></div>
+      <div class="plate__row"><dt class="plate__key">Maximum speed</dt><dd class="plate__val">10 knots</dd></div>
+      <div class="plate__row"><dt class="plate__key">Cruising speed</dt><dd class="plate__val">8 knots</dd></div>
+      <div class="plate__row"><dt class="plate__key">Range</dt><dd class="plate__val">3,000 NM economical, 4,000 NM at cruising speed</dd></div>
+      <div class="plate__row"><dt class="plate__key">Generators</dt><dd class="plate__val">2 × Stamford HCM 534C1, MTU engine, 375 kVA. 1 emergency Stamford, John Deere engine, 150 kVA</dd></div>
+      <div class="plate__row"><dt class="plate__key">Guests sleeping</dt><dd class="plate__val">26</dd></div>
+      <div class="plate__row"><dt class="plate__key">Guests cruising</dt><dd class="plate__val">180, plus 12 overnight</dd></div>
+      <div class="plate__row"><dt class="plate__key">Quayside events</dt><dd class="plate__val">180 and above</dd></div>
+      <div class="plate__row"><dt class="plate__key">Guest cabins</dt><dd class="plate__val">12, with 15 beds</dd></div>
+      <div class="plate__row"><dt class="plate__key">Connectivity</dt><dd class="plate__val">Starlink, 4G and 5G, WiFi throughout</dd></div>
+      <div class="plate__row"><dt class="plate__key">Commercial status</dt><dd class="plate__val">YET 12, ISM, ISPS and MLC compliant</dd></div>
+    </dl>
+  </div>
+</dialog>
 
 <footer class="site-footer">
   <div class="wrap site-footer__inner">
@@ -166,5 +216,6 @@
 
 <script src="/js/nav.js" defer></script>
 <script src="/js/statement.js" defer></script>
+<script src="/js/specs.js" defer></script>
 </body>
 </html>

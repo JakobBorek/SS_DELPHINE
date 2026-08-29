@@ -6,9 +6,13 @@ export default [
       sourceType: "script",
       globals: {
         AbortController: "readonly",
+        CSS: "readonly",
         document: "readonly",
         fetch: "readonly",
         FormData: "readonly",
+        getComputedStyle: "readonly",
+        IntersectionObserver: "readonly",
+        requestAnimationFrame: "readonly",
         window: "readonly"
       }
     },

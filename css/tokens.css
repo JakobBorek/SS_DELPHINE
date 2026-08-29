@@ -92,8 +92,10 @@
   --hairline-gold:   rgb(199 162 76 / 0.40); /* gold, for rules only */
   --hero-scrim:      rgb(10 22 40 / 0.42);   /* over the hero video */
   --hero-scrim-deep: rgb(10 22 40 / 0.72);   /* foot of hero, for legibility */
-  --statement-dim:   rgb(242 237 227 / 0.16);/* unlit words. Reads as unlit, not disabled. */
+  --statement-dim:   rgb(242 237 227 / 0.14); /* deliberately ghosted before the scroll fill */
   --focus-ring:      rgb(199 162 76 / 0.85);
+  --modal-backdrop:  rgb(10 22 40 / 0.84);
+  --modal-shadow:    rgb(10 22 40 / 0.72);
 
   /* ---------- Type ---------- */
   --font-display: 'Archivo', ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;

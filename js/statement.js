@@ -1,20 +1,4 @@
-/* ============================================================
-   SS DELPHINE — TRACK A: THE SCROLL-FILL STATEMENT
-   The one animation on this site.
-
-   Words fill left to right, driven by scroll position rather
-   than triggered once. Scrolling back up un-fills them.
-
-   Two paths:
-     1. CSS scroll-driven animation (view-timeline). Runs off the
-        main thread, so it cannot jank. Used where supported.
-     2. One rAF-throttled scroll listener for everything else.
-        One listener for the whole page.
-
-   prefers-reduced-motion renders the text filled and static and
-   neither path runs. With JavaScript off the sentence is already
-   in the DOM and CSS shows it filled.
-   ============================================================ */
+/* The only scroll-driven animation on the site. */
 (() => {
   'use strict';
 
@@ -22,132 +6,121 @@
   if (!el) return;
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* ---------- Split into words, once, not per frame ---------- */
   const source = el.textContent.trim();
+  const spoken = document.createElement('span');
+  const visual = document.createElement('span');
+  const chars = [];
 
-  // The last sentence is the payload. It gets its own line.
-  const parts = source.match(/[^.]+\./g) || [source];
-  const lead = parts.slice(0, -1).join(' ').trim();
-  const payload = (parts[parts.length - 1] || '').trim();
+  spoken.className = 'visually-hidden';
+  spoken.textContent = source;
+  visual.className = 'statement__visual';
+  visual.setAttribute('aria-hidden', 'true');
 
-  const frag = document.createDocumentFragment();
-  const words = [];
+  const segmenter = typeof Intl.Segmenter === 'function'
+    ? new Intl.Segmenter(document.documentElement.lang || 'en', { granularity: 'grapheme' })
+    : null;
+  const graphemes = (value) => segmenter
+    ? [...segmenter.segment(value)].map((part) => part.segment)
+    : Array.from(value);
 
-  const addWords = (text, host) => {
-    text.split(/\s+/).filter(Boolean).forEach((w, i, arr) => {
-      const span = document.createElement('span');
-      span.className = 'statement__word';
-      span.textContent = w;
-      host.appendChild(span);
-      if (i < arr.length - 1) host.appendChild(document.createTextNode(' '));
-      words.push(span);
-    });
-  };
+  for (const token of source.match(/\s+|\S+/gu) || []) {
+    if (/^\s+$/u.test(token)) {
+      visual.appendChild(document.createTextNode(token));
+      continue;
+    }
 
-  addWords(lead, frag);
-
-  if (payload) {
-    const line = document.createElement('span');
-    line.className = 'statement__line';
-    addWords(payload, line);
-    frag.appendChild(line);
+    const word = document.createElement('span');
+    word.className = 'statement__word';
+    for (const grapheme of graphemes(token)) {
+      const char = document.createElement('span');
+      char.className = 'statement__char';
+      char.textContent = grapheme;
+      word.appendChild(char);
+      chars.push(char);
+    }
+    visual.appendChild(word);
   }
 
-  el.textContent = '';
-  el.appendChild(frag);
+  el.replaceChildren(spoken, visual);
 
-  const total = words.length;
+  const total = chars.length;
   if (!total) return;
 
-  // Per-word index and count for the CSS path's staggered ranges.
-  words.forEach((w, i) => w.style.setProperty('--i', String(i)));
+  chars.forEach((char, index) => {
+    char.style.setProperty('--i', String(index));
+    char.dataset.lit = 'false';
+  });
   el.style.setProperty('--n', String(total));
 
   if (reduced) {
-    words.forEach((w) => { w.dataset.lit = 'true'; });
+    chars.forEach((char) => {
+      char.dataset.lit = 'true';
+    });
     return;
   }
 
-  /* ---------- Path 1: CSS scroll-driven ---------- */
   const cssDriven =
     CSS.supports('animation-timeline: view()') &&
-    CSS.supports('animation-range: contain 0% contain 100%');
-
-  /* Path 2 is defined below and can be started on demand. */
+    CSS.supports('animation-range: cover 36% cover 64%');
   let rafStarted = false;
 
   if (cssDriven) {
     document.documentElement.classList.add('statement-css');
 
-    /* Watchdog. Declaring support is not the same as the timeline
-       actually advancing: a scroll-driven animation can register and
-       still sit at progress 0 in some engines and embedded contexts.
-       Sample once, after the statement has genuinely been scrolled
-       past its start. If nothing has lit, hand over to path 2. */
-    const check = () => {
-      const sec = el.closest('.statement') || el;
-      const rect = sec.getBoundingClientRect();
-      const vh = window.innerHeight || 0;
-      // Only judge once the section is well into view.
-      if (rect.top > vh * 0.45) return;
-      window.removeEventListener('scroll', check);
-      /* Mid-section, a working timeline has lit the opening words and
-         not the closing ones. If every word still renders identically,
-         the timeline is inert. */
-      const first = getComputedStyle(words[0]).color;
-      const last = getComputedStyle(words[words.length - 1]).color;
+    const checkTimeline = () => {
+      const section = el.closest('.statement') || el;
+      const rect = section.getBoundingClientRect();
+      const viewport = window.innerHeight || document.documentElement.clientHeight;
+      const distance = Math.max(1, (rect.height || viewport * 1.8) - viewport);
+      const progress = Math.min(1, Math.max(0, -rect.top / distance));
+      if (progress < 0.2) return;
+
+      window.removeEventListener('scroll', checkTimeline);
+      const first = getComputedStyle(chars[0]).color;
+      const last = getComputedStyle(chars[chars.length - 1]).color;
       if (first === last) {
         document.documentElement.classList.remove('statement-css');
         startRaf();
       }
     };
-    window.addEventListener('scroll', check, { passive: true });
+
+    window.addEventListener('scroll', checkTimeline, { passive: true });
     return;
   }
 
   startRaf();
 
-  /* ---------- Path 2: one rAF-throttled scroll listener ---------- */
   function startRaf() {
     if (rafStarted) return;
     rafStarted = true;
 
-  const section = el.closest('.statement') || el;
-  let ticking = false;
+    const section = el.closest('.statement') || el;
+    let ticking = false;
 
-  const paint = () => {
-    ticking = false;
-    const rect = section.getBoundingClientRect();
-    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const paint = () => {
+      ticking = false;
+      const rect = section.getBoundingClientRect();
+      const viewport = window.innerHeight || document.documentElement.clientHeight;
+      const distance = Math.max(1, (rect.height || viewport * 1.8) - viewport);
+      const progress = Math.min(1, Math.max(0, -rect.top / distance));
+      const lit = Math.round(progress * total);
 
-    /* Fill across the span from the section's top reaching ~80% of
-       the viewport to it reaching ~25%. That completes the sentence
-       comfortably before the section leaves the screen, so a reader
-       scrolling at normal speed finishes it. */
-    const start = vh * 0.80;
-    const end = vh * 0.25;
-    const raw = (start - rect.top) / (start - end);
-    const progress = Math.min(1, Math.max(0, raw));
+      chars.forEach((char, index) => {
+        const on = index < lit;
+        if ((char.dataset.lit === 'true') !== on) {
+          char.dataset.lit = on ? 'true' : 'false';
+        }
+      });
+    };
 
-    // Slight overshoot so the final word lights before the end.
-    const lit = Math.round(progress * (total + 2));
-    for (let i = 0; i < total; i++) {
-      const on = i < lit;
-      if ((words[i].dataset.lit === 'true') !== on) {
-        words[i].dataset.lit = on ? 'true' : 'false';
-      }
-    }
-  };
+    const requestPaint = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(paint);
+    };
 
-  const onScroll = () => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(paint);
-  };
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll, { passive: true });
-  paint();
+    window.addEventListener('scroll', requestPaint, { passive: true });
+    window.addEventListener('resize', requestPaint, { passive: true });
+    paint();
   }
 })();

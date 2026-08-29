@@ -39,10 +39,11 @@ Frame-by-frame checks that shaped the in-point:
    It descends into deck close-ups after t=50. Strong candidate for a section backdrop.
 2. `DJI_20260808103538_0018_D.MP4`. Correct angle and daylight, but a white superyacht and a
    tender sit in frame throughout, and the coastline is busy.
-3. `ssdvideo.mp4`. A top-down of the yacht underway in deep blue water with a full wake, and the
-   single most striking image in the whole set. **Not the hero because it is not a three-quarter
-   side angle**, which the brief specifies. It is 1080p and already web-encoded. Recommended for
-   the gallery opener.
+3. `ssdvideo.mp4`. A top-down of the yacht underway in deep blue water with a full wake, and one of
+   the strongest images in the set. **Not the hero because it is not a three-quarter side angle**,
+   which the brief specifies. A frame from this clip previously appeared beside The Yacht copy; the
+   client later supplied `topviewssd.png` specifically for that position, so the video frame is no
+   longer referenced by the production HTML.
 4. `DJI_20260808205742_0080_D.MP4`. Night/dusk with Monaco lit behind. Atmospheric, too dark, and
    the city dominates.
 5. `DJI_20260808171215_0027_D.MP4`. Top-down at anchor. Useful for the deck-plan or layout
@@ -55,6 +56,7 @@ Frame-by-frame checks that shaped the in-point:
 | `delphine-hero-1080.mp4` | H.264, 1920x1080, CRF 28, faststart, no audio | 4.23 MB |
 | `delphine-hero-1080.webm` | VP9, 1920x1080, CRF 46 | 3.60 MB |
 | `delphine-hero-720.mp4` | H.264, 1280x720, CRF 29, for small screens | 1.65 MB |
+| `delphine-hero-480.mp4` | H.264, 854x480, CRF 30, for phone screens | 0.55 MB |
 | `delphine-hero-poster.jpg` | Poster, first frame of the loop (t=39) | 0.17 MB |
 | `delphine-hero-poster.webp` | Poster | 0.09 MB |
 | `delphine-hero-poster.avif` | Poster | 0.07 MB |
@@ -68,27 +70,24 @@ VP9's CRF scale is not comparable to x264's.
 
 Mobile: no separate portrait crop. The yacht is a long horizontal object and any 9:16 crop cuts off
 bow or stern. The brief permits `object-fit: cover` with a focal point instead, so the hero holds a
-centre focal point that keeps the funnel and midships in frame at 375px.
+centre focal point that keeps the funnel and midships in frame at 375px. The 480p derivative is used
+below 560px to keep the autoplay transfer below 0.6 MB without changing the approved ten-second loop.
 
-## Logo — MISSING, ESCALATED
+## Logo
 
-**There is no SS Delphine logo file anywhere in the supplied materials.** Searched the project
-folder, `_source/`, `~/Downloads` and `~/Desktop`.
+The client supplied `SS_Delphine_D_vector.svg` after the initial inventory. The production copy is
+`assets/logo/ss-delphine-d.svg`, with the original artwork bounds preserved in its viewBox and the
+mark held to the frozen gold token value.
 
-The brief states a raster logo exists ("Yellow, stays yellow. Raster only ... no original artwork
-survives"), so one is expected, but it has not been supplied. What does exist:
+Production derivatives:
 
-- `~/Downloads/delphine-ref-clean.png` and `delphine-ref-2x.png` — despite the names these are
-  **photographic reference stills** (top-down of the yacht underway), not artwork.
-- `~/Downloads/logo-matilde-studio.png` — a different studio's mark, unrelated to this client.
-- The previous version of this site set the wordmark **typographically**, in type, with no image
-  asset. The prior handover document describes splitting "the wordmark into character spans",
-  which confirms it was always live text.
+- `assets/logo/ss-delphine-d.svg` for the header monogram
+- `assets/logo/ss-delphine-d-512.png` as the high-resolution raster derivative
+- `favicon.ico`, `apple-touch-icon.png`, `icon-192.png` and `icon-512.png`
 
-**Decision, pending the client:** the hero wordmark is set as live text in the display face at the
-gold token, not as an image. This is honest to how the previous site worked, keeps the mark crisp
-at every density, costs no bytes, and is trivially swapped for a raster once one is supplied.
-Flagged in `NOTES.md` as the first thing the client will ask about.
+The header pairs the supplied monogram with a live-text SS Delphine wordmark. Following the
+homepage review, the hero itself uses the live-text wordmark without a second gold monogram.
+The supplied artwork remains unchanged and is not traced or redrawn.
 
 ## Type
 

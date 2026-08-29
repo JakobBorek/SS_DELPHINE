@@ -7,7 +7,7 @@
     "test": "npm run validate && node tests/behavior-check.mjs",
     "test:served": "node tests/server-check.mjs",
     "validate": "npm run validate:html && npm run validate:css && npm run validate:js && npm run validate:data && node tests/site-check.mjs",
-    "validate:html": "html-validate index.html 404.html",
+    "validate:html": "html-validate index.html discover.html 404.html privacy.html imprint.html",
     "validate:css": "stylelint 'css/*.css'",
     "validate:js": "eslint js tests",
     "validate:data": "jq -e . vercel.json site.webmanifest >/dev/null && xmllint --noout sitemap.xml"
