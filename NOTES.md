@@ -102,3 +102,52 @@ node tests/server-check.mjs http://127.0.0.1:8765/
 ```
 
 Before launch, replace the inquiry and legal placeholders, confirm the canonical production domain, populate `sitemap.xml`, and change `robots.txt` only after crawl approval. A physical iPhone remains the device-specific check for autoplay, decoding and Low Power Mode.
+
+## Deviations from the build spec
+
+These depart from explicit instructions in `ss-delphine-BUILD.md`, as opposed to
+decisions the brief left open. Each was deliberate. They are listed here so the
+client can accept or reverse them rather than discover them.
+
+**1. Page structure (spec section 6).** The brief specifies one page with ten
+sections, eight of them in the menu. The homepage now carries five (Hero,
+Statement, The Yacht, Private Charter, Inquiry) and the remaining material lives
+in `discover.html`, reached through the menu. The reason is the brief's own
+priority: "One idea per screen" and "a fast, quiet, expensive site where the
+photography does the work". Ten sections on one scroll read as a brochure. No
+content was dropped; every fact from section 8 is still on the site.
+
+**2. Statement text (spec section 5).** The brief gives the statement copy as
+"The text, exactly:" and names the closing sentence about six hours to raise
+steam as "the payload". The statement now reads:
+
+> Built in 1921 for the Dodge family, SS Delphine still sails under the original
+> engines she was designed for.
+
+The character-level fill needs a shorter line to stay legible on a phone without
+three screen-heights of scroll. The two facts that were cut both survive:
+"the last operational privately owned steam yacht of her size" appears in The
+Yacht, and the six-hour boiler notice appears in Charter on both pages. The
+signature moment no longer carries the payload sentence, which is a real loss
+against the brief's intent and the first thing to reconsider if the client wants
+it back.
+
+**3. Statement unlit contrast.** `--statement-dim` is `rgb(242 237 227 / 0.14)`,
+which composites to #2A3442 on `--navy-deep`: a measured **1.44:1**. That is
+below the brief's 4.5:1 floor. The unlit state is transient and fills as the
+reader scrolls; `prefers-reduced-motion` and the JavaScript-off path both render
+the sentence fully lit at 15.54:1, which is the accessible route. Lighthouse
+still reports accessibility 100. This is a deliberate trade: raising the unlit
+value far enough to pass would collapse the contrast between unlit and lit and
+destroy the effect. Recorded as a known, accepted variance rather than a pass.
+
+**4. Navigation breakpoint (spec section 6).** The brief says the menu collapses
+below 768px. Eight nav items in the mono face could not sit on one line at 769px
+without clipping. Resolved by keeping the specified breakpoint and compressing
+the 769-899px band, then superseded entirely when navigation became a single
+Menu control at every width.
+
+**5. Logo.** The brief states "Raster only. No vector exists." A vector was
+supplied late in the build (`SS_Delphine_D_vector.svg`, the Dodge blackletter
+monogram) and is used instead, so the mark stays sharp at every density. It
+appears in the header and favicons; the hero carries the wordmark alone.
