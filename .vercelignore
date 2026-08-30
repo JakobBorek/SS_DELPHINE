@@ -1,0 +1,33 @@
+# Local dependencies, credentials, and deployment metadata
+node_modules/
+.env*
+.vercel/
+.git/
+.DS_Store
+
+# Agent and local tooling state
+.agent/
+.agentbridge/
+.agents/
+.claude/
+.claude-flow/
+.codex/
+.swarm/
+.ruflo-init-backup-*/
+ruvector.db
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# Original source media and working exports
+_source/
+*.zip
+ssdvideo.mp4
+*.master.mp4
+DJI_*.MP4
+*.MP4
+[0-9] UPPER DECK HD/
+[0-9] PROMENADE DECK HD/
+[0-9] MAIN DECK HD*/
+[0-9] LOWER DECK HD/
+[0-9] ORLOP DECK HD/
