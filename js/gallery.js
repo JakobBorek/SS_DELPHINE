@@ -40,6 +40,32 @@
     if (status) status.textContent = 'Showing all chapters.';
   };
 
+  const carouselFor = (set) => {
+    const track = set.querySelector('[data-gallery-track]');
+    const slides = [...set.querySelectorAll('.gallery-slide')];
+    const pos = set.querySelector('[data-gallery-pos]');
+    if (!track || !slides.length) return;
+    let at = 0;
+    const go = (n) => {
+      at = Math.min(slides.length - 1, Math.max(0, n));
+      track.scrollTo({ left: slides[at].offsetLeft - track.offsetLeft, behavior: 'smooth' });
+      if (pos) pos.textContent = String(at + 1);
+    };
+    set.querySelector('[data-gallery-prev]')?.addEventListener('click', () => go(at - 1));
+    set.querySelector('[data-gallery-next]')?.addEventListener('click', () => go(at + 1));
+    let raf = 0;
+    track.addEventListener('scroll', () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const mid = track.scrollLeft + track.clientWidth / 2;
+        const i = slides.findIndex((sl) => sl.offsetLeft - track.offsetLeft + sl.clientWidth > mid);
+        if (i >= 0 && i !== at) { at = i; if (pos) pos.textContent = String(at + 1); }
+      });
+    }, { passive: true });
+  };
+  sets.forEach(carouselFor);
+
   const openChapter = (name) => {
     const set = sets.find((s) => s.dataset.gallerySet === name);
     if (!set) return;
