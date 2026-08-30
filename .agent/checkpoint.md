@@ -1,70 +1,59 @@
-# Checkpoint 2026-08-30T17:05Z — Codex paused, Claude solo
+# Checkpoint 2026-08-30T18:47Z — joint budget pause
 
-## Task
-SS Delphine production site. Spec: ~/Downloads/ss-delphine-BUILD.md
-Repo: https://github.com/JakobBorek/SS_DELPHINE (PRIVATE). Local: ~/Documents/SSDELPHINE
+## Live
+- Netlify (primary, CI from main): https://ss-delphine.netlify.app
+- Vercel (still live, CI from main):  https://ss-delphine.vercel.app
+- Repo: https://github.com/JakobBorek/SS_DELPHINE — now PUBLIC
+- HEAD 5021582, clean tree, both hosts green on all 21 served checks.
 
-## State
-- HEAD 5a5c11b, pushed, clean tree.
-- Vercel: LIVE at https://ss-delphine.vercel.app (auto-deploys from main).
-- Netlify: LIVE at https://ss-delphine.netlify.app (manual CLI deploy only so far).
-- BOTH hosts currently serve the site. Cutover is INCOMPLETE.
+## Done today (after the earlier handover)
+- Netlify cutover finished: public, CI connected, security headers matched to
+  Vercel, .webmanifest MIME fixed (Netlify has no default mapping for it).
+  Repo had to go public: Netlify's Free plan refuses private-repo builds
+  ("Unrecognized Git contributor"), and neither commit identity satisfied it.
+- Brand lockup: the supplied SS_Delphine_Logo_Smooth_Vector_Clean.svg replaces
+  the monogram+wordmark in the header and menu on both pages. Recoloured to
+  --gold and viewBox tightened to the ink extents (74 19 442 240) — without
+  that trim it renders ~25% too small and is illegible at header scale.
+- AI image removed: yacht-aerial-* ("Underway") deleted, all references gone,
+  404 on production. A test now FAILS if it is ever referenced again.
+  NOTE: yacht-topview-* is NOT the same image — it is a genuine drone frame
+  from DJI_20260808171215_0027 (at anchor, tender alongside). Keep it.
+  Do not regenerate anything from delphine-ref-clean.png / delphine-ref-2x.*,
+  which are the synthetic source.
+- Gallery rebuilt: opens as five chapter banners (Deck & Exterior, Salons &
+  Dining, Cabins, Wellness, Heritage & Engineering) instead of 33 photographs
+  at once. Choosing one shows only that chapter, with a way back.
+- Lightbox: arrows are now scoped to the open chapter and wrap at its ends.
+  The photo-over-the-footer bug was real: the image was sized with
+  max-height calc(100dvh ...) so it could exceed its grid row. Now sized by the
+  row with overflow:hidden on the figure. The mobile override had the same bug.
+- Opened to AI agents: robots.txt allows all and names ten agents explicitly;
+  removed the noindex meta from discover.html (the main content page).
+  privacy/imprint/404 keep noindex — placeholders.
 
-## Codex paused
-Codex hit its 5h line at 17:04Z; window resets 2026-09-06 05:22 Beijing.
-Do not delegate to it until then. It was mid-way through the Netlify migration.
+## Open decisions for the user
+1. INQUIRY still uses the cream/navy/gold card: 8px gold border, drop shadow,
+   gold button fills, plus a disabled form. Conflicts with spec section 4
+   ("No cards... no bordered boxes... never a gold button") AND the user's own
+   "it can only display text for now". Display-only version recoverable:
+   git checkout 7015178 -- index.html
+2. STATEMENT is missing the spec's payload sentence ("She still needs six hours
+   to raise steam before she can leave a berth"). Fact survives in Charter.
+3. Legal pages are placeholders; contact details all "To be confirmed".
+4. Site is now fully indexable by search engines while in this state. If that is
+   unwanted, add X-Robots-Tag: noindex in netlify.toml — agents still fetch,
+   nothing gets indexed.
+5. Gallery intro copy was updated 34 -> 33; may want rewording.
 
-## Netlify cutover — DONE except CI (verified by Claude 17:20Z)
-- Netlify is PUBLIC and CURRENT. Rebuilt dist and redeployed after the user
-  approved visibility; it had been stale from 17:01.
-- netlify.toml: publish=dist, six security headers carried over, pretty_urls,
-  no SPA fallback. Verified identical headers to Vercel (HSTS max-age differs
-  1y vs 2y, immaterial).
-- Fixed a real host difference: Netlify has no default MIME mapping for
-  .webmanifest and served application/octet-stream. Explicit [[headers]] rule
-  added. Committed f9b2d0e.
-- BOTH hosts pass all 21 served-resource checks.
-- Leak paths verified 404 on Netlify: /does-not-exist, the drone master,
-  /assets/fonts/.claude-flow/policy/state.json, /_source/photography.
-
-### THE ONE REMAINING STEP — needs the browser, not the CLI
-Netlify has NO continuous deployment. `netlify api getSite` -> repo_url: NONE.
-The GitHub OAuth did not complete. Pushes to main update Vercel ONLY.
-Fix: app.netlify.com/projects/ss-delphine -> Site configuration ->
-Build & deploy -> Link repository -> JakobBorek/SS_DELPHINE, branch main.
-Until that is done, deploy Netlify by hand: npm run build && npx netlify deploy --prod --dir=dist
-
-### DO NOT PAUSE VERCEL YET
-Vercel is currently the only host with working CI, so it is the safety net.
-Pause it only after Netlify CI is confirmed. When that time comes (reversible):
-   POST https://api.vercel.com/v1/projects/prj_4awldaOjRrrUwf3SfbKv1L3gytP4/pause
-   ?teamId=team_LF1ybXzCmIlD0nr8SHMagMop
-5. After cutover: remove vercel.json and .vercelignore, update docs.
-
-## Outstanding — content/design decisions for the user
-- INQUIRY: currently a cream/navy/gold card with 8px gold border, drop shadow,
-  gold button fills, and a disabled form. Conflicts with spec section 4
-  ("No cards... no bordered boxes... never a gold button") AND with the user's
-  own instruction "it can only display text for now". UNRESOLVED. The
-  display-only version is recoverable: git checkout 7015178 -- index.html
-- STATEMENT: the spec's payload sentence ("She still needs six hours to raise
-  steam before she can leave a berth") is no longer in the signature moment.
-  Fact survives in Charter. Recommend restoring it.
-- Legal pages privacy.html / imprint.html are still placeholders.
-- Contact details are all "To be confirmed". No approved email/phone/office.
-- Charter event photo: none of the 168 owned stills shows people. The one
-  authentic event photograph found is copyrighted by Nathalie Oundjian and
-  must NOT ship without written commercial permission.
-
-## Lessons that cost time (do not repeat)
-- .gitignore does NOT untrack files already in the index. Nested
-  assets/fonts/.claude-flow survived the root removal until 5a5c11b.
-- macOS is case-insensitive: a `*.MP4` rule also ignored the lowercase web
-  hero videos, so Safari/iOS had no playable source until it was caught.
+## Traps already paid for
+- .gitignore does not untrack indexed files (assets/fonts/.claude-flow survived).
+- macOS is case-insensitive: `*.MP4` also ignored the lowercase web hero videos.
 - .vercelignore does not inherit .gitignore; the CLI tried to upload 5GB.
-- Chrome headless: --window-size below ~500px silently renders at 500 and
-  crops. Use an iframe harness to test 375px. scrollTo(x,y) does not scroll
-  under --virtual-time-budget because scroll-behavior is smooth; use
-  scrollTo({top, behavior:'instant'}).
-- Vercel blocks private-repo deploys when the commit author is not associated
-  with the project owner. Repo-local identity is set; keep it.
+- Chrome headless: min window width ~500px (use an iframe harness for 375);
+  scrollTo(x,y) does not scroll under --virtual-time-budget (use behavior:'instant').
+- Removing CSS rules by regex can leave dangling selectors that silently merge
+  into the next rule. Stylelint will not catch it; a screenshot will.
+
+## Codex
+Budget-locked; the bridge refuses to forward. Estimated reset 2026-09-06 05:22.
