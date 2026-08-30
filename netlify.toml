@@ -37,3 +37,9 @@
   from = "/imprint"
   to = "/imprint.html"
   status = 200
+
+# Netlify does not map .webmanifest by default; Vercel does.
+[[headers]]
+  for = "/site.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json; charset=utf-8"
