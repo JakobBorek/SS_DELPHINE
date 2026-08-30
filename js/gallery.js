@@ -32,13 +32,15 @@
   let scope = [];
   let index = 0;
   let keptScroll = 0;
+  let lastOpener = null;
 
   /* ---------- Chapters ---------- */
   const showChapters = () => {
+    /* With JavaScript the sets are never shown; they hold the photographs
+       and serve as the no-JS fallback. */
     sets.forEach((set) => { set.hidden = true; });
     if (chapters) chapters.hidden = false;
-    scope = [];
-    if (status) status.textContent = 'Showing all chapters.';
+    if (status) status.textContent = 'Five chapters.';
   };
 
   const carouselFor = (set) => {
@@ -67,15 +69,18 @@
   };
   sets.forEach(carouselFor);
 
+  /* Choosing a chapter goes straight to the photographs. There is no
+     intermediate page: the reader clicks a chapter and the carousel opens
+     on its first photograph, on phone and on desktop alike. */
   const openChapter = (name) => {
-    const set = sets.find((s) => s.dataset.gallerySet === name);
+    const set = sets.find((el) => el.dataset.gallerySet === name);
     if (!set) return;
-    if (chapters) chapters.hidden = true;
-    sets.forEach((s) => { s.hidden = s !== set; });
     scope = [...set.querySelectorAll('[data-gallery-item]')];
+    if (!scope.length) return;
     const label = set.querySelector('.gallery-set__title')?.textContent.trim() || name;
     if (status) status.textContent = `${label}: ${scope.length} photographs.`;
-    set.querySelector('[data-gallery-back]')?.focus();
+    lastOpener = gallery.querySelector(`[data-gallery-open="${name}"]`);
+    open(scope[0]);
   };
 
   gallery.querySelectorAll('[data-gallery-open]').forEach((button) => {
@@ -160,7 +165,7 @@
   dialog?.addEventListener('close', () => {
     document.documentElement.style.overflow = '';
     /* return the reader exactly where they were, not to the top or the foot */
-    scope[index]?.focus({ preventScroll: true });
+    (lastOpener || scope[index])?.focus({ preventScroll: true });
     if (typeof window.scrollTo === 'function') {
       try { window.scrollTo({ top: keptScroll, behavior: 'instant' }); } catch { /* not implemented */ }
     }

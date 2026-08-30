@@ -261,50 +261,33 @@ const createDom = (html = homeHtml, { reduced = false, cssDriven = false, url = 
   window.eval(scripts.gallery);
   const document = window.document;
 
-  // The archive opens as chapters, not as every photograph at once.
+  // Choosing a chapter opens the carousel immediately; there is no middle page.
   const sets = [...document.querySelectorAll('[data-gallery-set]')];
-  assert.ok(sets.every((set) => set.hidden), 'Gallery must open on the chapter index');
+  assert.ok(sets.every((set) => set.hidden), 'the chapter sets are never shown when scripted');
 
-  const openCabins = document.querySelector('[data-gallery-open="cabins"]');
-  openCabins.click();
-  const cabinSet = document.querySelector('[data-gallery-set="cabins"]');
-  assert.equal(cabinSet.hidden, false, 'choosing a chapter must reveal it');
-  assert.ok(sets.filter((set) => set !== cabinSet).every((set) => set.hidden), 'only the chosen chapter may be shown');
-  assert.equal(document.querySelector('[data-gallery-chapters]').hidden, true, 'the chapter index must step aside');
-
-  const visible = [...cabinSet.querySelectorAll('[data-gallery-item]')];
-  assert.equal(visible.length, 8, 'Cabins must reveal exactly eight photographs');
-  assert.ok(visible.every((item) => item.dataset.category === 'cabins'), 'a chapter must contain only its own category');
-  assert.match(document.querySelector('[data-gallery-status]').textContent, /Cabins: 8 photographs\./, 'Gallery must announce the chapter');
-
-  const firstItem = visible[0];
-  const openEvent = new window.MouseEvent('click', { button: 0, bubbles: true, cancelable: true });
-  assert.equal(firstItem.dispatchEvent(openEvent), false, 'plain Gallery activation must open the focused lightbox');
-  assert.equal(openEvent.defaultPrevented, true, 'enhanced Gallery activation must preserve the image link as fallback');
   const lightbox = document.querySelector('[data-gallery-lightbox]');
-  assert.equal(lightbox.open, true, 'Gallery lightbox must use a native modal dialog');
-  assert.equal(document.querySelector('[data-lightbox-title]').textContent, 'H&A Dodge Suite', 'lightbox must name the selected photograph');
-  assert.equal(document.querySelector('[data-lightbox-position]').textContent, '1 of 8', 'lightbox must be scoped to the open chapter');
-  assert.equal(document.documentElement.style.overflow, 'hidden', 'open lightbox must lock page scrolling');
+  document.querySelector('[data-gallery-open="cabins"]').click();
+  assert.equal(lightbox.open, true, 'choosing a chapter must open the carousel straight away');
+  assert.equal(document.querySelector('[data-gallery-chapters]').hidden, false, 'the chapter index stays put behind the modal');
+  assert.ok(sets.every((set) => set.hidden), 'no intermediate chapter page may appear');
+
+  assert.equal(document.querySelector('[data-lightbox-title]').textContent, 'H&A Dodge Suite', 'the carousel starts on the first photograph of the chapter');
+  assert.equal(document.querySelector('[data-lightbox-position]').textContent, '1 of 8', 'the carousel is scoped to the chosen chapter');
+  assert.equal(document.documentElement.style.overflow, 'hidden', 'the open carousel must lock page scrolling');
 
   document.querySelector('[data-lightbox-next]').click();
-  assert.equal(document.querySelector('[data-lightbox-position]').textContent, '2 of 8', 'lightbox Next must advance within the chapter');
-  assert.equal(document.querySelector('[data-lightbox-title]').textContent, 'Blue guest suite', 'lightbox Next must advance the photograph');
+  assert.equal(document.querySelector('[data-lightbox-position]').textContent, '2 of 8', 'Next must advance within the chapter');
+  assert.equal(document.querySelector('[data-lightbox-title]').textContent, 'Blue guest suite', 'Next must advance the photograph');
 
   lightbox.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
-  assert.equal(document.querySelector('[data-lightbox-position]').textContent, '1 of 8', 'lightbox Left arrow must reverse');
-
-  // Arrows wrap inside the chapter rather than skipping into another one.
+  assert.equal(document.querySelector('[data-lightbox-position]').textContent, '1 of 8', 'Left arrow must reverse');
   lightbox.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
-  assert.equal(document.querySelector('[data-lightbox-position]').textContent, '8 of 8', 'lightbox must wrap within the chapter');
+  assert.equal(document.querySelector('[data-lightbox-position]').textContent, '8 of 8', 'the carousel wraps inside the chapter');
 
   document.querySelector('[data-lightbox-close]').click();
-  assert.equal(lightbox.open, false, 'Gallery Close must dismiss the lightbox');
-  assert.equal(document.documentElement.style.overflow, '', 'closing Gallery must release page scrolling');
-
-  cabinSet.querySelector('[data-gallery-back]').click();
-  assert.equal(cabinSet.hidden, true, 'Back must close the chapter');
-  assert.equal(document.querySelector('[data-gallery-chapters]').hidden, false, 'Back must restore the chapter index');
+  assert.equal(lightbox.open, false, 'Close must dismiss the carousel');
+  assert.equal(document.documentElement.style.overflow, '', 'closing must release page scrolling');
+  assert.equal(document.activeElement, document.querySelector('[data-gallery-open="cabins"]'), 'closing returns focus to the chapter that was opened');
 
   dom.window.close();
 }
