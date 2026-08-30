@@ -120,6 +120,13 @@
   const open = (item) => {
     if (!dialog || typeof dialog.showModal !== 'function') return false;
     index = scope.indexOf(item);
+    if (index < 0) {
+      /* Fall back to the item's own chapter rather than letting the browser
+         navigate to the raw image file. */
+      const set = item.closest('[data-gallery-set]');
+      if (set) scope = [...set.querySelectorAll('[data-gallery-item]')];
+      index = scope.indexOf(item);
+    }
     if (index < 0) return false;
     render();
     dialog.showModal();
@@ -152,6 +159,11 @@
     document.documentElement.style.overflow = '';
     scope[index]?.focus();
   });
+
+  /* A stale scroll lock is what makes the page feel frozen after navigating
+     away with a dialog open, so clear it on every arrival. */
+  window.addEventListener('pageshow', () => { document.documentElement.style.overflow = ''; });
+  window.addEventListener('hashchange', () => { document.documentElement.style.overflow = ''; });
 
   showChapters();
 })();

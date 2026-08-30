@@ -151,6 +151,14 @@
     });
   });
 
+  /* Clear any scroll lock left behind by a dialog when the reader arrives
+     on a new page; otherwise the menu appears open but nothing responds. */
+  window.addEventListener('pageshow', () => {
+    root.style.overflow = '';
+    if (dialog?.open) dialog.close();
+    toggle?.setAttribute('aria-expanded', 'false');
+  });
+
   const header = document.querySelector('[data-site-header]');
   const hero = document.querySelector('.hero');
 

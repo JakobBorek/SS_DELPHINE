@@ -94,7 +94,13 @@
   --hero-scrim-deep: rgb(10 22 40 / 0.72);   /* foot of hero, for legibility */
   --statement-dim:   rgb(242 237 227 / 0.14); /* deliberately ghosted before the scroll fill */
   --focus-ring:      rgb(199 162 76 / 0.85);
-  --modal-backdrop:  rgb(10 22 40 / 0.84);
+  --modal-backdrop:  rgb(10 22 40 / 0.72);   /* blurred, so it sits lighter */
+  --control-ground:  rgb(10 22 40 / 0.72);   /* arrows over a photograph */
+  --scrim-strong:    rgb(10 22 40 / 0.88);   /* foot of a chapter banner */
+  --scrim-mid:       rgb(10 22 40 / 0.55);
+  --scrim-soft:      rgb(10 22 40 / 0.12);
+  --scrim-none:      rgb(10 22 40 / 0.05);
+  --modal-lift:      rgb(0 0 0 / 0.55);      /* lightbox shadow */
   --modal-shadow:    rgb(10 22 40 / 0.72);
   --panel-shadow:    rgb(10 22 40 / 0.16);
   --disabled-opacity: 0.64;

@@ -563,6 +563,7 @@ html.no-js .gallery__filters {
 }
 
 .gallery-lightbox {
+  /* centred, lifted off the page */
   width: calc(100% - var(--sp-8));
   max-width: var(--content-max);
   max-height: calc(100dvh - var(--sp-8));
@@ -572,11 +573,13 @@ html.no-js .gallery__filters {
   border: var(--rule) solid var(--hairline-gold);
   background: var(--navy-deep);
   color: var(--cream);
-  box-shadow: 0 var(--sp-3) var(--sp-16) var(--modal-shadow);
+  box-shadow: 0 var(--sp-4) calc(var(--sp-16) * 1.5) var(--modal-lift);
 }
 
 .gallery-lightbox::backdrop {
-  background: var(--modal-backdrop);
+  /* the page blurs away so the photograph is the only thing in focus */
+  background: var(--control-ground);
+  backdrop-filter: blur(14px) saturate(0.9);
 }
 
 .gallery-lightbox__shell {
@@ -599,6 +602,8 @@ html.no-js .gallery__filters {
 }
 
 .gallery-lightbox__footer {
+  position: relative;
+  justify-content: center;
   border-top: var(--rule) solid var(--hairline);
 }
 
@@ -626,6 +631,7 @@ html.no-js .gallery__filters {
 }
 
 .gallery-lightbox__figure {
+  position: relative;
   min-height: 0;
   min-width: 0;
   overflow: hidden;          /* the photograph can never spill onto the bars */
@@ -1228,154 +1234,6 @@ html.no-js .gallery__filters {
   .site-footer__contact { grid-template-columns: 1fr; gap: var(--sp-3); }
 }
 
-/* ============================================================
-   GALLERY — chapters first
-   Five chapters rather than thirty three photographs at once.
-   ============================================================ */
-.gallery-chapters {
-  display: grid;
-  gap: var(--sp-3);
-}
-
-.gallery-chapter {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: stretch;
-  gap: 0;
-  padding: 0;
-  border: 0;
-  border-top: var(--rule) solid var(--hairline);
-  background: none;
-  color: inherit;
-  text-align: left;
-  cursor: pointer;
-  overflow: hidden;
-}
-.gallery-chapters .gallery-chapter:last-child {
-  border-bottom: var(--rule) solid var(--hairline);
-}
-
-.gallery-chapter__media {
-  display: block;
-  overflow: hidden;
-  aspect-ratio: 16 / 9;
-}
-.gallery-chapter__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform var(--dur-expand) var(--ease);
-}
-.gallery-chapter:hover .gallery-chapter__media img,
-.gallery-chapter:focus-visible .gallery-chapter__media img {
-  transform: scale(1.03);
-}
-
-.gallery-chapter__body {
-  display: grid;
-  align-content: center;
-  gap: var(--sp-2);
-  padding: var(--sp-5) var(--sp-4);
-}
-
-.gallery-chapter__label {
-  font-family: var(--font-display);
-  font-variation-settings: 'wdth' var(--wdth-display);
-  font-weight: var(--wt-display);
-  font-size: var(--fs-display-m);
-  line-height: var(--lh-display);
-  letter-spacing: var(--tr-display);
-  color: var(--cream);
-}
-.gallery-chapter__blurb {
-  font-size: var(--fs-body);
-  color: var(--cream-muted);
-  max-width: 34ch;
-}
-.gallery-chapter__count {
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono-s);
-  letter-spacing: var(--tr-mono);
-  text-transform: uppercase;
-  color: var(--gold);
-}
-
-/* Alternate which side the photograph sits on, so the index has rhythm. */
-.gallery-chapter:nth-child(even) .gallery-chapter__media { order: 2; }
-
-@media (max-width: 768px) {
-  .gallery-chapter { grid-template-columns: 1fr; }
-  .gallery-chapter:nth-child(even) .gallery-chapter__media { order: 0; }
-  .gallery-chapter__body { padding: var(--sp-4) 0 var(--sp-5); }
-}
-
-/* ---------- One chapter, opened ---------- */
-.gallery-set__head {
-  display: grid;
-  gap: var(--sp-1);
-  margin-bottom: var(--sp-5);
-  padding-bottom: var(--sp-3);
-  border-bottom: var(--rule) solid var(--hairline);
-}
-.gallery-set__back {
-  justify-self: start;
-  min-block-size: var(--sp-6);
-  margin-bottom: var(--sp-2);
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono-s);
-  letter-spacing: var(--tr-mono);
-  text-transform: uppercase;
-  color: var(--cream-muted);
-  transition: color var(--dur-hover) var(--ease);
-}
-.gallery-set__back::before { content: '\2190\00a0\00a0'; }
-.gallery-set__back:hover { color: var(--cream); }
-
-.gallery-set__title {
-  font-family: var(--font-display);
-  font-variation-settings: 'wdth' var(--wdth-display);
-  font-weight: var(--wt-display);
-  font-size: var(--fs-display-m);
-  line-height: var(--lh-display);
-  letter-spacing: var(--tr-display);
-  color: var(--cream);
-}
-.gallery-set__count {
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono-s);
-  letter-spacing: var(--tr-mono);
-  text-transform: uppercase;
-  color: var(--cream-muted);
-}
-
-.gallery-set__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
-  gap: var(--sp-3);
-}
-
-
-/* On phones both editorial photographs run the full width. The desktop
-   inset that anchors them to alternating outer edges left a visible gap
-   down one side once the columns collapsed. */
-@media (max-width: 768px) {
-  .editorial__media--promenade picture,
-  .editorial__media--aerial picture {
-    width: 100%;
-    margin-inline: 0;
-  }
-  .editorial__media--promenade img,
-  .editorial__media--aerial img {
-    width: 100%;
-    max-width: none;
-    max-height: none;
-  }
-}
 
 /* ---------- Chapter back control ----------
    Sits above the chapter title, hard left, so a reader can leave without
@@ -1409,32 +1267,6 @@ html.no-js .gallery__filters {
   margin-top: var(--sp-3);
 }
 .specs-scroll .plate { border-top: 0; }
-
-/* ---------- Onward links, beside the back control ---------- */
-.panel-onward {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: var(--sp-2);
-  margin-bottom: var(--sp-3);
-}
-.panel-onward__label,
-.panel-onward a {
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono-s);
-  letter-spacing: var(--tr-mono);
-  text-transform: uppercase;
-}
-.panel-onward__label { color: var(--cream-muted); }
-.panel-onward ul { display: flex; flex-wrap: wrap; gap: var(--sp-3); }
-.panel-onward a {
-  color: var(--cream);
-  text-decoration-line: underline;
-  text-decoration-color: var(--gold);
-  text-decoration-thickness: var(--rule);
-  text-underline-offset: 0.25em;
-}
-.panel-onward a:hover { color: var(--gold); }
 
 /* ---------- Interiors: the amenities themselves ---------- */
 .amenity-grid {
@@ -1531,18 +1363,8 @@ html.no-js .gallery__filters {
   color: var(--cream-muted);
 }
 
-/* ---------- Gallery chapter banners: identical on phone and desktop ----------
-   The preview photograph was disappearing on phones. Every chapter keeps its
-   banner image at every width; only the stacking changes. */
-@media (max-width: 768px) {
-  .gallery-chapter { grid-template-columns: 1fr; }
-  .gallery-chapter__media { aspect-ratio: 16 / 10; display: block; }
-  .gallery-chapter__media img { width: 100%; height: 100%; object-fit: cover; }
-  .gallery-chapter__body { padding: var(--sp-3) 0 var(--sp-5); }
-}
-
 /* ---------- A chapter opens as a carousel, not a wall of thumbnails ---------- */
-.gallery-carousel { display: grid; gap: var(--sp-2); min-width: 0; }
+.gallery-carousel { position: relative; display: grid; gap: var(--sp-2); min-width: 0; }
 .gallery-carousel__track {
   display: flex;
   overflow-x: auto;
@@ -1570,18 +1392,24 @@ html.no-js .gallery__filters {
   color: var(--cream-muted);
 }
 .gallery-carousel__controls {
+  /* the arrows sit beside the photograph, vertically centred, rather than
+     parked in a bar underneath it */
+  position: absolute;
+  inset-inline: 0;
+  top: calc(50% - var(--sp-6));
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--sp-2);
-  border-top: var(--rule) solid var(--hairline);
-  padding-top: var(--sp-2);
+  padding-inline: var(--sp-2);
+  pointer-events: none;
 }
 .gallery-carousel__controls button {
+  pointer-events: auto;
   min-inline-size: var(--sp-6);
   min-block-size: var(--sp-6);
-  border: var(--rule) solid var(--hairline);
-  background: none;
+  border: var(--rule) solid var(--hairline-gold);
+  background: var(--control-ground);
   color: var(--cream);
   cursor: pointer;
   font-family: var(--font-mono);
@@ -1594,3 +1422,108 @@ html.no-js .gallery__filters {
   text-transform: uppercase;
   color: var(--cream-muted);
 }
+
+/* ============================================================
+   GALLERY CHAPTERS
+   Each chapter is its own panel: the first photograph fills the
+   panel, the title sits over it. Identical on phone and desktop.
+   ============================================================ */
+.gallery-chapters {
+  display: grid;
+  gap: var(--sp-2);
+}
+
+.gallery-chapter {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* the photograph is the ground */
+.gallery-chapter__media {
+  display: block;
+  aspect-ratio: 16 / 9;
+}
+.gallery-chapter__media img {
+  width: 100%;
+  height: 100%;
+  /* height:auto is deliberately NOT used here: the media box sets the
+     frame and the photograph fills it */
+  object-fit: cover;
+  transition: transform var(--dur-expand) var(--ease);
+}
+.gallery-chapter:hover .gallery-chapter__media img,
+.gallery-chapter:focus-visible .gallery-chapter__media img {
+  transform: scale(1.03);
+}
+
+/* the title rides over it */
+.gallery-chapter__body {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: end;
+  z-index: 1;
+}
+.gallery-chapter__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    var(--scrim-strong) 0%,
+    var(--scrim-mid) 38%,
+    var(--scrim-soft) 72%,
+    var(--scrim-none) 100%);
+}
+.gallery-chapter__text {
+  position: relative;
+  display: grid;
+  gap: var(--sp-1);
+  padding: var(--sp-4);
+}
+.gallery-chapter__label {
+  font-family: var(--font-display);
+  font-variation-settings: 'wdth' var(--wdth-display);
+  font-weight: var(--wt-display);
+  font-size: var(--fs-display-m);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tr-display);
+  color: var(--cream);
+}
+.gallery-chapter__blurb {
+  font-size: var(--fs-body);
+  color: var(--cream);
+  max-width: 40ch;
+}
+.gallery-chapter__count {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-s);
+  letter-spacing: var(--tr-mono);
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+@media (max-width: 768px) {
+  .gallery-chapter__media { aspect-ratio: 4 / 3; }
+  .gallery-chapter__text { padding: var(--sp-3); }
+}
+
+
+
+.gallery-lightbox__footer button {
+  position: absolute;
+  top: calc(-50vh + 50%);
+  z-index: 2;
+  background: var(--control-ground);
+  border-color: var(--hairline-gold);
+}
+.gallery-lightbox__footer button[data-lightbox-previous] { left: var(--sp-2); }
+.gallery-lightbox__footer button[data-lightbox-next] { right: var(--sp-2); }
