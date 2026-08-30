@@ -4,7 +4,7 @@ Source inventory: 168 supplied JPEG photographs across five deck folders. All ar
 
 ## Production selection
 
-The homepage now also uses one client-supplied top-down photograph. The original photography selection remains unchanged.
+The homepage now uses a broadside dusk frame from the supplied `DJI_20260808202557_0098_D.MP4`. Both top-down compositions remain available in the Gallery.
 
 | Source | Dimensions | Production use | Decision |
 |---|---:|---|---|
@@ -22,17 +22,24 @@ The homepage now also uses one client-supplied top-down photograph. The original
 | SS DELPHINE-157.jpg | 1478 × 986 | Gallery | Strongest symmetrical sauna frame; exported at source width rather than upscaled. |
 | SS DELPHINE-165.jpg | 6036 × 4026 | Gallery | Tight engine-room controls provide a machinery detail between broad room views. |
 | SS DELPHINE-168.jpg | 7923 × 5285 | The Refit full-bleed image | Most legible symmetrical view of the original steam machinery. |
-| topviewssd.png | 959 × 1644 | The Yacht editorial image | Client-selected portrait overhead view, preserving the complete length of SS Delphine against dark blue water. |
+| DJI_20260808202557_0098_D.MP4, t=44 | 1600 × 900 derivative | The Yacht editorial image | Broadside dusk exterior; the yacht fills most of the landscape frame on phone and laptop. |
+| frame from ssdvideo.mp4 | 1600 × 900 derivative | Gallery | Complete vessel underway in a landscape overhead frame. |
+| topviewssd.png | 959 × 1644 | Gallery | Client-selected portrait overhead view, preserved as the one vertical composition in the archive. |
 
 Each selected deck photograph has AVIF and WebP derivatives at a maximum width of 960 and 1600 pixels in `media/gallery/`. Metadata is stripped. AVIF quality is 50 and WebP quality is 78. No selected image was upscaled.
 
-The client-selected portrait image is exported at 640 pixels and at its native 959 pixel width as `yacht-topview-{640,959}.{avif,webp}`. The full composition is preserved on desktop and mobile. The earlier `yacht-aerial-{960,1600}` derivatives remain in the workspace for provenance but are not referenced by the production pages.
+The client-selected portrait image is exported at 640 pixels and at its native 959 pixel width as `yacht-topview-{640,959}.{avif,webp}`. The homepage broadside uses `yacht-dusk-side-{960,1600}.{avif,webp}`; the landscape overhead uses `yacht-aerial-{960,1600}.{avif,webp}` in the Gallery.
+
+## Expanded Gallery edit
+
+The Gallery now carries 34 photographs in five explicit categories: Deck & Exterior (8), Salons & Dining (8), Cabins (8), Wellness (5), and Heritage & Engineering (5). Eighteen new subjects were selected from the supplied archive and exported in the same AVIF/WebP pipeline: pool deck, aft-deck lounge, alfresco dining, promenade landing, wide leather salon, main-salon lounge, wide formal dining, wide blue suite, cream guest cabin, striped guest cabin, cream double cabin, blue-banquette cabin, red guest cabin, hair salon, Jacuzzi, hammam, bridge controls and engine-room cylinder tops.
 
 ## Rejected from the production page
 
-- Near-duplicates of the selected salons, suites, bathrooms and machinery spaces were left out to keep the gallery concise and avoid repeating one room from several angles.
+- The remaining near-duplicates were left out after the expanded 34-image edit so each retained angle adds new spatial information.
 - Frames 66 to 68, 70 and 153 to 154 are approximately 1.5 megapixels. They were not selected where a stronger high-resolution composition existed.
 - Bathroom close-ups were not used because the gallery already covers suites, wellness and machinery, and another polished interior detail would reduce variety.
-- The hair salon, Jacuzzi and hammam photographs document the amenities accurately but are flatter compositions than the selected sauna and gym frames.
+- Alternate angles of the hair salon, Jacuzzi and hammam were rejected where the selected Gallery views documented those spaces more clearly.
 - No supplied still clearly documents the toys, tenders or chase boat. That section therefore remains text-only rather than pairing factual copy with an unrelated photograph.
 - No supplied still was used as a second hero. The approved drone loop and its matching poster remain the only hero media.
+- None of the 168 supplied stills contains guests, a crowd or an event. A future Private Charter replacement therefore requires a rights-cleared owner or crew photograph rather than relabelling an empty deck.

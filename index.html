@@ -44,36 +44,36 @@
   <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-haspopup="dialog"><span class="nav-toggle__bars" aria-hidden="true"><span></span><span></span></span><span class="visually-hidden">Menu</span></button>
 </header>
 
-<dialog class="site-menu" id="site-menu" aria-labelledby="site-menu-title">
+<dialog class="site-menu" id="site-menu" aria-labelledby="site-menu-title" data-state="closed">
+  <button class="site-menu__close" type="button" data-menu-close><span class="site-menu__close-bars" aria-hidden="true"><span></span><span></span></span><span class="visually-hidden">Close menu</span></button>
   <div class="site-menu__shell">
     <div class="site-menu__header">
       <a class="site-mark site-menu__brand" href="/" aria-label="SS Delphine, home">
         <img class="site-mark__logo" src="/assets/logo/ss-delphine-d.svg" alt="" width="24" height="28" aria-hidden="true">
         <span class="site-mark__text">SS Delphine</span>
       </a>
-      <button class="site-menu__close" type="button" data-menu-close><span class="site-menu__close-bars" aria-hidden="true"><span></span><span></span></span><span class="visually-hidden">Close menu</span></button>
     </div>
     <h2 class="visually-hidden" id="site-menu-title">Site navigation</h2>
     <nav class="site-menu__nav" aria-label="Primary">
       <div>
-        <p class="site-menu__label">Main</p>
+        <p class="site-menu__label">On this page</p>
         <ul class="site-menu__primary">
-          <li><a href="/" aria-current="page">Home</a></li>
-          <li><a href="/#the-yacht">The Yacht</a></li>
-          <li><a href="/#private-charter">Private Charter</a></li>
-          <li><a href="/#inquiry">Inquiry</a></li>
+          <li><a href="/" aria-current="page"><span>Home</span><span class="site-menu__index" aria-hidden="true">01</span></a></li>
+          <li><a href="/#the-yacht"><span>The Yacht</span><span class="site-menu__index" aria-hidden="true">02</span></a></li>
+          <li><a href="/#private-charter"><span>Private Charter</span><span class="site-menu__index" aria-hidden="true">03</span></a></li>
+          <li><a href="/#inquiry"><span>Inquiry</span><span class="site-menu__index" aria-hidden="true">04</span></a></li>
         </ul>
       </div>
       <div>
-        <p class="site-menu__label">Explore further</p>
+        <p class="site-menu__label">Discover the yacht</p>
         <ul class="site-menu__secondary">
-          <li><a href="/discover.html#technical-specifications">Technical Specifications</a></li>
-          <li><a href="/discover.html#the-refit">The Refit</a></li>
-          <li><a href="/discover.html#interiors">Interiors</a></li>
-          <li><a href="/discover.html#cabins">Cabins</a></li>
-          <li><a href="/discover.html#toys-and-tenders">Toys and Tenders</a></li>
-          <li><a href="/discover.html#charter">Charter Details</a></li>
-          <li><a href="/discover.html#gallery">Gallery</a></li>
+          <li><a href="/discover.html#technical-specifications"><span>Technical Specifications</span><span class="site-menu__index" aria-hidden="true">01</span></a></li>
+          <li><a href="/discover.html#the-refit"><span>The Refit</span><span class="site-menu__index" aria-hidden="true">02</span></a></li>
+          <li><a href="/discover.html#interiors"><span>Interiors</span><span class="site-menu__index" aria-hidden="true">03</span></a></li>
+          <li><a href="/discover.html#cabins"><span>Cabins</span><span class="site-menu__index" aria-hidden="true">04</span></a></li>
+          <li><a href="/discover.html#toys-and-tenders"><span>Toys and Tenders</span><span class="site-menu__index" aria-hidden="true">05</span></a></li>
+          <li><a href="/discover.html#charter"><span>Charter Details</span><span class="site-menu__index" aria-hidden="true">06</span></a></li>
+          <li><a href="/discover.html#gallery"><span>Gallery</span><span class="site-menu__index" aria-hidden="true">07</span></a></li>
         </ul>
       </div>
     </nav>
@@ -132,11 +132,11 @@
       </div>
       <figure class="editorial__media editorial__media--aerial">
         <picture>
-          <source type="image/avif" srcset="/media/gallery/yacht-topview-640.avif 640w, /media/gallery/yacht-topview-959.avif 959w" sizes="(max-width: 768px) 100vw, 50vw">
-          <img src="/media/gallery/yacht-topview-959.webp"
-               srcset="/media/gallery/yacht-topview-640.webp 640w, /media/gallery/yacht-topview-959.webp 959w"
-               sizes="(max-width: 768px) 100vw, 50vw" width="959" height="1644" loading="lazy"
-               alt="SS Delphine seen directly from above in dark blue water.">
+          <source type="image/avif" srcset="/media/gallery/yacht-dusk-side-960.avif 960w, /media/gallery/yacht-dusk-side-1600.avif 1600w" sizes="(max-width: 768px) 100vw, 45vw">
+          <img src="/media/gallery/yacht-dusk-side-1600.webp"
+               srcset="/media/gallery/yacht-dusk-side-960.webp 960w, /media/gallery/yacht-dusk-side-1600.webp 1600w"
+               sizes="(max-width: 768px) 100vw, 45vw" width="1600" height="900" loading="lazy"
+               alt="SS Delphine seen broadside at dusk on open water.">
         </picture>
       </figure>
     </div>

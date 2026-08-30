@@ -83,7 +83,7 @@ for (const document of [home, discover]) {
   assert.equal(menuMark?.querySelector('img')?.getAttribute('src'), headerMark?.querySelector('img')?.getAttribute('src'), 'Menu and header must use the same official monogram');
   assert.equal(menuMark?.querySelector('.site-mark__text')?.textContent.trim(), headerMark?.querySelector('.site-mark__text')?.textContent.trim(), 'Menu and header must use the same wordmark');
 }
-assert.match(home.querySelector('.editorial--yacht img')?.getAttribute('src') || '', /yacht-topview-959\.webp$/, 'The Yacht must use the supplied portrait top view');
+assert.match(home.querySelector('.editorial--yacht img')?.getAttribute('src') || '', /yacht-dusk-side-1600\.webp$/, 'The Yacht must use the responsive broadside exterior');
 assert.equal(home.querySelector('#the-refit'), null, 'refit detail must not remain in the main-page scroll');
 assert.equal(home.querySelector('#interiors'), null, 'interior detail must not remain in the main-page scroll');
 assert.equal(home.querySelector('#cabins'), null, 'cabin detail must not remain in the main-page scroll');
@@ -120,7 +120,21 @@ assert.ok(home.querySelector('[data-menu-close] .site-menu__close-bars'), 'the o
 for (const unapprovedContact of ['charter@ssdelphne.com', '+377 97 97 97 97', 'Monaco', 'Within 24 Hours']) {
   assert.doesNotMatch(home.body.textContent, new RegExp(unapprovedContact.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'), `unapproved mock contact must not ship: ${unapprovedContact}`);
 }
-assert.equal(discover.querySelectorAll('[data-gallery-slide]').length, 9, 'the explore page must retain the nine selected photographs');
+const galleryItems = [...discover.querySelectorAll('[data-gallery-item]')];
+assert.equal(galleryItems.length, 34, 'the explore gallery must contain the expanded thirty-four photograph edit');
+assert.deepEqual(
+  Object.fromEntries(['deck', 'salons', 'cabins', 'wellness', 'heritage'].map((category) => [
+    category,
+    galleryItems.filter((item) => item.dataset.category === category).length
+  ])),
+  { deck: 8, salons: 8, cabins: 8, wellness: 5, heritage: 5 },
+  'gallery categories must keep their intended editorial balance'
+);
+assert.equal(new Set(galleryItems.map((item) => item.dataset.title)).size, 34, 'gallery titles must be unique');
+assert.equal(discover.querySelectorAll('[data-gallery-filter]').length, 6, 'gallery must expose All plus five category filters');
+assert.equal(discover.querySelector('[data-gallery-lightbox]')?.tagName, 'DIALOG', 'gallery must open in a native focused lightbox');
+assert.ok(discover.querySelector('[data-gallery-lightbox] [aria-live="polite"]'), 'gallery lightbox changes must be announced');
+assert.equal(discover.querySelectorAll('.discover-panel__back').length, 0, 'deep chapters must rely on the persistent Menu instead of returning to the Explore index');
 
 const combinedCopy = [...doms.values()]
   .map((dom) => dom.window.document.body.textContent.replace(/\s+/g, ' '))

@@ -28,36 +28,36 @@
   <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-haspopup="dialog"><span class="nav-toggle__bars" aria-hidden="true"><span></span><span></span></span><span class="visually-hidden">Menu</span></button>
 </header>
 
-<dialog class="site-menu" id="site-menu" aria-labelledby="site-menu-title">
+<dialog class="site-menu" id="site-menu" aria-labelledby="site-menu-title" data-state="closed">
+  <button class="site-menu__close" type="button" data-menu-close><span class="site-menu__close-bars" aria-hidden="true"><span></span><span></span></span><span class="visually-hidden">Close menu</span></button>
   <div class="site-menu__shell">
     <div class="site-menu__header">
       <a class="site-mark site-menu__brand" href="/" aria-label="SS Delphine, home">
         <img class="site-mark__logo" src="/assets/logo/ss-delphine-d.svg" alt="" width="24" height="28" aria-hidden="true">
         <span class="site-mark__text">SS Delphine</span>
       </a>
-      <button class="site-menu__close" type="button" data-menu-close><span class="site-menu__close-bars" aria-hidden="true"><span></span><span></span></span><span class="visually-hidden">Close menu</span></button>
     </div>
     <h2 class="visually-hidden" id="site-menu-title">Site navigation</h2>
     <nav class="site-menu__nav" aria-label="Primary">
       <div>
-        <p class="site-menu__label">Main</p>
+        <p class="site-menu__label">Main journey</p>
         <ul class="site-menu__primary">
-          <li><a href="/">Home</a></li>
-          <li><a href="/#the-yacht">The Yacht</a></li>
-          <li><a href="/#private-charter">Private Charter</a></li>
-          <li><a href="/#inquiry">Inquiry</a></li>
+          <li><a href="/"><span>Home</span><span class="site-menu__index" aria-hidden="true">01</span></a></li>
+          <li><a href="/#the-yacht"><span>The Yacht</span><span class="site-menu__index" aria-hidden="true">02</span></a></li>
+          <li><a href="/#private-charter"><span>Private Charter</span><span class="site-menu__index" aria-hidden="true">03</span></a></li>
+          <li><a href="/#inquiry"><span>Inquiry</span><span class="site-menu__index" aria-hidden="true">04</span></a></li>
         </ul>
       </div>
       <div>
-        <p class="site-menu__label">Explore further</p>
+        <p class="site-menu__label">Discover the yacht</p>
         <ul class="site-menu__secondary">
-          <li><a href="/discover.html#technical-specifications">Technical Specifications</a></li>
-          <li><a href="/discover.html#the-refit">The Refit</a></li>
-          <li><a href="/discover.html#interiors">Interiors</a></li>
-          <li><a href="/discover.html#cabins">Cabins</a></li>
-          <li><a href="/discover.html#toys-and-tenders">Toys and Tenders</a></li>
-          <li><a href="/discover.html#charter">Charter Details</a></li>
-          <li><a href="/discover.html#gallery">Gallery</a></li>
+          <li><a href="/discover.html#technical-specifications"><span>Technical Specifications</span><span class="site-menu__index" aria-hidden="true">01</span></a></li>
+          <li><a href="/discover.html#the-refit"><span>The Refit</span><span class="site-menu__index" aria-hidden="true">02</span></a></li>
+          <li><a href="/discover.html#interiors"><span>Interiors</span><span class="site-menu__index" aria-hidden="true">03</span></a></li>
+          <li><a href="/discover.html#cabins"><span>Cabins</span><span class="site-menu__index" aria-hidden="true">04</span></a></li>
+          <li><a href="/discover.html#toys-and-tenders"><span>Toys and Tenders</span><span class="site-menu__index" aria-hidden="true">05</span></a></li>
+          <li><a href="/discover.html#charter"><span>Charter Details</span><span class="site-menu__index" aria-hidden="true">06</span></a></li>
+          <li><a href="/discover.html#gallery"><span>Gallery</span><span class="site-menu__index" aria-hidden="true">07</span></a></li>
         </ul>
       </div>
     </nav>
@@ -103,7 +103,6 @@
   <section class="discover-panel" id="the-refit" aria-labelledby="the-refit-title">
     <div class="discover-panel__frame">
       <div class="discover-panel__copy">
-        <a class="discover-panel__back" href="/discover.html">Explore another chapter</a>
         <h2 class="section-title" id="the-refit-title">The Refit</h2>
         <div class="discover-panel__prose prose">
           <p>In November 2024, Maxime Berisset of VIENA MB was appointed as representative owner and project manager to lead the entire refit.</p>
@@ -138,7 +137,6 @@
         </picture>
       </figure>
       <div class="discover-panel__copy">
-        <a class="discover-panel__back" href="/discover.html">Explore another chapter</a>
         <h2 class="section-title" id="interiors-title">Interiors and Amenities</h2>
         <div class="discover-panel__prose prose">
           <p>The gym includes two Concept 2 exercise bikes, two rowing machines, a multi-gym, a full set of dumbbells, an adjustable weight bench and an ab crunch machine.</p>
@@ -153,7 +151,6 @@
   <section class="discover-panel" id="cabins" aria-labelledby="cabins-title">
     <div class="discover-panel__frame">
       <div class="discover-panel__copy">
-        <a class="discover-panel__back" href="/discover.html">Explore another chapter</a>
         <h2 class="section-title" id="cabins-title">Cabins</h2>
         <p class="discover-panel__lead prose">Twelve guest cabins with fifteen beds sleep twenty-six guests.</p>
         <dl class="manifest">
@@ -175,7 +172,6 @@
 
   <section class="discover-panel discover-panel--manifest" id="toys-and-tenders" aria-labelledby="toys-title">
     <div class="wrap discover-panel__manifest">
-      <a class="discover-panel__back" href="/discover.html">Explore another chapter</a>
       <div class="discover-panel__manifest-heading">
         <h2 class="section-title" id="toys-title">Toys and Tenders</h2>
         <p class="prose prose--muted">A compact inventory, available when the itinerary calls for it.</p>
@@ -200,7 +196,6 @@
         </picture>
       </figure>
       <div class="discover-panel__copy">
-        <a class="discover-panel__back" href="/discover.html">Explore another chapter</a>
         <h2 class="section-title" id="charter-title">Charter Details</h2>
         <div class="discover-panel__prose prose">
           <p>Rates are on request. SS Delphine is available for private charter and for quayside events for more than 180 guests.</p>
@@ -215,52 +210,96 @@
 
   <section class="discover-panel discover-panel--gallery" id="gallery" aria-labelledby="gallery-title">
     <div class="wrap">
-      <a class="discover-panel__back" href="/discover.html">Explore another chapter</a>
-      <h2 class="section-title" id="gallery-title">Gallery</h2>
-      <section class="gallery" data-gallery aria-label="Photography of SS Delphine">
-        <div class="gallery__viewport" data-gallery-viewport tabindex="0">
-          <div class="gallery__track">
-            <figure class="fullbleed fullbleed--wide gallery__slide" data-gallery-slide>
-              <picture><source type="image/avif" srcset="/media/gallery/wheelhouse-960.avif 960w, /media/gallery/wheelhouse-1600.avif 1600w" sizes="100vw"><img src="/media/gallery/wheelhouse-1600.webp" srcset="/media/gallery/wheelhouse-960.webp 960w, /media/gallery/wheelhouse-1600.webp 1600w" sizes="100vw" width="1600" height="1067" loading="lazy" alt="Wheelhouse of SS Delphine with its timber wheel and brass engine telegraphs."></picture>
-            </figure>
-            <figure class="fullbleed fullbleed--wide gallery__slide" data-gallery-slide>
-              <picture><source type="image/avif" srcset="/media/gallery/promenade-deck-960.avif 960w, /media/gallery/promenade-deck-1600.avif 1600w" sizes="100vw"><img src="/media/gallery/promenade-deck-1600.webp" srcset="/media/gallery/promenade-deck-960.webp 960w, /media/gallery/promenade-deck-1600.webp 1600w" sizes="100vw" width="1600" height="1067" loading="lazy" alt="Covered teak promenade deck with wicker seating aboard SS Delphine."></picture>
-            </figure>
-            <figure class="fullbleed fullbleed--wide gallery__slide" data-gallery-slide>
-              <picture><source type="image/avif" srcset="/media/gallery/leather-salon-960.avif 960w, /media/gallery/leather-salon-1600.avif 1600w" sizes="100vw"><img src="/media/gallery/leather-salon-1600.webp" srcset="/media/gallery/leather-salon-960.webp 960w, /media/gallery/leather-salon-1600.webp 1600w" sizes="100vw" width="1600" height="1067" loading="lazy" alt="Symmetrical wood-panelled salon with leather seating aboard SS Delphine."></picture>
-            </figure>
-            <figure class="fullbleed fullbleed--wide gallery__slide" data-gallery-slide>
-              <picture><source type="image/avif" srcset="/media/gallery/main-salon-960.avif 960w, /media/gallery/main-salon-1600.avif 1600w" sizes="100vw"><img src="/media/gallery/main-salon-1600.webp" srcset="/media/gallery/main-salon-960.webp 960w, /media/gallery/main-salon-1600.webp 1600w" sizes="100vw" width="1600" height="1067" loading="lazy" alt="Main salon of SS Delphine with pale seating and polished timber floors."></picture>
-            </figure>
-            <figure class="fullbleed fullbleed--wide gallery__slide" data-gallery-slide>
-              <picture><source type="image/avif" srcset="/media/gallery/guest-suite-960.avif 960w, /media/gallery/guest-suite-1600.avif 1600w" sizes="100vw"><img src="/media/gallery/guest-suite-1600.webp" srcset="/media/gallery/guest-suite-960.webp 960w, /media/gallery/guest-suite-1600.webp 1600w" sizes="100vw" width="1600" height="1067" loading="lazy" alt="A blue guest suite with polished timber cabinetry aboard SS Delphine."></picture>
-            </figure>
-            <figure class="fullbleed fullbleed--wide gallery__slide" data-gallery-slide>
-              <picture><source type="image/avif" srcset="/media/gallery/dining-room-960.avif 960w, /media/gallery/dining-room-1600.avif 1600w" sizes="100vw"><img src="/media/gallery/dining-room-1600.webp" srcset="/media/gallery/dining-room-960.webp 960w, /media/gallery/dining-room-1600.webp 1600w" sizes="100vw" width="1600" height="1067" loading="lazy" alt="Formal dining room aboard SS Delphine, set beneath a circular timber ceiling detail."></picture>
-            </figure>
-            <figure class="fullbleed fullbleed--wide gallery__slide" data-gallery-slide>
-              <picture><source type="image/avif" srcset="/media/gallery/gym-960.avif 960w, /media/gallery/gym-1600.avif 1600w" sizes="100vw"><img src="/media/gallery/gym-1600.webp" srcset="/media/gallery/gym-960.webp 960w, /media/gallery/gym-1600.webp 1600w" sizes="100vw" width="1600" height="1067" loading="lazy" alt="Gym aboard SS Delphine with rowing machines, weights and exercise equipment."></picture>
-            </figure>
-            <figure class="fullbleed fullbleed--wide gallery__slide" data-gallery-slide>
-              <picture><source type="image/avif" srcset="/media/gallery/sauna-960.avif 960w, /media/gallery/sauna-1600.avif 1600w" sizes="100vw"><img src="/media/gallery/sauna-1600.webp" srcset="/media/gallery/sauna-960.webp 960w, /media/gallery/sauna-1600.webp 1600w" sizes="100vw" width="1600" height="1067" loading="lazy" alt="Timber sauna with tiered seating aboard SS Delphine."></picture>
-            </figure>
-            <figure class="fullbleed fullbleed--wide gallery__slide" data-gallery-slide>
-              <picture><source type="image/avif" srcset="/media/gallery/engine-controls-960.avif 960w, /media/gallery/engine-controls-1600.avif 1600w" sizes="100vw"><img src="/media/gallery/engine-controls-1600.webp" srcset="/media/gallery/engine-controls-960.webp 960w, /media/gallery/engine-controls-1600.webp 1600w" sizes="100vw" width="1600" height="1067" loading="lazy" alt="Engine-room gauges and steam controls aboard SS Delphine."></picture>
-            </figure>
-          </div>
+      <header class="gallery__heading">
+        <div>
+          <p class="eyebrow">Private archive</p>
+          <h2 class="section-title" id="gallery-title">Gallery</h2>
         </div>
-        <div class="gallery__controls">
-          <button class="gallery__button" type="button" data-gallery-prev aria-label="Previous photograph"><span aria-hidden="true">←</span></button>
-          <p class="gallery__counter" aria-live="polite"><span data-gallery-current>1</span><span aria-hidden="true"> / </span><span data-gallery-total>9</span></p>
-          <button class="gallery__button" type="button" data-gallery-next aria-label="Next photograph"><span aria-hidden="true">→</span></button>
+        <p class="prose prose--muted">Thirty-four views across the decks, salons, cabins, wellness spaces and working heart of SS Delphine.</p>
+      </header>
+
+      <section class="gallery" data-gallery aria-label="Photography of SS Delphine">
+        <div class="gallery__toolbar">
+          <div class="gallery__filters" role="group" aria-label="Filter photographs by category">
+            <button type="button" data-gallery-filter="all" aria-pressed="true">All <span>34</span></button>
+            <button type="button" data-gallery-filter="deck" aria-pressed="false">Deck &amp; Exterior <span>8</span></button>
+            <button type="button" data-gallery-filter="salons" aria-pressed="false">Salons &amp; Dining <span>8</span></button>
+            <button type="button" data-gallery-filter="cabins" aria-pressed="false">Cabins <span>8</span></button>
+            <button type="button" data-gallery-filter="wellness" aria-pressed="false">Wellness <span>5</span></button>
+            <button type="button" data-gallery-filter="heritage" aria-pressed="false">Heritage &amp; Engineering <span>5</span></button>
+          </div>
+          <p class="gallery__status" data-gallery-status aria-live="polite">34 photographs</p>
+        </div>
+
+        <div class="gallery__grid" id="gallery-grid">
+          <a class="gallery-card gallery-card--feature" href="/media/gallery/yacht-aerial-1600.webp" data-gallery-item data-category="deck" data-category-label="Deck &amp; Exterior" data-title="Underway"><picture><source type="image/avif" srcset="/media/gallery/yacht-aerial-960.avif 960w, /media/gallery/yacht-aerial-1600.avif 1600w" sizes="(max-width: 768px) 100vw, 66vw"><img src="/media/gallery/yacht-aerial-1600.webp" srcset="/media/gallery/yacht-aerial-960.webp 960w, /media/gallery/yacht-aerial-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 66vw" width="1600" height="900" loading="lazy" alt="SS Delphine underway, seen directly from above in vivid blue water."></picture><span class="gallery-card__meta"><span>Underway</span><span>Deck &amp; Exterior</span></span></a>
+          <a class="gallery-card gallery-card--tall" href="/media/gallery/yacht-topview-959.webp" data-gallery-item data-category="deck" data-category-label="Deck &amp; Exterior" data-title="At anchor"><picture><source type="image/avif" srcset="/media/gallery/yacht-topview-640.avif 640w, /media/gallery/yacht-topview-959.avif 959w" sizes="(max-width: 768px) 50vw, 33vw"><img src="/media/gallery/yacht-topview-959.webp" srcset="/media/gallery/yacht-topview-640.webp 640w, /media/gallery/yacht-topview-959.webp 959w" sizes="(max-width: 768px) 50vw, 33vw" width="959" height="1644" loading="lazy" alt="The complete length of SS Delphine seen from directly overhead."></picture><span class="gallery-card__meta"><span>At anchor</span><span>Deck &amp; Exterior</span></span></a>
+          <a class="gallery-card" href="/media/gallery/forward-deck-1600.webp" data-gallery-item data-category="deck" data-category-label="Deck &amp; Exterior" data-title="Forward deck"><picture><source type="image/avif" srcset="/media/gallery/forward-deck-960.avif 960w, /media/gallery/forward-deck-1600.avif 1600w" sizes="(max-width: 768px) 50vw, 33vw"><img src="/media/gallery/forward-deck-1600.webp" srcset="/media/gallery/forward-deck-960.webp 960w, /media/gallery/forward-deck-1600.webp 1600w" sizes="(max-width: 768px) 50vw, 33vw" width="1600" height="1067" loading="lazy" alt="Forward teak deck with a brass engine telegraph at centre."></picture><span class="gallery-card__meta"><span>Forward deck</span><span>Deck &amp; Exterior</span></span></a>
+          <a class="gallery-card gallery-card--wide" href="/media/gallery/wheelhouse-exterior-1600.webp" data-gallery-item data-category="deck" data-category-label="Deck &amp; Exterior" data-title="Wheelhouse exterior"><picture><source type="image/avif" srcset="/media/gallery/wheelhouse-exterior-960.avif 960w, /media/gallery/wheelhouse-exterior-1600.avif 1600w" sizes="(max-width: 768px) 100vw, 66vw"><img src="/media/gallery/wheelhouse-exterior-1600.webp" srcset="/media/gallery/wheelhouse-exterior-960.webp 960w, /media/gallery/wheelhouse-exterior-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 66vw" width="1600" height="1067" loading="lazy" alt="Varnished wheelhouse exterior and teak side deck."></picture><span class="gallery-card__meta"><span>Wheelhouse exterior</span><span>Deck &amp; Exterior</span></span></a>
+          <a class="gallery-card" href="/media/gallery/promenade-deck-1600.webp" data-gallery-item data-category="deck" data-category-label="Deck &amp; Exterior" data-title="Promenade deck"><picture><source type="image/avif" srcset="/media/gallery/promenade-deck-960.avif 960w, /media/gallery/promenade-deck-1600.avif 1600w" sizes="(max-width: 768px) 50vw, 33vw"><img src="/media/gallery/promenade-deck-1600.webp" srcset="/media/gallery/promenade-deck-960.webp 960w, /media/gallery/promenade-deck-1600.webp 1600w" sizes="(max-width: 768px) 50vw, 33vw" width="1600" height="1067" loading="lazy" alt="Covered teak promenade deck with wicker seating."></picture><span class="gallery-card__meta"><span>Promenade deck</span><span>Deck &amp; Exterior</span></span></a>
+          <a class="gallery-card gallery-card--wide" href="/media/gallery/pool-deck-1600.webp" data-gallery-item data-category="deck" data-category-label="Deck &amp; Exterior" data-title="Pool deck"><picture><source type="image/avif" srcset="/media/gallery/pool-deck-960.avif 960w, /media/gallery/pool-deck-1600.avif 1600w" sizes="(max-width: 768px) 100vw, 66vw"><img src="/media/gallery/pool-deck-1600.webp" srcset="/media/gallery/pool-deck-960.webp 960w, /media/gallery/pool-deck-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 66vw" width="1600" height="1067" loading="lazy" alt="Upper teak deck with the mosaic pool and yellow funnel."></picture><span class="gallery-card__meta"><span>Pool deck</span><span>Deck &amp; Exterior</span></span></a>
+          <a class="gallery-card" href="/media/gallery/aft-deck-lounge-1600.webp" data-gallery-item data-category="deck" data-category-label="Deck &amp; Exterior" data-title="Aft lounge"><picture><source type="image/avif" srcset="/media/gallery/aft-deck-lounge-960.avif 960w, /media/gallery/aft-deck-lounge-1600.avif 1600w" sizes="(max-width: 768px) 50vw, 33vw"><img src="/media/gallery/aft-deck-lounge-1600.webp" srcset="/media/gallery/aft-deck-lounge-960.webp 960w, /media/gallery/aft-deck-lounge-1600.webp 1600w" sizes="(max-width: 768px) 50vw, 33vw" width="1600" height="1067" loading="lazy" alt="Circular open-air lounge on the aft deck."></picture><span class="gallery-card__meta"><span>Aft lounge</span><span>Deck &amp; Exterior</span></span></a>
+          <a class="gallery-card" href="/media/gallery/alfresco-dining-1600.webp" data-gallery-item data-category="deck" data-category-label="Deck &amp; Exterior" data-title="Alfresco dining"><picture><source type="image/avif" srcset="/media/gallery/alfresco-dining-960.avif 960w, /media/gallery/alfresco-dining-1600.avif 1600w" sizes="(max-width: 768px) 50vw, 33vw"><img src="/media/gallery/alfresco-dining-1600.webp" srcset="/media/gallery/alfresco-dining-960.webp 960w, /media/gallery/alfresco-dining-1600.webp 1600w" sizes="(max-width: 768px) 50vw, 33vw" width="1600" height="1067" loading="lazy" alt="Alfresco dining table shaded by a large parasol."></picture><span class="gallery-card__meta"><span>Alfresco dining</span><span>Deck &amp; Exterior</span></span></a>
+
+          <a class="gallery-card gallery-card--feature" href="/media/gallery/red-salon-1600.webp" data-gallery-item data-category="salons" data-category-label="Salons &amp; Dining" data-title="Red salon"><picture><source type="image/avif" srcset="/media/gallery/red-salon-960.avif 960w, /media/gallery/red-salon-1600.avif 1600w" sizes="(max-width: 768px) 100vw, 66vw"><img src="/media/gallery/red-salon-1600.webp" srcset="/media/gallery/red-salon-960.webp 960w, /media/gallery/red-salon-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 66vw" width="1600" height="1067" loading="lazy" alt="Wood-panelled salon with deep red seating."></picture><span class="gallery-card__meta"><span>Red salon</span><span>Salons &amp; Dining</span></span></a>
+          <a class="gallery-card" href="/media/gallery/leather-salon-1600.webp" data-gallery-item data-category="salons" data-category-label="Salons &amp; Dining" data-title="Leather salon"><picture><source type="image/avif" srcset="/media/gallery/leather-salon-960.avif 960w, /media/gallery/leather-salon-1600.avif 1600w" sizes="(max-width: 768px) 50vw, 33vw"><img src="/media/gallery/leather-salon-1600.webp" srcset="/media/gallery/leather-salon-960.webp 960w, /media/gallery/leather-salon-1600.webp 1600w" sizes="(max-width: 768px) 50vw, 33vw" width="1600" height="1067" loading="lazy" alt="Symmetrical timber salon with leather seating."></picture><span class="gallery-card__meta"><span>Leather salon</span><span>Salons &amp; Dining</span></span></a>
+          <a class="gallery-card gallery-card--wide" href="/media/gallery/main-salon-1600.webp" data-gallery-item data-category="salons" data-category-label="Salons &amp; Dining" data-title="Main salon"><picture><source type="image/avif" srcset="/media/gallery/main-salon-960.avif 960w, /media/gallery/main-salon-1600.avif 1600w" sizes="(max-width: 768px) 100vw, 66vw"><img src="/media/gallery/main-salon-1600.webp" srcset="/media/gallery/main-salon-960.webp 960w, /media/gallery/main-salon-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 66vw" width="1600" height="1067" loading="lazy" alt="Main salon with pale seating and polished timber floors."></picture><span class="gallery-card__meta"><span>Main salon</span><span>Salons &amp; Dining</span></span></a>
+          <a class="gallery-card" href="/media/gallery/dining-room-1600.webp" data-gallery-item data-category="salons" data-category-label="Salons &amp; Dining" data-title="Formal dining room"><picture><source type="image/avif" srcset="/media/gallery/dining-room-960.avif 960w, /media/gallery/dining-room-1600.avif 1600w" sizes="(max-width: 768px) 50vw, 33vw"><img src="/media/gallery/dining-room-1600.webp" srcset="/media/gallery/dining-room-960.webp 960w, /media/gallery/dining-room-1600.webp 1600w" sizes="(max-width: 768px) 50vw, 33vw" width="1535" height="1024" loading="lazy" alt="Formal dining room set beneath a circular timber ceiling detail."></picture><span class="gallery-card__meta"><span>Formal dining room</span><span>Salons &amp; Dining</span></span></a>
+          <a class="gallery-card" href="/media/gallery/promenade-landing-1600.webp" data-gallery-item data-category="salons" data-category-label="Salons &amp; Dining" data-title="Promenade landing"><picture><source type="image/avif" srcset="/media/gallery/promenade-landing-960.avif 960w, /media/gallery/promenade-landing-1600.avif 1600w" sizes="(max-width: 768px) 50vw, 33vw"><img src="/media/gallery/promenade-landing-1600.webp" srcset="/media/gallery/promenade-landing-960.webp 960w, /media/gallery/promenade-landing-1600.webp 1600w" sizes="(max-width: 768px) 50vw, 33vw" width="1600" height="1067" loading="lazy" alt="Upper promenade landing with polished timber rails."></picture><span class="gallery-card__meta"><span>Promenade landing</span><span>Salons &amp; Dining</span></span></a>
+          <a class="gallery-card gallery-card--wide" href="/media/gallery/leather-salon-wide-1600.webp" data-gallery-item data-category="salons" data-category-label="Salons &amp; Dining" data-title="Club salon"><picture><source type="image/avif" srcset="/media/gallery/leather-salon-wide-960.avif 960w, /media/gallery/leather-salon-wide-1600.avif 1600w" sizes="(max-width: 768px) 100vw, 66vw"><img src="/media/gallery/leather-salon-wide-1600.webp" srcset="/media/gallery/leather-salon-wide-960.webp 960w, /media/gallery/leather-salon-wide-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 66vw" width="1600" height="1067" loading="lazy" alt="Wide view across the club salon and its leather seating."></picture><span class="gallery-card__meta"><span>Club salon</span><span>Salons &amp; Dining</span></span></a>
+          <a class="gallery-card" href="/media/gallery/main-salon-lounge-1600.webp" data-gallery-item data-category="salons" data-category-label="Salons &amp; Dining" data-title="Main lounge"><picture><source type="image/avif" srcset="/media/gallery/main-salon-lounge-960.avif 960w, /media/gallery/main-salon-lounge-1600.avif 1600w" sizes="(max-width: 768px) 50vw, 33vw"><img src="/media/gallery/main-salon-lounge-1600.webp" srcset="/media/gallery/main-salon-lounge-960.webp 960w, /media/gallery/main-salon-lounge-1600.webp 1600w" sizes="(max-width: 768px) 50vw, 33vw" width="1600" height="1067" loading="lazy" alt="Main lounge arranged around pale sofas and small tables."></picture><span class="gallery-card__meta"><span>Main lounge</span><span>Salons &amp; Dining</span></span></a>
+          <a class="gallery-card gallery-card--wide" href="/media/gallery/formal-dining-wide-1600.webp" data-gallery-item data-category="salons" data-category-label="Salons &amp; Dining" data-title="Dinner setting"><picture><source type="image/avif" srcset="/media/gallery/formal-dining-wide-960.avif 960w, /media/gallery/formal-dining-wide-1600.avif 1536w" sizes="(max-width: 768px) 100vw, 66vw"><img src="/media/gallery/formal-dining-wide-1600.webp" srcset="/media/gallery/formal-dining-wide-960.webp 960w, /media/gallery/formal-dining-wide-1600.webp 1536w" sizes="(max-width: 768px) 100vw, 66vw" width="1536" height="1024" loading="lazy" alt="Wide formal dining setting prepared beneath the circular ceiling."></picture><span class="gallery-card__meta"><span>Dinner setting</span><span>Salons &amp; Dining</span></span></a>
+
+          <a class="gallery-card gallery-card--feature" href="/media/gallery/dodge-suite-1600.webp" data-gallery-item data-category="cabins" data-category-label="Cabins" data-title="H&amp;A Dodge Suite"><picture><source type="image/avif" srcset="/media/gallery/dodge-suite-960.avif 960w, /media/gallery/dodge-suite-1600.avif 1600w" sizes="(max-width: 768px) 100vw, 66vw"><img src="/media/gallery/dodge-suite-1600.webp" srcset="/media/gallery/dodge-suite-960.webp 960w, /media/gallery/dodge-suite-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 66vw" width="1600" height="1067" loading="lazy" alt="The H&amp;A Dodge Suite centred on its king bed."></picture><span class="gallery-card__meta"><span>H&amp;A Dodge Suite</span><span>Cabins</span></span></a>
+          <a class="gallery-card" href="/media/gallery/guest-suite-1600.webp" data-gallery-item data-category="cabins" data-category-label="Cabins" data-title="Blue guest suite"><picture><source type="image/avif" srcset="/media/gallery/guest-suite-960.avif 960w, /media/gallery/guest-suite-1600.avif 1600w" sizes="(max-width: 768px) 50vw, 33vw"><img src="/media/gallery/guest-suite-1600.webp" srcset="/media/gallery/guest-suite-960.webp 960w, /media/gallery/guest-suite-1600.webp 1600w" sizes="(max-width: 768px) 50vw, 33vw" width="1600" height="1067" loading="lazy" alt="Blue guest suite with polished timber cabinetry."></picture><span class="gallery-card__meta"><span>Blue guest suite</span><span>Cabins</span></span></a>
+          <a class="gallery-card gallery-card--wide" href="/media/gallery/blue-suite-wide-1600.webp" data-gallery-item data-category="cabins" data-category-label="Cabins" data-title="SS Delphine Suite"><picture><source type="image/avif" srcset="/media/gallery/blue-suite-wide-960.avif 960w, /media/gallery/blue-suite-wide-1600.avif 1600w" sizes="(max-width: 768px) 100vw, 66vw"><img src="/media/gallery/blue-suite-wide-1600.webp" srcset="/media/gallery/blue-suite-wide-960.webp 960w, /media/gallery/blue-suite-wide-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 66vw" width="1600" height="1067" loading="lazy" alt="Wide blue suite with a timber-panelled king bed."></picture><span class="gallery-card__meta"><span>SS Delphine Suite</span><span>Cabins</span></span></a>
+          <a class="gallery-card" href="/media/gallery/cream-guest-cabin-1600.webp" data-gallery-item data-category="cabins" data-category-label="Cabins" data-title="Cream guest cabin"><picture><source type="image/avif" srcset="/media/gallery/cream-guest-cabin-960.avif 960w, /media/gallery/cream-guest-cabin-1600.avif 1600w" sizes="(max-width: 768px) 50vw, 33vw"><img src="/media/gallery/cream-guest-cabin-1600.webp" srcset="/media/gallery/cream-guest-cabin-960.webp 960w, /media/gallery/cream-guest-cabin-1600.webp 1600w" sizes="(max-width: 768px) 50vw, 33vw" width="1600" height="1067" loading="lazy" alt="Cream guest cabin with a fitted double bed."></picture><span class="gallery-card__meta"><span>Cream guest cabin</span><span>Cabins</span></span></a>
+          <a class="gallery-card" href="/media/gallery/striped-guest-cabin-1600.webp" data-gallery-item data-category="cabins" data-category-label="Cabins" data-title="Striped guest cabin"><picture><source type="image/avif" srcset="/media/gallery/striped-guest-cabin-960.avif 960w, /media/gallery/striped-guest-cabin-1600.avif 1600w" sizes="(max-width: 768px) 50vw, 33vw"><img src="/media/gallery/striped-guest-cabin-1600.webp" srcset="/media/gallery/striped-guest-cabin-960.webp 960w, /media/gallery/striped-guest-cabin-1600.webp 1600w" sizes="(max-width: 768px) 50vw, 33vw" width="1600" height="1067" loading="lazy" alt="Guest cabin with striped textiles and a blue patterned carpet."></picture><span class="gallery-card__meta"><span>Striped guest cabin</span><span>Cabins</span></span></a>
+          <a class="gallery-card gallery-card--wide" href="/media/gallery/cream-double-cabin-1600.webp" data-gallery-item data-category="cabins" data-category-label="Cabins" data-title="Double cabin"><picture><source type="image/avif" srcset="/media/gallery/cream-double-cabin-960.avif 960w, /media/gallery/cream-double-cabin-1600.avif 1600w" sizes="(max-width: 768px) 100vw, 66vw"><img src="/media/gallery/cream-double-cabin-1600.webp" srcset="/media/gallery/cream-double-cabin-960.webp 960w, /media/gallery/cream-double-cabin-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 66vw" width="1600" height="1067" loading="lazy" alt="Calm cream double cabin with timber lower panelling."></picture><span class="gallery-card__meta"><span>Double cabin</span><span>Cabins</span></span></a>
+          <a class="gallery-card" href="/media/gallery/blue-banquette-cabin-1600.webp" data-gallery-item data-category="cabins" data-category-label="Cabins" data-title="Blue banquette cabin"><picture><source type="image/avif" srcset="/media/gallery/blue-banquette-cabin-960.avif 960w, /media/gallery/blue-banquette-cabin-1600.avif 1600w" sizes="(max-width: 768px) 50vw, 33vw"><img src="/media/gallery/blue-banquette-cabin-1600.webp" srcset="/media/gallery/blue-banquette-cabin-960.webp 960w, /media/gallery/blue-banquette-cabin-1600.webp 1600w" sizes="(max-width: 768px) 50vw, 33vw" width="1600" height="1067" loading="lazy" alt="Guest cabin with a blue banquette and gold bed cover."></picture><span class="gallery-card__meta"><span>Blue banquette cabin</span><span>Cabins</span></span></a>
+          <a class="gallery-card" href="/media/gallery/red-guest-cabin-1600.webp" data-gallery-item data-category="cabins" data-category-label="Cabins" data-title="Red guest cabin"><picture><source type="image/avif" srcset="/media/gallery/red-guest-cabin-960.avif 960w, /media/gallery/red-guest-cabin-1600.avif 1600w" sizes="(max-width: 768px) 50vw, 33vw"><img src="/media/gallery/red-guest-cabin-1600.webp" srcset="/media/gallery/red-guest-cabin-960.webp 960w, /media/gallery/red-guest-cabin-1600.webp 1600w" sizes="(max-width: 768px) 50vw, 33vw" width="1600" height="1067" loading="lazy" alt="Guest cabin dressed in deep red and gold textiles."></picture><span class="gallery-card__meta"><span>Red guest cabin</span><span>Cabins</span></span></a>
+
+          <a class="gallery-card gallery-card--wide" href="/media/gallery/gym-1600.webp" data-gallery-item data-category="wellness" data-category-label="Wellness" data-title="Gym"><picture><source type="image/avif" srcset="/media/gallery/gym-960.avif 960w, /media/gallery/gym-1600.avif 1600w" sizes="(max-width: 768px) 100vw, 66vw"><img src="/media/gallery/gym-1600.webp" srcset="/media/gallery/gym-960.webp 960w, /media/gallery/gym-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 66vw" width="1600" height="1067" loading="lazy" alt="Gym with rowing machines, weights and exercise equipment."></picture><span class="gallery-card__meta"><span>Gym</span><span>Wellness</span></span></a>
+          <a class="gallery-card" href="/media/gallery/sauna-1600.webp" data-gallery-item data-category="wellness" data-category-label="Wellness" data-title="Sauna"><picture><source type="image/avif" srcset="/media/gallery/sauna-960.avif 960w, /media/gallery/sauna-1600.avif 1600w" sizes="(max-width: 768px) 50vw, 33vw"><img src="/media/gallery/sauna-1600.webp" srcset="/media/gallery/sauna-960.webp 960w, /media/gallery/sauna-1600.webp 1600w" sizes="(max-width: 768px) 50vw, 33vw" width="1478" height="986" loading="lazy" alt="Timber sauna with tiered seating."></picture><span class="gallery-card__meta"><span>Sauna</span><span>Wellness</span></span></a>
+          <a class="gallery-card" href="/media/gallery/hair-salon-1600.webp" data-gallery-item data-category="wellness" data-category-label="Wellness" data-title="Hair salon"><picture><source type="image/avif" srcset="/media/gallery/hair-salon-960.avif 960w, /media/gallery/hair-salon-1600.avif 1537w" sizes="(max-width: 768px) 50vw, 33vw"><img src="/media/gallery/hair-salon-1600.webp" srcset="/media/gallery/hair-salon-960.webp 960w, /media/gallery/hair-salon-1600.webp 1537w" sizes="(max-width: 768px) 50vw, 33vw" width="1537" height="1023" loading="lazy" alt="Private hair salon with two styling chairs."></picture><span class="gallery-card__meta"><span>Hair salon</span><span>Wellness</span></span></a>
+          <a class="gallery-card gallery-card--wide" href="/media/gallery/jacuzzi-1600.webp" data-gallery-item data-category="wellness" data-category-label="Wellness" data-title="Jacuzzi"><picture><source type="image/avif" srcset="/media/gallery/jacuzzi-960.avif 960w, /media/gallery/jacuzzi-1600.avif 1525w" sizes="(max-width: 768px) 100vw, 66vw"><img src="/media/gallery/jacuzzi-1600.webp" srcset="/media/gallery/jacuzzi-960.webp 960w, /media/gallery/jacuzzi-1600.webp 1525w" sizes="(max-width: 768px) 100vw, 66vw" width="1525" height="1017" loading="lazy" alt="Tiled indoor Jacuzzi and relaxation area."></picture><span class="gallery-card__meta"><span>Jacuzzi</span><span>Wellness</span></span></a>
+          <a class="gallery-card" href="/media/gallery/hammam-1600.webp" data-gallery-item data-category="wellness" data-category-label="Wellness" data-title="Hammam"><picture><source type="image/avif" srcset="/media/gallery/hammam-960.avif 960w, /media/gallery/hammam-1600.avif 1600w" sizes="(max-width: 768px) 50vw, 33vw"><img src="/media/gallery/hammam-1600.webp" srcset="/media/gallery/hammam-960.webp 960w, /media/gallery/hammam-1600.webp 1600w" sizes="(max-width: 768px) 50vw, 33vw" width="1600" height="1067" loading="lazy" alt="Mosaic-lined hammam with a curved tiled bench."></picture><span class="gallery-card__meta"><span>Hammam</span><span>Wellness</span></span></a>
+
+          <a class="gallery-card gallery-card--feature" href="/media/gallery/wheelhouse-1600.webp" data-gallery-item data-category="heritage" data-category-label="Heritage &amp; Engineering" data-title="Wheelhouse"><picture><source type="image/avif" srcset="/media/gallery/wheelhouse-960.avif 960w, /media/gallery/wheelhouse-1600.avif 1600w" sizes="(max-width: 768px) 100vw, 66vw"><img src="/media/gallery/wheelhouse-1600.webp" srcset="/media/gallery/wheelhouse-960.webp 960w, /media/gallery/wheelhouse-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 66vw" width="1600" height="1067" loading="lazy" alt="Wheelhouse with its timber wheel and brass engine telegraphs."></picture><span class="gallery-card__meta"><span>Wheelhouse</span><span>Heritage &amp; Engineering</span></span></a>
+          <a class="gallery-card" href="/media/gallery/engine-controls-1600.webp" data-gallery-item data-category="heritage" data-category-label="Heritage &amp; Engineering" data-title="Engine controls"><picture><source type="image/avif" srcset="/media/gallery/engine-controls-960.avif 960w, /media/gallery/engine-controls-1600.avif 1600w" sizes="(max-width: 768px) 50vw, 33vw"><img src="/media/gallery/engine-controls-1600.webp" srcset="/media/gallery/engine-controls-960.webp 960w, /media/gallery/engine-controls-1600.webp 1600w" sizes="(max-width: 768px) 50vw, 33vw" width="1600" height="1067" loading="lazy" alt="Engine-room gauges and original steam controls."></picture><span class="gallery-card__meta"><span>Engine controls</span><span>Heritage &amp; Engineering</span></span></a>
+          <a class="gallery-card gallery-card--wide" href="/media/gallery/steam-machinery-1600.webp" data-gallery-item data-category="heritage" data-category-label="Heritage &amp; Engineering" data-title="Steam machinery"><picture><source type="image/avif" srcset="/media/gallery/steam-machinery-960.avif 960w, /media/gallery/steam-machinery-1600.avif 1600w" sizes="(max-width: 768px) 100vw, 66vw"><img src="/media/gallery/steam-machinery-1600.webp" srcset="/media/gallery/steam-machinery-960.webp 960w, /media/gallery/steam-machinery-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 66vw" width="1600" height="1067" loading="lazy" alt="Restored original steam machinery in the engine room."></picture><span class="gallery-card__meta"><span>Steam machinery</span><span>Heritage &amp; Engineering</span></span></a>
+          <a class="gallery-card" href="/media/gallery/bridge-controls-1600.webp" data-gallery-item data-category="heritage" data-category-label="Heritage &amp; Engineering" data-title="Bridge controls"><picture><source type="image/avif" srcset="/media/gallery/bridge-controls-960.avif 960w, /media/gallery/bridge-controls-1600.avif 1600w" sizes="(max-width: 768px) 50vw, 33vw"><img src="/media/gallery/bridge-controls-1600.webp" srcset="/media/gallery/bridge-controls-960.webp 960w, /media/gallery/bridge-controls-1600.webp 1600w" sizes="(max-width: 768px) 50vw, 33vw" width="1600" height="1067" loading="lazy" alt="Bridge console combining brass fittings with modern controls."></picture><span class="gallery-card__meta"><span>Bridge controls</span><span>Heritage &amp; Engineering</span></span></a>
+          <a class="gallery-card gallery-card--wide" href="/media/gallery/engine-room-cylinders-1600.webp" data-gallery-item data-category="heritage" data-category-label="Heritage &amp; Engineering" data-title="Cylinder tops"><picture><source type="image/avif" srcset="/media/gallery/engine-room-cylinders-960.avif 960w, /media/gallery/engine-room-cylinders-1600.avif 1600w" sizes="(max-width: 768px) 100vw, 66vw"><img src="/media/gallery/engine-room-cylinders-1600.webp" srcset="/media/gallery/engine-room-cylinders-960.webp 960w, /media/gallery/engine-room-cylinders-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 66vw" width="1600" height="1067" loading="lazy" alt="Brass cylinder tops and green casings in the engine room."></picture><span class="gallery-card__meta"><span>Cylinder tops</span><span>Heritage &amp; Engineering</span></span></a>
         </div>
       </section>
     </div>
+
+    <dialog class="gallery-lightbox" data-gallery-lightbox aria-labelledby="gallery-lightbox-title">
+      <div class="gallery-lightbox__shell">
+        <header class="gallery-lightbox__header">
+          <div aria-live="polite" aria-atomic="true">
+            <p class="gallery-lightbox__category" data-gallery-lightbox-category></p>
+            <h3 class="gallery-lightbox__title" id="gallery-lightbox-title" data-gallery-lightbox-title tabindex="-1">Gallery photograph</h3>
+          </div>
+          <button class="gallery-lightbox__close" type="button" data-gallery-lightbox-close>Close</button>
+        </header>
+        <figure class="gallery-lightbox__figure">
+          <picture>
+            <source type="image/avif" data-gallery-lightbox-source>
+            <img data-gallery-lightbox-image src="/media/gallery/yacht-aerial-1600.webp" width="1600" height="900" loading="lazy" alt="">
+          </picture>
+        </figure>
+        <footer class="gallery-lightbox__footer">
+          <button type="button" data-gallery-lightbox-prev aria-label="Previous photograph">←</button>
+          <p><span data-gallery-lightbox-current>1</span><span aria-hidden="true"> / </span><span data-gallery-lightbox-total>34</span></p>
+          <button type="button" data-gallery-lightbox-next aria-label="Next photograph">→</button>
+        </footer>
+      </div>
+    </dialog>
   </section>
 
   <section class="discover-panel discover-panel--specifications" id="technical-specifications" aria-labelledby="technical-specifications-title">
     <div class="wrap discover-panel__specifications">
-      <a class="discover-panel__back" href="/discover.html">Explore another chapter</a>
       <div class="discover-panel__specifications-heading">
         <h2 class="section-title" id="technical-specifications-title">Technical Specifications</h2>
         <p class="prose prose--muted">Propulsion, performance, capacity and onboard systems.</p>
@@ -311,6 +350,7 @@
 </footer>
 
 <script src="/js/nav.js" defer></script>
+<script src="/js/discover.js" defer></script>
 <script src="/js/gallery.js" defer></script>
 </body>
 </html>

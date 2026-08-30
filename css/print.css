@@ -11,7 +11,8 @@
   .skip-link,
   .hero__video,
   .hero__scrim,
-  .gallery__controls {
+  .gallery__toolbar,
+  .gallery-lightbox {
     display: none !important;
   }
 
@@ -125,12 +126,29 @@
     object-fit: cover;
   }
 
-  .gallery__track {
-    display: block;
+  .gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: auto;
   }
 
-  .gallery__slide:not(:first-child) {
-    display: none;
+  .gallery-card {
+    display: none !important;
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .gallery-card[data-title='Underway'],
+  .gallery-card[data-title='Red salon'],
+  .gallery-card[data-title='H&A Dodge Suite'],
+  .gallery-card[data-title='Gym'],
+  .gallery-card[data-title='Wheelhouse'] {
+    display: block !important;
+  }
+
+  .gallery-card img {
+    height: calc(var(--sp-16) * 2);
+    object-fit: cover;
   }
 
   .plate__row,

@@ -38,20 +38,20 @@ The statement is the only scroll-driven animation. It fills forward and un-fills
 
 ## Homepage imagery
 
-The Yacht uses the client-selected `topviewssd.png`. Its portrait top-down composition preserves the complete vessel and is intentionally different from the hero orbit. Production derivatives:
+The Yacht uses a broadside dusk frame from the supplied `DJI_20260808202557_0098_D.MP4` at 44 seconds. The vessel occupies most of the wide frame, keeping its complete silhouette legible in the desktop split and at phone width without becoming a tall inserted slab. Production derivatives:
 
-- `media/gallery/yacht-topview-959.avif`, 118 KB
-- `media/gallery/yacht-topview-959.webp`, 203 KB
-- `media/gallery/yacht-topview-640.avif`, 65 KB
-- `media/gallery/yacht-topview-640.webp`, 124 KB
+- `media/gallery/yacht-dusk-side-1600.avif`
+- `media/gallery/yacht-dusk-side-1600.webp`
+- `media/gallery/yacht-dusk-side-960.avif`
+- `media/gallery/yacht-dusk-side-960.webp`
 
-Private Charter uses the supplied promenade-deck photograph. Its long teak perspective provides a quieter human-scale counterpoint to the aerial yacht image.
+The portrait `topviewssd.png` remains available as a vertical composition in the Gallery. Private Charter uses the supplied promenade-deck photograph. On mobile its copy now precedes its image, preventing two photographs from stacking between the editorial sections. None of the 168 supplied stills depicts guests, a crowd or an event, so an authentic rights-cleared event photograph is still needed before replacing it.
 
 ## Navigation and deeper content
 
-Menu is the only top-right navigation control at every width. It opens a native modal `dialog`, which supplies focus containment and native Escape handling. Menu and Close have 48 pixel minimum targets. On short 320 pixel screens the menu scrolls, the Close row remains sticky, and the final Gallery link remains reachable.
+Menu is the only top-right navigation control at every width. It opens a native modal `dialog` as a shadowed right-hand drawer with a visible gold leading edge. The fixed two-line control remains in place while its bars morph into an X, and internal navigation waits for the exit transition before changing pages. Menu and Close have 48 pixel minimum targets. On short 320 pixel screens the menu begins at the top and scrolls without losing its first or last link.
 
-`discover.html` begins with a seven-chapter index. Hash targets reveal only the selected chapter, so deeper information remains available without recreating a second brochure-length page. This target behavior works without JavaScript. The Gallery retains manual arrows, keyboard arrows and native swipe; it never advances automatically.
+`discover.html` begins with a seven-chapter index. Selecting a chapter hides that index and reveals only the chosen material, so users cannot scroll back into “Explore SS Delphine” while reading a deep route. CSS handles the no-JavaScript route; a tiny hash synchronizer covers browsers without `:has()`. The Gallery is a 34-image editorial mosaic with five categories, filter controls and an accessible native-dialog lightbox. It never advances automatically; keyboard arrows and explicit previous/next controls remain available.
 
 Technical Specifications now sits directly below The Yacht copy as a body-font link with a close gold underline and an open arrow. A normal click opens all thirteen rows in a native modal dialog with a dark backdrop, offset shadow, sticky Close control, focus restoration and Escape handling. The same facts remain available at `discover.html#technical-specifications` through the Menu, modifier-clicks, unsupported-dialog browsers and JavaScript-off navigation.
 
@@ -65,15 +65,15 @@ Privacy and imprint pages remain marked as awaiting client-approved text. `robot
 
 The existing navy, gold and cream palette and the Archivo plus IBM Plex Mono type system remain unchanged. No new colour, font or UI library was introduced. Gold remains restricted to the supplied mark, focus treatment and hairline detail.
 
-No second scroll animation, reveal animation, card grid, gradient treatment, 3D scene or autoplaying gallery was added.
+No second scroll animation, reveal animation, gradient treatment, 3D scene or autoplaying gallery was added. The expanded Gallery uses an asymmetric editorial mosaic rather than a repetitive card grid.
 
 ## Verification
 
 - `npm test`: pass
-- `node tests/server-check.mjs http://127.0.0.1:8765/`: pass, 19 representative resources
+- `npm run test:served`: pass, 21 representative resources
 - `npm audit --omit=dev`: zero vulnerabilities
-- JavaScript: 2,986 bytes gzipped, below the 40 KB budget
-- Google Chrome 152 real-render pass: desktop 1440 by 900, tablet 1024 by 768, mobile 390 by 844, 320 by 568 and mobile landscape 844 by 390
+- JavaScript: 3,982 bytes gzipped, below the 40 KB budget
+- Earlier Google Chrome 152 real-render evidence covers the prior desktop, tablet and phone refinement. A fresh in-app browser pass was unavailable for this final gallery/menu revision because the live browser registry returned no browser instances.
 - Statement verified at start, midpoint, completion and reverse on desktop and mobile, with the 14 percent pre-fill state visibly distinct
 - Reduced-motion and JavaScript-off statements verified fully lit
 - Technical Specifications verified through Close, Escape, backdrop click, focus restoration, 320 pixel modal scrolling, Menu navigation and JavaScript-off deep routing
@@ -89,6 +89,7 @@ Evidence:
 - `/private/tmp/ssdelphine-redesign-qa/desktop-menu-open.png`
 - `/private/tmp/ssdelphine-redesign-qa/mobile-320-menu-bottom.png`
 - `/private/tmp/ssdelphine-redesign-qa/discover-index.png`
+- `/private/tmp/ssdelphine-gallery-selection.jpg`
 
 ## Run and deploy
 

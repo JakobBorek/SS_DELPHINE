@@ -36,14 +36,14 @@ Frame-by-frame checks that shaped the in-point:
 1. `DJI_20260808202557_0098_D.MP4` t=20-44. A genuinely beautiful dusk orbit, and the strongest
    *mood* in the set. Rejected as hero because the usable portion is dark enough that the navy
    scrim plus cream type over it would either wash the picture out or fail the contrast floor.
-   It descends into deck close-ups after t=50. Strong candidate for a section backdrop.
+   It descends into deck close-ups after t=50. The broadside frame at t=44 now illustrates The
+   Yacht: the complete vessel fills most of a 16:9 frame and stays readable on a phone.
 2. `DJI_20260808103538_0018_D.MP4`. Correct angle and daylight, but a white superyacht and a
    tender sit in frame throughout, and the coastline is busy.
 3. `ssdvideo.mp4`. A top-down of the yacht underway in deep blue water with a full wake, and one of
    the strongest images in the set. **Not the hero because it is not a three-quarter side angle**,
-   which the brief specifies. A frame from this clip previously appeared beside The Yacht copy; the
-   client later supplied `topviewssd.png` specifically for that position, so the video frame is no
-   longer referenced by the production HTML.
+   which the brief specifies. Its landscape still and the later `topviewssd.png` portrait remain in
+   the categorised Gallery rather than the homepage.
 4. `DJI_20260808205742_0080_D.MP4`. Night/dusk with Monaco lit behind. Atmospheric, too dark, and
    the city dominates.
 5. `DJI_20260808171215_0027_D.MP4`. Top-down at anchor. Useful for the deck-plan or layout

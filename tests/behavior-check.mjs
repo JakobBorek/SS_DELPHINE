@@ -11,6 +11,7 @@ const scripts = {
   nav: await readFile(path.join(root, 'js/nav.js'), 'utf8'),
   statement: await readFile(path.join(root, 'js/statement.js'), 'utf8'),
   specs: await readFile(path.join(root, 'js/specs.js'), 'utf8'),
+  discover: await readFile(path.join(root, 'js/discover.js'), 'utf8'),
   gallery: await readFile(path.join(root, 'js/gallery.js'), 'utf8')
 };
 const heroCss = await readFile(path.join(root, 'css/hero.css'), 'utf8');
@@ -68,6 +69,7 @@ const createDom = (html = homeHtml, { reduced = false, cssDriven = false, url = 
   assert.match(layoutCss, /html\.no-js \.nav-toggle,[\s\S]*html\.no-js \.site-menu[\s\S]*display:\s*none/, 'no-JS mode must hide the inert menu controls');
   assert.match(layoutCss, /html\.no-js \.nojs-nav\s*\{[\s\S]*display:\s*block/, 'no-JS mode must expose a normal-flow index');
   assert.match(sectionsCss, /\.discover-panel:target\s*\{\s*display:\s*block/, 'hash navigation must reveal one deep chapter without JavaScript');
+  assert.match(sectionsCss, /\.discover-page:has\(\.discover-panel:target\) \.discover-intro/, 'a selected deep chapter must remove the Explore index above it without JavaScript');
 
   homeDom.window.close();
   discoverDom.window.close();
@@ -144,20 +146,14 @@ const createDom = (html = homeHtml, { reduced = false, cssDriven = false, url = 
   assert.equal(document.documentElement.style.overflow, '', 'Close must release page scrolling');
   assert.equal(document.activeElement, toggle, 'Close must restore Menu focus');
 
-  const animationFrames = [];
-  window.requestAnimationFrame = (callback) => {
-    animationFrames.push(callback);
-    return animationFrames.length;
-  };
   toggle.click();
+  assert.equal(dialog.dataset.state, 'open', 'Menu must reach its painted open state');
   const sectionLink = dialog.querySelector('a[href="/#the-yacht"]');
   const destinationHeading = document.querySelector('#the-yacht-title');
   const click = new window.MouseEvent('click', { bubbles: true, cancelable: true });
-  assert.equal(sectionLink.dispatchEvent(click), true, 'same-page Menu link must preserve native navigation');
-  assert.equal(click.defaultPrevented, false, 'same-page Menu link must not replace hash navigation');
+  assert.equal(sectionLink.dispatchEvent(click), false, 'same-page Menu link must wait for the Menu exit');
+  assert.equal(click.defaultPrevented, true, 'same-page Menu link must coordinate navigation with the exit state');
   assert.equal(dialog.open, false, 'same-page Menu link must close the dialog');
-  assert.equal(animationFrames.length, 1, 'same-page destination focus must wait for native navigation');
-  animationFrames.shift()(0);
   assert.equal(document.activeElement, destinationHeading, 'same-page navigation must focus the destination heading');
   assert.equal(destinationHeading.getAttribute('tabindex'), '-1', 'destination heading must be programmatically focusable');
   destinationHeading.blur();
@@ -165,10 +161,11 @@ const createDom = (html = homeHtml, { reduced = false, cssDriven = false, url = 
 
   toggle.click();
   const crossPage = dialog.querySelector('a[href="/discover.html#the-refit"]');
-  const frameCount = animationFrames.length;
-  crossPage.dispatchEvent(new window.MouseEvent('click', { bubbles: true, cancelable: true }));
-  assert.equal(dialog.open, false, 'cross-page Menu link must close the dialog');
-  assert.equal(animationFrames.length, frameCount, 'cross-page Menu link must not focus the current document');
+  const modifiedClick = new window.MouseEvent('click', { button: 0, ctrlKey: true, bubbles: true, cancelable: true });
+  assert.equal(crossPage.dispatchEvent(modifiedClick), true, 'modified cross-page activation must remain native');
+  assert.equal(modifiedClick.defaultPrevented, false, 'modified cross-page activation must not be delayed');
+  assert.equal(dialog.open, true, 'opening a chapter in another tab must leave the current Menu available');
+  close.click();
 
   toggle.click();
   const cancelEvent = new window.Event('cancel', { cancelable: true });
@@ -176,11 +173,22 @@ const createDom = (html = homeHtml, { reduced = false, cssDriven = false, url = 
   assert.equal(cancelEvent.defaultPrevented, true, 'native Escape close must wait for the menu exit path');
   assert.equal(document.activeElement, toggle, 'native Escape close path must restore Menu focus');
 
+  const shell = dialog.querySelector('.site-menu__shell');
+  shell.getAnimations = () => [];
+  toggle.click();
+  close.click();
+  assert.equal(dialog.open, true, 'animated close must keep the modal alive while the drawer exits');
+  assert.equal(dialog.dataset.state, 'closing', 'animated close must expose the reversing state');
+  const transitionEnd = new window.Event('transitionend');
+  Object.defineProperty(transitionEnd, 'propertyName', { value: 'transform' });
+  shell.dispatchEvent(transitionEnd);
+  assert.equal(dialog.open, false, 'drawer transform completion must finish the native dialog close');
+
   assert.match(layoutCss, /\.nav-toggle,[\s\S]*min-inline-size:\s*var\(--sp-6\)[\s\S]*min-block-size:\s*var\(--sp-6\)/, 'Menu and Close must use 48px minimum targets');
-  assert.match(layoutCss, /@keyframes\s+menu-cross-first/, 'the two-rule Menu mark must morph into the first arm of the X');
-  assert.match(layoutCss, /@keyframes\s+menu-cross-last/, 'the two-rule Menu mark must morph into the second arm of the X');
-  assert.match(layoutCss, /@keyframes\s+menu-panel-enter/, 'the menu panel must enter from the right');
-  assert.match(layoutCss, /@keyframes\s+menu-panel-exit/, 'the menu panel must exit to the right');
+  assert.match(layoutCss, /\.site-menu__close\s*\{[\s\S]*position:\s*fixed/, 'the Menu-to-Close mark must remain fixed while the drawer moves');
+  assert.match(layoutCss, /\.site-menu\[data-state='open'\] \.site-menu__shell\s*\{[\s\S]*translate3d\(0, 0, 0\)/, 'the Menu drawer must enter from the right through an explicit open state');
+  assert.match(layoutCss, /\.site-menu\[data-state='open'\] \.site-menu__close-bars > span:first-child[\s\S]*rotate\(45deg\)/, 'the first Menu rule must morph into the X');
+  assert.match(layoutCss, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.site-menu__shell[\s\S]*transition:\s*none/, 'Menu motion must collapse under reduced motion');
   dom.window.close();
 }
 
@@ -241,24 +249,46 @@ const createDom = (html = homeHtml, { reduced = false, cssDriven = false, url = 
 
 {
   const { dom, window } = createDom(discoverHtml, { url: 'https://local.test/discover.html#gallery' });
-  const slides = [...window.document.querySelectorAll('[data-gallery-slide]')];
-  let shown = null;
-  slides.forEach((slide, index) => {
-    slide.scrollIntoView = () => {
-      shown = index;
-    };
-  });
-  window.eval(scripts.gallery);
-  window.document.querySelector('[data-gallery-next]').click();
-  assert.equal(shown, 1, 'Next must request the second photograph');
-  assert.equal(window.document.querySelector('[data-gallery-current]').textContent, '2', 'gallery counter must advance');
+  window.eval(scripts.discover);
+  assert.equal(window.document.body.dataset.chapterView, 'gallery', 'deep route must isolate the selected chapter');
+  window.history.pushState(null, '', '#cabins');
+  window.dispatchEvent(new window.HashChangeEvent('hashchange'));
+  assert.equal(window.document.body.dataset.chapterView, 'cabins', 'chapter isolation must follow hash changes');
+  window.history.pushState(null, '', '/discover.html');
+  window.dispatchEvent(new window.HashChangeEvent('hashchange'));
+  assert.equal(window.document.body.hasAttribute('data-chapter-view'), false, 'the unselected route must restore the Explore index');
 
-  window.document.querySelector('[data-gallery-viewport]').dispatchEvent(
-    new window.KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true })
-  );
-  assert.equal(shown, 0, 'Left arrow must return to the first photograph');
-  assert.equal(window.document.querySelector('[data-gallery-current]').textContent, '1', 'gallery counter must reverse');
+  window.eval(scripts.gallery);
+  const document = window.document;
+  const cabinFilter = document.querySelector('[data-gallery-filter="cabins"]');
+  cabinFilter.click();
+  const visible = [...document.querySelectorAll('[data-gallery-item]')].filter((item) => !item.hidden);
+  assert.equal(visible.length, 8, 'Cabins filter must reveal exactly eight photographs');
+  assert.ok(visible.every((item) => item.dataset.category === 'cabins'), 'Cabins filter must hide every other category');
+  assert.equal(cabinFilter.getAttribute('aria-pressed'), 'true', 'active Gallery filter must expose its pressed state');
+  assert.equal(document.querySelector('[data-gallery-status]').textContent, '8 photographs', 'Gallery must announce the filtered count');
+
+  const firstItem = visible[0];
+  const openEvent = new window.MouseEvent('click', { button: 0, bubbles: true, cancelable: true });
+  assert.equal(firstItem.dispatchEvent(openEvent), false, 'plain Gallery activation must open the focused lightbox');
+  assert.equal(openEvent.defaultPrevented, true, 'enhanced Gallery activation must preserve the image link as fallback');
+  const lightbox = document.querySelector('[data-gallery-lightbox]');
+  assert.equal(lightbox.open, true, 'Gallery lightbox must use a native modal dialog');
+  assert.equal(document.querySelector('[data-gallery-lightbox-title]').textContent, 'H&A Dodge Suite', 'lightbox must name the selected photograph');
+  assert.equal(document.querySelector('[data-gallery-lightbox-total]').textContent, '8', 'lightbox count must follow the active category');
+  assert.equal(document.documentElement.style.overflow, 'hidden', 'open lightbox must lock page scrolling');
+
+  document.querySelector('[data-gallery-lightbox-next]').click();
+  assert.equal(document.querySelector('[data-gallery-lightbox-current]').textContent, '2', 'lightbox Next must advance the counter');
+  assert.equal(document.querySelector('[data-gallery-lightbox-title]').textContent, 'Blue guest suite', 'lightbox Next must advance the photograph');
+
+  lightbox.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
+  assert.equal(document.querySelector('[data-gallery-lightbox-current]').textContent, '1', 'lightbox Left arrow must reverse the counter');
+  document.querySelector('[data-gallery-lightbox-close]').click();
+  assert.equal(lightbox.open, false, 'Gallery Close must dismiss the lightbox');
+  assert.equal(document.activeElement, firstItem, 'closing Gallery must restore the originating photograph');
+  assert.equal(document.documentElement.style.overflow, '', 'closing Gallery must release page scrolling');
   dom.window.close();
 }
 
-console.log('Behaviour checks passed: native Menu, no-JS paths, character scroll-fill, reduced motion, focused specifications and deep gallery controls.');
+console.log('Behaviour checks passed: animated Menu, no-JS paths, character scroll-fill, reduced motion, isolated chapters, focused specifications and filtered Gallery lightbox.');

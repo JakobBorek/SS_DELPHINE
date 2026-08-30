@@ -1,4 +1,4 @@
-/* Site shell: one native modal navigation surface and header state. */
+/* Site shell: a native modal drawer with one continuous Menu-to-Close mark. */
 (() => {
   'use strict';
 
@@ -9,11 +9,19 @@
   const shell = dialog?.querySelector('.site-menu__shell');
   let restoreFocus = true;
   let closing = false;
+  let closeFallback = 0;
+
+  const reducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
+  const afterPaint = (callback) => {
+    requestAnimationFrame(() => requestAnimationFrame(callback));
+  };
 
   const syncClosedState = () => {
+    window.clearTimeout(closeFallback);
     toggle?.setAttribute('aria-expanded', 'false');
     root.style.overflow = '';
-    dialog?.removeAttribute('data-closing');
+    if (dialog) dialog.dataset.state = 'closed';
     closing = false;
     if (restoreFocus) toggle?.focus();
     restoreFocus = true;
@@ -21,20 +29,33 @@
 
   const openMenu = () => {
     if (!dialog || !toggle || dialog.open) return;
-    dialog.removeAttribute('data-closing');
+
+    dialog.dataset.state = 'opening';
     if (typeof dialog.showModal === 'function') dialog.showModal();
     else dialog.setAttribute('open', '');
     toggle.setAttribute('aria-expanded', 'true');
     root.style.overflow = 'hidden';
     closeButton?.focus();
+
+    if (reducedMotion()) {
+      dialog.dataset.state = 'open';
+      return;
+    }
+
+    afterPaint(() => {
+      if (dialog.open && !closing) dialog.dataset.state = 'open';
+    });
   };
 
   const closeMenu = (shouldRestoreFocus = true, afterClose) => {
     if (!dialog || !dialog.open || closing) return;
     restoreFocus = shouldRestoreFocus;
+    let onTransitionEnd;
 
     const finishClose = () => {
       if (!dialog.open) return;
+      window.clearTimeout(closeFallback);
+      if (onTransitionEnd) shell?.removeEventListener('transitionend', onTransitionEnd);
       if (typeof dialog.close === 'function') dialog.close();
       else {
         dialog.removeAttribute('open');
@@ -43,20 +64,23 @@
       afterClose?.();
     };
 
-    const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    if (reducedMotion || typeof shell?.getAnimations !== 'function') {
+    if (
+      dialog.dataset.state !== 'open' ||
+      reducedMotion() ||
+      typeof shell?.getAnimations !== 'function'
+    ) {
       finishClose();
       return;
     }
 
     closing = true;
-    dialog.setAttribute('data-closing', '');
-    const animations = shell.getAnimations();
-    if (animations.length === 0) {
+    onTransitionEnd = (event) => {
+      if (event.target !== shell || event.propertyName !== 'transform') return;
       finishClose();
-      return;
-    }
-    Promise.allSettled(animations.map((animation) => animation.finished)).then(finishClose);
+    };
+    shell.addEventListener('transitionend', onTransitionEnd);
+    dialog.dataset.state = 'closing';
+    closeFallback = window.setTimeout(finishClose, 700);
   };
 
   toggle?.addEventListener('click', openMenu);
@@ -72,34 +96,57 @@
 
   const normalisePath = (pathname) => pathname.replace(/\/index\.html$/u, '/');
 
+  const focusDestination = (destination) => {
+    if (!destination) return;
+    destination.scrollIntoView?.({ block: 'start' });
+    const labelledBy = destination.getAttribute('aria-labelledby');
+    const focusTarget = labelledBy
+      ? document.getElementById(labelledBy) || destination
+      : destination;
+    const temporaryTabindex = !focusTarget.hasAttribute('tabindex');
+
+    if (temporaryTabindex) {
+      focusTarget.setAttribute('tabindex', '-1');
+      focusTarget.addEventListener('blur', () => {
+        focusTarget.removeAttribute('tabindex');
+      }, { once: true });
+    }
+
+    focusTarget.focus({ preventScroll: true });
+  };
+
   dialog?.querySelectorAll('a[href]').forEach((link) => {
-    link.addEventListener('click', () => {
+    link.addEventListener('click', (event) => {
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey ||
+        link.hasAttribute('download') ||
+        link.target === '_blank'
+      ) return;
+
       const destinationUrl = new window.URL(link.href, window.location.href);
+      if (destinationUrl.origin !== window.location.origin) return;
+
+      event.preventDefault();
       const sameDocument =
-        destinationUrl.origin === window.location.origin &&
         normalisePath(destinationUrl.pathname) === normalisePath(window.location.pathname);
       const destination = sameDocument && destinationUrl.hash
         ? document.getElementById(destinationUrl.hash.slice(1))
         : null;
 
       closeMenu(false, () => {
-        if (!destination) return;
-        requestAnimationFrame(() => {
-          const labelledBy = destination.getAttribute('aria-labelledby');
-          const focusTarget = labelledBy
-            ? document.getElementById(labelledBy) || destination
-            : destination;
-          const temporaryTabindex = !focusTarget.hasAttribute('tabindex');
-
-          if (temporaryTabindex) {
-            focusTarget.setAttribute('tabindex', '-1');
-            focusTarget.addEventListener('blur', () => {
-              focusTarget.removeAttribute('tabindex');
-            }, { once: true });
+        if (destination) {
+          if (window.location.hash !== destinationUrl.hash) {
+            window.history.pushState(null, '', destinationUrl.hash);
           }
-
-          focusTarget.focus({ preventScroll: true });
-        });
+          requestAnimationFrame(() => focusDestination(destination));
+          return;
+        }
+        window.location.assign(destinationUrl.href);
       });
     });
   });
