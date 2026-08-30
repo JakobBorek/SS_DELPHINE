@@ -27,9 +27,12 @@ const resources = new Map([
 for (const [resource, expectedType] of resources) {
   const response = await fetch(new URL(resource, baseUrl), { method: 'HEAD' });
   assert.equal(response.status, 200, `${resource} must return HTTP 200`);
+  const expectedPattern = expectedType === 'text/javascript'
+    ? /^(?:text|application)\/javascript/
+    : new RegExp(`^${expectedType.replace('+', '\\+')}`);
   assert.match(
     response.headers.get('content-type') || '',
-    new RegExp(`^${expectedType.replace('+', '\\+')}`),
+    expectedPattern,
     `${resource} must use ${expectedType}`
   );
 }

@@ -35,7 +35,6 @@ npm-debug.log*
 
 # Drone masters and extracted deck plan folders — originals, never committed
 DJI_*.MP4
-*.MP4
 [0-9]" "*DECK*/
 1 UPPER DECK HD/
 2 PROMENADE DECK HD/
