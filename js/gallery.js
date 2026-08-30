@@ -31,6 +31,7 @@
      lightbox never sees anything outside this list. */
   let scope = [];
   let index = 0;
+  let keptScroll = 0;
 
   /* ---------- Chapters ---------- */
   const showChapters = () => {
@@ -129,9 +130,10 @@
     }
     if (index < 0) return false;
     render();
+    keptScroll = window.scrollY;
     dialog.showModal();
     document.documentElement.style.overflow = 'hidden';
-    closeButton?.focus();
+    closeButton?.focus({ preventScroll: true });
     return true;
   };
 
@@ -157,7 +159,11 @@
 
   dialog?.addEventListener('close', () => {
     document.documentElement.style.overflow = '';
-    scope[index]?.focus();
+    /* return the reader exactly where they were, not to the top or the foot */
+    scope[index]?.focus({ preventScroll: true });
+    if (typeof window.scrollTo === 'function') {
+      try { window.scrollTo({ top: keptScroll, behavior: 'instant' }); } catch { /* not implemented */ }
+    }
   });
 
   /* A stale scroll lock is what makes the page feel frozen after navigating

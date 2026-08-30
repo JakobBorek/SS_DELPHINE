@@ -18,7 +18,12 @@
 
 /* ---------- Reset ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html {
+  -webkit-text-size-adjust: 100%;
+  /* Reserve the scrollbar so locking scroll for a modal cannot shift the
+     page sideways, which is what made opening a photograph feel like a jump. */
+  scrollbar-gutter: stable;
+}
 body, h1, h2, h3, h4, p, figure, blockquote, dl, dd, ul, ol { margin: 0; }
 ul[class], ol[class] { list-style: none; padding: 0; }
 img, picture, video { max-width: 100%; display: block; }
