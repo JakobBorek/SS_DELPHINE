@@ -78,6 +78,10 @@ const serialisePlate = (scope) => [...scope.querySelectorAll('.plate__row')]
 assert.deepEqual(serialisePlate(specsDialog), serialisePlate(deepSpecs), 'modal and deep-route specification facts must not drift');
 for (const document of [home, discover]) {
   assert.ok(document.querySelector('.site-menu a[href="/discover.html#technical-specifications"]'), 'Menu must expose the dedicated technical specifications route');
+  const headerMark = document.querySelector('.site-header .site-mark');
+  const menuMark = document.querySelector('.site-menu .site-menu__brand');
+  assert.equal(menuMark?.querySelector('img')?.getAttribute('src'), headerMark?.querySelector('img')?.getAttribute('src'), 'Menu and header must use the same official monogram');
+  assert.equal(menuMark?.querySelector('.site-mark__text')?.textContent.trim(), headerMark?.querySelector('.site-mark__text')?.textContent.trim(), 'Menu and header must use the same wordmark');
 }
 assert.match(home.querySelector('.editorial--yacht img')?.getAttribute('src') || '', /yacht-topview-959\.webp$/, 'The Yacht must use the supplied portrait top view');
 assert.equal(home.querySelector('#the-refit'), null, 'refit detail must not remain in the main-page scroll');
@@ -87,14 +91,20 @@ assert.equal(home.querySelector('#toys-and-tenders'), null, 'tender detail must 
 assert.equal(home.querySelector('#contact'), null, 'the closing section must not be named Contact');
 assert.equal(home.querySelector('#inquiry-title')?.textContent.trim(), 'Inquiry', 'the closing section must be Inquiry');
 assert.equal(discover.querySelectorAll('form').length, 0, 'the deeper page must not contain an inquiry form');
-assert.equal(home.querySelectorAll('form').length, 0, 'the homepage must contain no form: contact is display only until a route is approved');
-assert.equal(home.querySelectorAll('input, select, textarea').length, 0, 'no input controls may ship before a handler and privacy copy exist');
+const inquiryForm = home.querySelector('.inquiry-form');
+assert.equal(home.querySelectorAll('form').length, 1, 'the homepage must contain one display-only inquiry form');
+assert.equal(inquiryForm?.hasAttribute('action'), false, 'the display-only form must not have an action');
+assert.equal(inquiryForm?.hasAttribute('method'), false, 'the display-only form must not have a method');
+assert.ok(inquiryForm?.querySelector('fieldset[disabled]'), 'the display-only form must use a disabled fieldset');
+assert.ok(inquiryForm?.querySelector('button[type="submit"][disabled]'), 'the display-only submit button must remain disabled');
 const inquiryTerms = [...home.querySelectorAll('.inquiry__details dt')].map((n) => n.textContent.trim());
-assert.deepEqual(inquiryTerms, ['Email', 'Telephone', 'Location'], 'inquiry must list email, telephone and location');
+assert.deepEqual(inquiryTerms, ['Email', 'Telephone', 'Location', 'Instagram'], 'inquiry must list email, telephone, location and Instagram');
 assert.ok(
-  [...home.querySelectorAll('.inquiry__details dd')].every((n) => n.textContent.trim() === 'To be confirmed'),
-  'every inquiry detail must remain an explicit placeholder'
+  [...home.querySelectorAll('.inquiry__details dd')].slice(0, 3).every((n) => n.textContent.trim() === 'To be confirmed'),
+  'unapproved inquiry details must remain explicit placeholders'
 );
+assert.equal(home.querySelector('.inquiry__details a')?.getAttribute('href'), 'https://www.instagram.com/ssdelphine', 'the inquiry Instagram detail must use the approved account');
+assert.equal(home.querySelector('.inquiry__signature img')?.getAttribute('src'), '/assets/logo/ss-delphine-d.svg', 'the inquiry must use the official monogram');
 const footerTerms = [...home.querySelectorAll('.site-footer__contact dt')].map((n) => n.textContent.trim());
 assert.deepEqual(footerTerms, ['Email', 'Telephone', 'Location'], 'the footer must carry the same placeholder details');
 assert.ok(home.querySelector('.site-footer__social .icon-instagram'), 'the footer must carry a clickable Instagram icon');

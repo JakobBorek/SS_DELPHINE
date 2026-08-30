@@ -171,11 +171,16 @@ const createDom = (html = homeHtml, { reduced = false, cssDriven = false, url = 
   assert.equal(animationFrames.length, frameCount, 'cross-page Menu link must not focus the current document');
 
   toggle.click();
-  dialog.dispatchEvent(new window.Event('cancel', { cancelable: true }));
-  dialog.close();
+  const cancelEvent = new window.Event('cancel', { cancelable: true });
+  assert.equal(dialog.dispatchEvent(cancelEvent), false, 'Escape cancellation must be handled for the menu exit');
+  assert.equal(cancelEvent.defaultPrevented, true, 'native Escape close must wait for the menu exit path');
   assert.equal(document.activeElement, toggle, 'native Escape close path must restore Menu focus');
 
   assert.match(layoutCss, /\.nav-toggle,[\s\S]*min-inline-size:\s*var\(--sp-6\)[\s\S]*min-block-size:\s*var\(--sp-6\)/, 'Menu and Close must use 48px minimum targets');
+  assert.match(layoutCss, /@keyframes\s+menu-cross-first/, 'the two-rule Menu mark must morph into the first arm of the X');
+  assert.match(layoutCss, /@keyframes\s+menu-cross-last/, 'the two-rule Menu mark must morph into the second arm of the X');
+  assert.match(layoutCss, /@keyframes\s+menu-panel-enter/, 'the menu panel must enter from the right');
+  assert.match(layoutCss, /@keyframes\s+menu-panel-exit/, 'the menu panel must exit to the right');
   dom.window.close();
 }
 

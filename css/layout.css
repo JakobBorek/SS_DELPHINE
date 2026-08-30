@@ -63,8 +63,8 @@
   margin: 0;
   border: 0;
   padding: 0;
-  overflow-y: auto;
-  background: var(--navy-deep);
+  overflow: hidden;
+  background: transparent;
   color: var(--cream);
 }
 
@@ -73,10 +73,13 @@
 }
 
 .site-menu__shell {
+  height: 100%;
   min-height: 100%;
   display: grid;
   grid-template-rows: var(--header-h) 1fr;
   padding-inline: var(--gutter);
+  overflow-y: auto;
+  background: var(--navy-deep);
 }
 
 .site-menu__header {
@@ -90,7 +93,6 @@
   background: var(--navy-deep);
 }
 
-.site-menu__brand,
 .site-menu__label {
   font-family: var(--font-mono);
   font-size: var(--fs-mono-s);
@@ -99,8 +101,24 @@
   color: var(--cream-muted);
 }
 
-.site-menu__brand {
-  color: var(--gold);
+.site-menu__brand { color: var(--gold); }
+
+.site-menu[open]:not([data-closing]) .site-menu__shell {
+  animation: menu-panel-enter var(--dur-expand) var(--ease) both;
+}
+
+.site-menu[data-closing] .site-menu__shell {
+  animation: menu-panel-exit var(--dur-hover) var(--ease) both;
+}
+
+@keyframes menu-panel-enter {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes menu-panel-exit {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
 }
 
 .site-menu__nav {
@@ -283,5 +301,21 @@ html.no-js .nojs-nav {
 .site-menu__close-bars > span { top: 50%; }
 .site-menu__close-bars > span:first-child { transform: translateY(-50%) rotate(45deg); }
 .site-menu__close-bars > span:last-child  { transform: translateY(-50%) rotate(-45deg); }
+
+.site-menu[open] .site-menu__close-bars > span:first-child {
+  animation: menu-cross-first var(--dur-expand) var(--ease) both;
+}
+.site-menu[open] .site-menu__close-bars > span:last-child {
+  animation: menu-cross-last var(--dur-expand) var(--ease) both;
+}
+
+@keyframes menu-cross-first {
+  from { transform: translateY(-0.375rem) rotate(0); }
+  to { transform: translateY(-50%) rotate(45deg); }
+}
+@keyframes menu-cross-last {
+  from { transform: translateY(0.375rem) rotate(0); }
+  to { transform: translateY(-50%) rotate(-45deg); }
+}
 
 .nav-toggle:hover, .site-menu__close:hover { color: var(--gold); }
