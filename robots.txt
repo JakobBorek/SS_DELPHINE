@@ -1,2 +1,37 @@
+# SS Delphine — open to crawlers and to AI agents.
+# The legal pages and the 404 carry their own noindex meta because they are
+# placeholders; everything else is readable.
+
 User-agent: *
+Allow: /
+
+# Named AI agents, stated explicitly so there is no ambiguity.
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
 Allow: /
