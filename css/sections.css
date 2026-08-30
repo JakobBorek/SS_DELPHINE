@@ -800,6 +800,7 @@ html.no-js .gallery__filters {
 .editorial__media--promenade picture {
   width: calc(100% - var(--sp-8));
   margin-right: auto;
+  /* full-bleed on phones; the inset is a desktop-only device */
 }
 
 /* ---------- Inquiry ---------- */
@@ -1356,4 +1357,186 @@ html.no-js .gallery__filters {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
   gap: var(--sp-3);
+}
+
+
+/* On phones both editorial photographs run the full width. The desktop
+   inset that anchors them to alternating outer edges left a visible gap
+   down one side once the columns collapsed. */
+@media (max-width: 768px) {
+  .editorial__media--promenade picture,
+  .editorial__media--aerial picture {
+    width: 100%;
+    margin-inline: 0;
+  }
+  .editorial__media--promenade img,
+  .editorial__media--aerial img {
+    width: 100%;
+    max-width: none;
+    max-height: none;
+  }
+}
+
+/* ---------- Chapter back control ----------
+   Sits above the chapter title, hard left, so a reader can leave without
+   hunting for the logo. It returns to wherever they came from: the
+   homepage if they arrived from a homepage link, otherwise the chapter
+   index. */
+.panel-back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  min-block-size: var(--sp-6);
+  margin-bottom: var(--sp-3);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-s);
+  letter-spacing: var(--tr-mono);
+  text-transform: uppercase;
+  color: var(--cream-muted);
+  text-decoration: none;
+  transition: color var(--dur-hover) var(--ease);
+}
+.panel-back:hover { color: var(--cream); }
+.panel-back__arrow { color: var(--gold); }
+
+/* ---------- Technical specifications ----------
+   Only the rows travel; the title and the chapter head stay put. */
+.specs-scroll {
+  max-height: min(62vh, 40rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-top: var(--rule) solid var(--hairline);
+  margin-top: var(--sp-3);
+}
+.specs-scroll .plate { border-top: 0; }
+
+/* ---------- Onward links, beside the back control ---------- */
+.panel-onward {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-3);
+}
+.panel-onward__label,
+.panel-onward a {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-s);
+  letter-spacing: var(--tr-mono);
+  text-transform: uppercase;
+}
+.panel-onward__label { color: var(--cream-muted); }
+.panel-onward ul { display: flex; flex-wrap: wrap; gap: var(--sp-3); }
+.panel-onward a {
+  color: var(--cream);
+  text-decoration-line: underline;
+  text-decoration-color: var(--gold);
+  text-decoration-thickness: var(--rule);
+  text-underline-offset: 0.25em;
+}
+.panel-onward a:hover { color: var(--gold); }
+
+/* ---------- Interiors: the amenities themselves ---------- */
+.amenity-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: var(--sp-2);
+  /* the panel frame is min-height 100svh; without this the rows stretch */
+  align-content: center;
+  align-self: center;
+  padding: var(--sp-4);
+  min-width: 0;
+}
+.amenity { margin: 0; }
+.amenity img {
+  width: 100%;
+  /* the width/height attributes map to a presentational height, which
+     outranks aspect-ratio unless height is explicitly auto */
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+.amenity figcaption {
+  margin-top: var(--sp-1);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-s);
+  letter-spacing: var(--tr-mono);
+  text-transform: uppercase;
+  color: var(--cream-muted);
+}
+
+/* ---------- Cabins: one room at a time, uncropped ---------- */
+.cabin-carousel {
+  display: grid;
+  gap: var(--sp-2);
+  min-width: 0;
+  align-content: center;
+  align-self: center;
+  padding: var(--sp-4);
+}
+.cabin-carousel__track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-inline: contain;
+  gap: 0;
+  scrollbar-width: none;
+}
+.cabin-carousel__track::-webkit-scrollbar { display: none; }
+.cabin-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  min-width: 0;
+}
+.cabin-slide img {
+  width: 100%;
+  height: auto;
+  /* every room shares one frame, and nothing is cropped away */
+  aspect-ratio: 3 / 2;
+  object-fit: contain;
+  background: var(--navy);
+}
+.cabin-slide__name {
+  margin-top: var(--sp-1);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-s);
+  letter-spacing: var(--tr-mono);
+  text-transform: uppercase;
+  color: var(--cream-muted);
+}
+.cabin-carousel__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  border-top: var(--rule) solid var(--hairline);
+  padding-top: var(--sp-2);
+}
+.cabin-carousel__controls button {
+  min-inline-size: var(--sp-6);
+  min-block-size: var(--sp-6);
+  border: var(--rule) solid var(--hairline);
+  background: none;
+  color: var(--cream);
+  cursor: pointer;
+  font-family: var(--font-mono);
+}
+.cabin-carousel__controls button:hover { border-color: var(--gold); color: var(--gold); }
+.cabin-carousel__count {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-s);
+  letter-spacing: var(--tr-mono);
+  text-transform: uppercase;
+  color: var(--cream-muted);
+}
+
+/* ---------- Gallery chapter banners: identical on phone and desktop ----------
+   The preview photograph was disappearing on phones. Every chapter keeps its
+   banner image at every width; only the stacking changes. */
+@media (max-width: 768px) {
+  .gallery-chapter { grid-template-columns: 1fr; }
+  .gallery-chapter__media { aspect-ratio: 16 / 10; display: block; }
+  .gallery-chapter__media img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery-chapter__body { padding: var(--sp-3) 0 var(--sp-5); }
 }

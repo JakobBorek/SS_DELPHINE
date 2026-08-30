@@ -129,3 +129,36 @@
 
   showChapters();
 })();
+
+/* ---------- Cabins carousel ----------
+   One room at a time, scroll-snapped, with the position announced. */
+(() => {
+  const carousel = document.querySelector('[data-cabin-carousel]');
+  if (!carousel) return;
+  const track = carousel.querySelector('[data-cabin-track]');
+  const slides = [...carousel.querySelectorAll('[data-cabin-slide]')];
+  const position = carousel.querySelector('[data-cabin-position]');
+  if (!track || !slides.length) return;
+
+  let at = 0;
+  const go = (n) => {
+    at = Math.min(slides.length - 1, Math.max(0, n));
+    track.scrollTo({ left: slides[at].offsetLeft - track.offsetLeft, behavior: 'smooth' });
+    if (position) position.textContent = String(at + 1);
+  };
+
+  carousel.querySelector('[data-cabin-prev]')?.addEventListener('click', () => go(at - 1));
+  carousel.querySelector('[data-cabin-next]')?.addEventListener('click', () => go(at + 1));
+
+  // Keep the counter honest when the reader swipes instead of using the buttons.
+  let raf = 0;
+  track.addEventListener('scroll', () => {
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      raf = 0;
+      const mid = track.scrollLeft + track.clientWidth / 2;
+      const i = slides.findIndex((s) => s.offsetLeft - track.offsetLeft + s.clientWidth > mid);
+      if (i >= 0 && i !== at) { at = i; if (position) position.textContent = String(at + 1); }
+    });
+  }, { passive: true });
+})();

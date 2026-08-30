@@ -82,7 +82,7 @@
   height: 100%;
   min-height: 100%;
   display: grid;
-  grid-template-rows: var(--header-h) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
   padding-inline: var(--gutter);
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -113,7 +113,13 @@
   color: var(--cream-muted);
 }
 
-.site-menu__brand { color: var(--gold); }
+.site-menu__brand {
+  color: var(--gold);
+  /* The lockup is taller than the header row it used to sit in, which is why
+     the monogram was cut off at the top. Give it its own breathing room. */
+  align-self: center;
+  padding-block: var(--sp-3) var(--sp-2);
+}
 
 .site-menu[data-state='open']::backdrop {
   opacity: 1;

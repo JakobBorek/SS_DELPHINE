@@ -15,3 +15,21 @@
   window.addEventListener('hashchange', syncChapterView);
   syncChapterView();
 })();
+
+/* Back control: return to where the reader came from. If they arrived from
+   another page on this site, step back to it; otherwise fall through to the
+   href, which is the homepage. */
+document.querySelectorAll('[data-panel-back]').forEach((link) => {
+  link.addEventListener('click', (event) => {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+    let sameSite = false;
+    try {
+      sameSite = Boolean(document.referrer) &&
+        new window.URL(document.referrer).origin === window.location.origin;
+    } catch { sameSite = false; }
+    if (sameSite && window.history.length > 1) {
+      event.preventDefault();
+      window.history.back();
+    }
+  });
+});
