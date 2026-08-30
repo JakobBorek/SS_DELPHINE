@@ -260,13 +260,22 @@ const createDom = (html = homeHtml, { reduced = false, cssDriven = false, url = 
 
   window.eval(scripts.gallery);
   const document = window.document;
-  const cabinFilter = document.querySelector('[data-gallery-filter="cabins"]');
-  cabinFilter.click();
-  const visible = [...document.querySelectorAll('[data-gallery-item]')].filter((item) => !item.hidden);
-  assert.equal(visible.length, 8, 'Cabins filter must reveal exactly eight photographs');
-  assert.ok(visible.every((item) => item.dataset.category === 'cabins'), 'Cabins filter must hide every other category');
-  assert.equal(cabinFilter.getAttribute('aria-pressed'), 'true', 'active Gallery filter must expose its pressed state');
-  assert.equal(document.querySelector('[data-gallery-status]').textContent, '8 photographs', 'Gallery must announce the filtered count');
+
+  // The archive opens as chapters, not as every photograph at once.
+  const sets = [...document.querySelectorAll('[data-gallery-set]')];
+  assert.ok(sets.every((set) => set.hidden), 'Gallery must open on the chapter index');
+
+  const openCabins = document.querySelector('[data-gallery-open="cabins"]');
+  openCabins.click();
+  const cabinSet = document.querySelector('[data-gallery-set="cabins"]');
+  assert.equal(cabinSet.hidden, false, 'choosing a chapter must reveal it');
+  assert.ok(sets.filter((set) => set !== cabinSet).every((set) => set.hidden), 'only the chosen chapter may be shown');
+  assert.equal(document.querySelector('[data-gallery-chapters]').hidden, true, 'the chapter index must step aside');
+
+  const visible = [...cabinSet.querySelectorAll('[data-gallery-item]')];
+  assert.equal(visible.length, 8, 'Cabins must reveal exactly eight photographs');
+  assert.ok(visible.every((item) => item.dataset.category === 'cabins'), 'a chapter must contain only its own category');
+  assert.match(document.querySelector('[data-gallery-status]').textContent, /Cabins: 8 photographs\./, 'Gallery must announce the chapter');
 
   const firstItem = visible[0];
   const openEvent = new window.MouseEvent('click', { button: 0, bubbles: true, cancelable: true });
@@ -274,20 +283,29 @@ const createDom = (html = homeHtml, { reduced = false, cssDriven = false, url = 
   assert.equal(openEvent.defaultPrevented, true, 'enhanced Gallery activation must preserve the image link as fallback');
   const lightbox = document.querySelector('[data-gallery-lightbox]');
   assert.equal(lightbox.open, true, 'Gallery lightbox must use a native modal dialog');
-  assert.equal(document.querySelector('[data-gallery-lightbox-title]').textContent, 'H&A Dodge Suite', 'lightbox must name the selected photograph');
-  assert.equal(document.querySelector('[data-gallery-lightbox-total]').textContent, '8', 'lightbox count must follow the active category');
+  assert.equal(document.querySelector('[data-lightbox-title]').textContent, 'H&A Dodge Suite', 'lightbox must name the selected photograph');
+  assert.equal(document.querySelector('[data-lightbox-position]').textContent, '1 of 8', 'lightbox must be scoped to the open chapter');
   assert.equal(document.documentElement.style.overflow, 'hidden', 'open lightbox must lock page scrolling');
 
-  document.querySelector('[data-gallery-lightbox-next]').click();
-  assert.equal(document.querySelector('[data-gallery-lightbox-current]').textContent, '2', 'lightbox Next must advance the counter');
-  assert.equal(document.querySelector('[data-gallery-lightbox-title]').textContent, 'Blue guest suite', 'lightbox Next must advance the photograph');
+  document.querySelector('[data-lightbox-next]').click();
+  assert.equal(document.querySelector('[data-lightbox-position]').textContent, '2 of 8', 'lightbox Next must advance within the chapter');
+  assert.equal(document.querySelector('[data-lightbox-title]').textContent, 'Blue guest suite', 'lightbox Next must advance the photograph');
 
   lightbox.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
-  assert.equal(document.querySelector('[data-gallery-lightbox-current]').textContent, '1', 'lightbox Left arrow must reverse the counter');
-  document.querySelector('[data-gallery-lightbox-close]').click();
+  assert.equal(document.querySelector('[data-lightbox-position]').textContent, '1 of 8', 'lightbox Left arrow must reverse');
+
+  // Arrows wrap inside the chapter rather than skipping into another one.
+  lightbox.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
+  assert.equal(document.querySelector('[data-lightbox-position]').textContent, '8 of 8', 'lightbox must wrap within the chapter');
+
+  document.querySelector('[data-lightbox-close]').click();
   assert.equal(lightbox.open, false, 'Gallery Close must dismiss the lightbox');
-  assert.equal(document.activeElement, firstItem, 'closing Gallery must restore the originating photograph');
   assert.equal(document.documentElement.style.overflow, '', 'closing Gallery must release page scrolling');
+
+  cabinSet.querySelector('[data-gallery-back]').click();
+  assert.equal(cabinSet.hidden, true, 'Back must close the chapter');
+  assert.equal(document.querySelector('[data-gallery-chapters]').hidden, false, 'Back must restore the chapter index');
+
   dom.window.close();
 }
 

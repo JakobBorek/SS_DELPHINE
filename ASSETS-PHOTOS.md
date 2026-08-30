@@ -28,7 +28,6 @@ The homepage now uses a broadside dusk frame from the supplied `DJI_202608082025
 
 Each selected deck photograph has AVIF and WebP derivatives at a maximum width of 960 and 1600 pixels in `media/gallery/`. Metadata is stripped. AVIF quality is 50 and WebP quality is 78. No selected image was upscaled.
 
-The client-selected portrait image is exported at 640 pixels and at its native 959 pixel width as `yacht-topview-{640,959}.{avif,webp}`. The homepage broadside uses `yacht-dusk-side-{960,1600}.{avif,webp}`; the landscape overhead uses `yacht-aerial-{960,1600}.{avif,webp}` in the Gallery.
 
 ## Expanded Gallery edit
 
@@ -43,3 +42,7 @@ The Gallery now carries 34 photographs in five explicit categories: Deck & Exter
 - No supplied still clearly documents the toys, tenders or chase boat. That section therefore remains text-only rather than pairing factual copy with an unrelated photograph.
 - No supplied still was used as a second hero. The approved drone loop and its matching poster remain the only hero media.
 - None of the 168 supplied stills contains guests, a crowd or an event. A future Private Charter replacement therefore requires a rights-cleared owner or crew photograph rather than relabelling an empty deck.
+
+## Removed — do not reuse
+
+`yacht-aerial-*` (titled "Underway", top-down in vivid blue water) was AI-generated, not owned photography of SS Delphine. Deleted 2026-08-30. Do not reintroduce it or regenerate derivatives from `delphine-ref-clean.png` / `delphine-ref-2x.*`, which are the same synthetic source. The genuine top-down frame is `yacht-topview-*`, taken from drone clip DJI_20260808171215_0027.

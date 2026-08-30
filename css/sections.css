@@ -627,9 +627,12 @@ html.no-js .gallery__filters {
 
 .gallery-lightbox__figure {
   min-height: 0;
+  min-width: 0;
+  overflow: hidden;          /* the photograph can never spill onto the bars */
   display: grid;
   place-items: center;
   background: var(--navy);
+  padding: var(--sp-2);
 }
 
 .gallery-lightbox__figure picture {
@@ -637,10 +640,12 @@ html.no-js .gallery__filters {
 }
 
 .gallery-lightbox__figure img {
-  width: auto;
+  /* Sized by the grid row, not by the viewport. The old rule used
+     100dvh and so could exceed its cell and overlap the footer. */
   max-width: 100%;
+  max-height: 100%;
+  width: auto;
   height: auto;
-  max-height: calc(100dvh - var(--header-h) - var(--sp-16));
   object-fit: contain;
 }
 
@@ -1112,7 +1117,7 @@ html.no-js .gallery__filters {
   }
 
   .gallery-lightbox__figure img {
-    max-height: calc(100dvh - var(--header-h) - var(--sp-12));
+    max-height: 100%;
   }
   .inquiry__frame {
     grid-template-columns: 1fr;
@@ -1220,4 +1225,135 @@ html.no-js .gallery__filters {
 .site-footer__legal { display: flex; flex-wrap: wrap; gap: var(--sp-3); justify-content: center; }
 @media (max-width: 640px) {
   .site-footer__contact { grid-template-columns: 1fr; gap: var(--sp-3); }
+}
+
+/* ============================================================
+   GALLERY — chapters first
+   Five chapters rather than thirty three photographs at once.
+   ============================================================ */
+.gallery-chapters {
+  display: grid;
+  gap: var(--sp-3);
+}
+
+.gallery-chapter {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
+  gap: 0;
+  padding: 0;
+  border: 0;
+  border-top: var(--rule) solid var(--hairline);
+  background: none;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+}
+.gallery-chapters .gallery-chapter:last-child {
+  border-bottom: var(--rule) solid var(--hairline);
+}
+
+.gallery-chapter__media {
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+}
+.gallery-chapter__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-expand) var(--ease);
+}
+.gallery-chapter:hover .gallery-chapter__media img,
+.gallery-chapter:focus-visible .gallery-chapter__media img {
+  transform: scale(1.03);
+}
+
+.gallery-chapter__body {
+  display: grid;
+  align-content: center;
+  gap: var(--sp-2);
+  padding: var(--sp-5) var(--sp-4);
+}
+
+.gallery-chapter__label {
+  font-family: var(--font-display);
+  font-variation-settings: 'wdth' var(--wdth-display);
+  font-weight: var(--wt-display);
+  font-size: var(--fs-display-m);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tr-display);
+  color: var(--cream);
+}
+.gallery-chapter__blurb {
+  font-size: var(--fs-body);
+  color: var(--cream-muted);
+  max-width: 34ch;
+}
+.gallery-chapter__count {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-s);
+  letter-spacing: var(--tr-mono);
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* Alternate which side the photograph sits on, so the index has rhythm. */
+.gallery-chapter:nth-child(even) .gallery-chapter__media { order: 2; }
+
+@media (max-width: 768px) {
+  .gallery-chapter { grid-template-columns: 1fr; }
+  .gallery-chapter:nth-child(even) .gallery-chapter__media { order: 0; }
+  .gallery-chapter__body { padding: var(--sp-4) 0 var(--sp-5); }
+}
+
+/* ---------- One chapter, opened ---------- */
+.gallery-set__head {
+  display: grid;
+  gap: var(--sp-1);
+  margin-bottom: var(--sp-5);
+  padding-bottom: var(--sp-3);
+  border-bottom: var(--rule) solid var(--hairline);
+}
+.gallery-set__back {
+  justify-self: start;
+  min-block-size: var(--sp-6);
+  margin-bottom: var(--sp-2);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-s);
+  letter-spacing: var(--tr-mono);
+  text-transform: uppercase;
+  color: var(--cream-muted);
+  transition: color var(--dur-hover) var(--ease);
+}
+.gallery-set__back::before { content: '\2190\00a0\00a0'; }
+.gallery-set__back:hover { color: var(--cream); }
+
+.gallery-set__title {
+  font-family: var(--font-display);
+  font-variation-settings: 'wdth' var(--wdth-display);
+  font-weight: var(--wt-display);
+  font-size: var(--fs-display-m);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tr-display);
+  color: var(--cream);
+}
+.gallery-set__count {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-s);
+  letter-spacing: var(--tr-mono);
+  text-transform: uppercase;
+  color: var(--cream-muted);
+}
+
+.gallery-set__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: var(--sp-3);
 }

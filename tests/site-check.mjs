@@ -121,17 +121,30 @@ for (const unapprovedContact of ['charter@ssdelphne.com', '+377 97 97 97 97', 'M
   assert.doesNotMatch(home.body.textContent, new RegExp(unapprovedContact.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'), `unapproved mock contact must not ship: ${unapprovedContact}`);
 }
 const galleryItems = [...discover.querySelectorAll('[data-gallery-item]')];
-assert.equal(galleryItems.length, 34, 'the explore gallery must contain the expanded thirty-four photograph edit');
+assert.equal(galleryItems.length, 33, 'the explore gallery must contain the thirty-three owned photographs');
 assert.deepEqual(
   Object.fromEntries(['deck', 'salons', 'cabins', 'wellness', 'heritage'].map((category) => [
     category,
     galleryItems.filter((item) => item.dataset.category === category).length
   ])),
-  { deck: 8, salons: 8, cabins: 8, wellness: 5, heritage: 5 },
+  { deck: 7, salons: 8, cabins: 8, wellness: 5, heritage: 5 },
   'gallery categories must keep their intended editorial balance'
 );
-assert.equal(new Set(galleryItems.map((item) => item.dataset.title)).size, 34, 'gallery titles must be unique');
-assert.equal(discover.querySelectorAll('[data-gallery-filter]').length, 6, 'gallery must expose All plus five category filters');
+assert.equal(new Set(galleryItems.map((item) => item.dataset.title)).size, 33, 'gallery titles must be unique');
+
+// The archive opens as chapters, not as every photograph at once.
+assert.equal(discover.querySelectorAll('[data-gallery-open]').length, 5, 'the gallery must open as five chapter banners');
+assert.equal(discover.querySelectorAll('[data-gallery-set]').length, 5, 'each chapter must have its own set');
+assert.ok(
+  [...discover.querySelectorAll('[data-gallery-set]')].every((set) => set.hasAttribute('hidden')),
+  'chapter sets must start closed so the index is what loads'
+);
+assert.equal(discover.querySelectorAll('[data-gallery-back]').length, 5, 'every chapter must offer a way back to the index');
+assert.equal(discover.querySelectorAll('[data-gallery-filter]').length, 0, 'the old filter toolbar must be gone');
+
+// The AI-generated aerial must never reappear.
+assert.doesNotMatch(discover.documentElement.outerHTML, /yacht-aerial/, 'the AI-generated underway image must not be referenced');
+
 assert.equal(discover.querySelector('[data-gallery-lightbox]')?.tagName, 'DIALOG', 'gallery must open in a native focused lightbox');
 assert.ok(discover.querySelector('[data-gallery-lightbox] [aria-live="polite"]'), 'gallery lightbox changes must be announced');
 assert.equal(discover.querySelectorAll('.discover-panel__back').length, 0, 'deep chapters must rely on the persistent Menu instead of returning to the Explore index');

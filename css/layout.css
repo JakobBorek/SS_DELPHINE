@@ -34,7 +34,7 @@
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
-  gap: var(--sp-1);
+  gap: 0;
   font-family: var(--font-display);
   font-variation-settings: 'wdth' var(--wdth-display);
   font-weight: var(--wt-display);
@@ -48,7 +48,7 @@
 
 .site-mark__logo {
   width: auto;
-  height: 1.55em;
+  height: 3rem;
   display: block;
 }
 
@@ -355,4 +355,15 @@ html.no-js .nojs-nav {
   .site-menu__close-bars > span {
     transition: none;
   }
+}
+
+/* ---------- Brand lockup ----------
+   The supplied lockup is a landscape banner (586x276), sized by height
+   so it keeps its own proportion. It replaces the monogram-plus-wordmark
+   pairing in both the header and the menu. */
+.site-menu__logo {
+  height: clamp(3.25rem, 9vw, 5rem);
+}
+@media (max-width: 520px) {
+  .site-mark__logo { height: 2.4rem; }
 }
