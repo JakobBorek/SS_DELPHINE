@@ -52,3 +52,4 @@ ruvector.db
 *.sqlite-shm
 *.sqlite-wal
 .agent/
+.vercel
