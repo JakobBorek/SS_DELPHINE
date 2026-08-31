@@ -47,6 +47,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: inherit;
 }
 
 .editorial__media--aerial {
@@ -1507,3 +1508,64 @@ html.no-js .gallery__filters {
   .gallery-chapter__body { padding: var(--sp-4) 0 var(--sp-5); }
 }
 
+
+/* ============================================================
+   THE YACHT AND PRIVATE CHARTER
+   The photographs sit as lifted plates rather than raw bleeds, with
+   the copy optically centred against them. Rounded corners are a
+   deliberate departure from the brief's "no rounded corners", made
+   at the client's request, and are confined to these photographs.
+   ============================================================ */
+.editorial__media picture {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 var(--sp-2) var(--sp-8) var(--media-lift);
+}
+
+/* a hairline of gold along the inner edge, the same detail as the rules */
+.editorial__media picture::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: var(--rule) solid var(--hairline-gold);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  /* edge to edge on a phone, so only the inner corners are softened */
+  .editorial__media picture {
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .editorial__media picture::after { border: 0; }
+}
+
+
+/* The plate is pulled in from the outer edge so the whole rounded frame
+   reads, rather than half of it running off the side of the page. */
+@media (min-width: 769px) {
+  .editorial__media {
+    display: grid;
+    align-items: center;
+    padding-block: var(--sp-8);
+    padding-inline-end: var(--gutter);
+  }
+  .editorial--reverse .editorial__media {
+    padding-inline-end: 0;
+    padding-inline-start: var(--gutter);
+  }
+  .editorial__media,
+  .editorial__media picture {
+    min-height: 0;
+    height: auto;
+  }
+  .editorial__media--aerial img,
+  .editorial__media--promenade img {
+    width: 100%;
+    height: auto;
+    max-height: 72vh;
+    object-fit: cover;
+  }
+}

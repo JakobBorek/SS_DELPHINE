@@ -165,6 +165,8 @@
 
   /* ---------- Lines & motion ---------- */
   --rule: 1px;             /* hairline. Never thicker. */
+  --radius: 0.875rem;      /* editorial photographs only, at the client's request */
+  --media-lift: rgb(0 0 0 / 0.38);
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --dur-expand: 420ms;     /* Read more height transition */
   --dur-hover: 180ms;
