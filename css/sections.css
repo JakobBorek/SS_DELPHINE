@@ -1428,53 +1428,74 @@ html.no-js .gallery__filters {
 
 /* ============================================================
    GALLERY — chapters first
-   Five chapters rather than thirty three photographs at once.
+   Each chapter is previewed by its own opening photograph, laid in
+   as a darkened ground so the reader can see what they are about to
+   open. The text alternates side to side to keep the rhythm.
    ============================================================ */
 .gallery-chapters {
   display: grid;
-  gap: var(--sp-3);
+  gap: var(--sp-2);
 }
 
 .gallery-chapter {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: stretch;
-  gap: 0;
+  align-items: end;
+  min-height: 17rem;
   padding: 0;
   border: 0;
-  border-top: var(--rule) solid var(--hairline);
-  background: none;
+  background: var(--navy);
   color: inherit;
   text-align: left;
   cursor: pointer;
   overflow: hidden;
-}
-.gallery-chapters .gallery-chapter:last-child {
-  border-bottom: var(--rule) solid var(--hairline);
+  isolation: isolate;
 }
 
 .gallery-chapter__media {
+  position: absolute;
+  inset: 0;
   display: block;
-  overflow: hidden;
-  aspect-ratio: 16 / 9;
+  z-index: 0;
 }
 .gallery-chapter__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* a wide band across a tall room lands on the ceiling; bias it lower
+     so the preview shows the room rather than the deckhead */
+  object-position: 50% 62%;
   transition: transform var(--dur-expand) var(--ease);
 }
 .gallery-chapter:hover .gallery-chapter__media img,
 .gallery-chapter:focus-visible .gallery-chapter__media img {
-  transform: scale(1.03);
+  transform: scale(1.04);
+}
+
+/* darkened, so the type stays the loudest thing in the frame */
+.gallery-chapter::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to top,
+    var(--scrim-strong) 0%,
+    var(--scrim-mid) 46%,
+    var(--scrim-soft) 100%);
 }
 
 .gallery-chapter__body {
+  position: relative;
+  z-index: 2;
   display: grid;
-  align-content: center;
-  gap: var(--sp-2);
-  padding: var(--sp-5) var(--sp-4);
+  gap: var(--sp-1);
+  padding: var(--sp-4);
+  max-width: 46ch;
+}
+.gallery-chapter:nth-child(even) .gallery-chapter__body {
+  justify-self: end;
+  text-align: right;
 }
 
 .gallery-chapter__label {
@@ -1488,8 +1509,7 @@ html.no-js .gallery__filters {
 }
 .gallery-chapter__blurb {
   font-size: var(--fs-body);
-  color: var(--cream-muted);
-  max-width: 34ch;
+  color: var(--cream);
 }
 .gallery-chapter__count {
   font-family: var(--font-mono);
@@ -1499,13 +1519,13 @@ html.no-js .gallery__filters {
   color: var(--gold);
 }
 
-/* Alternate which side the photograph sits on, so the index has rhythm. */
-.gallery-chapter:nth-child(even) .gallery-chapter__media { order: 2; }
-
 @media (max-width: 768px) {
-  .gallery-chapter { grid-template-columns: 1fr; }
-  .gallery-chapter:nth-child(even) .gallery-chapter__media { order: 0; }
-  .gallery-chapter__body { padding: var(--sp-4) 0 var(--sp-5); }
+  .gallery-chapter { min-height: 13rem; }
+  .gallery-chapter__body { padding: var(--sp-3); max-width: none; }
+  .gallery-chapter:nth-child(even) .gallery-chapter__body {
+    justify-self: start;
+    text-align: left;
+  }
 }
 
 

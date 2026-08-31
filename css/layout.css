@@ -297,7 +297,7 @@ html.no-js .nojs-nav {
   height: clamp(3.25rem, 9vw, 5rem);
 }
 @media (max-width: 520px) {
-  .site-mark__logo { height: 3.6rem; }
+  .site-mark__logo { height: 2.7rem; }   /* 25% smaller on a phone */
 }
 
 /* ============================================================
