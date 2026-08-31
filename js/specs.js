@@ -1,47 +1,55 @@
-/* Progressive enhancement for the technical specification focus view. */
+/* Progressive enhancement for the focus views: technical specifications on
+   The Yacht, and charter information on Private Charter. Both open in place
+   rather than sending the reader to another page; without JavaScript the
+   links still resolve to their chapters on discover.html. */
 (() => {
   'use strict';
 
   const root = document.documentElement;
-  const dialog = document.querySelector('#technical-specifications-dialog');
-  const trigger = document.querySelector('[data-specs-open]');
-  const closeButton = dialog?.querySelector('[data-specs-close]');
-  const title = dialog?.querySelector('#technical-specifications-dialog-title');
 
-  if (!dialog || !trigger || !closeButton || typeof dialog.showModal !== 'function') return;
+  const wire = (dialogId, openAttr, closeAttr, titleId) => {
+    const dialog = document.querySelector(`#${dialogId}`);
+    const trigger = document.querySelector(`[${openAttr}]`);
+    const closeButton = dialog?.querySelector(`[${closeAttr}]`);
+    const title = dialog?.querySelector(`#${titleId}`);
+    if (!dialog || !trigger || !closeButton || typeof dialog.showModal !== 'function') return;
 
-  let opener = null;
-  let previousOverflow = '';
+    let opener = null;
+    let previousOverflow = '';
 
-  trigger.addEventListener('click', (event) => {
-    if (
-      event.defaultPrevented ||
-      event.button !== 0 ||
-      event.metaKey ||
-      event.ctrlKey ||
-      event.shiftKey ||
-      event.altKey ||
-      dialog.open
-    ) return;
+    trigger.addEventListener('click', (event) => {
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey ||
+        dialog.open
+      ) return;
 
-    event.preventDefault();
-    opener = trigger;
-    previousOverflow = root.style.overflow;
-    dialog.showModal();
-    root.style.overflow = 'hidden';
-    requestAnimationFrame(() => title?.focus({ preventScroll: true }));
-  });
+      event.preventDefault();
+      opener = trigger;
+      previousOverflow = root.style.overflow;
+      dialog.showModal();
+      root.style.overflow = 'hidden';
+      requestAnimationFrame(() => title?.focus({ preventScroll: true }));
+    });
 
-  closeButton.addEventListener('click', () => dialog.close());
+    closeButton.addEventListener('click', () => dialog.close());
 
-  dialog.addEventListener('click', (event) => {
-    if (event.target === dialog) dialog.close();
-  });
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
 
-  dialog.addEventListener('close', () => {
-    root.style.overflow = previousOverflow;
-    if (opener?.isConnected) opener.focus();
-    opener = null;
-    previousOverflow = '';
-  });
+    dialog.addEventListener('close', () => {
+      root.style.overflow = previousOverflow;
+      if (opener?.isConnected) opener.focus();
+      opener = null;
+      previousOverflow = '';
+    });
+  };
+
+  wire('technical-specifications-dialog', 'data-specs-open', 'data-specs-close', 'technical-specifications-dialog-title');
+  wire('charter-dialog', 'data-charter-open', 'data-charter-close', 'charter-dialog-title');
 })();

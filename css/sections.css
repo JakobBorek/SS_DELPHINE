@@ -1534,3 +1534,12 @@ html.no-js .gallery__filters {
     object-fit: cover;
   }
 }
+
+/* ---------- Chapter reading order ----------
+   The copy always precedes the photograph in the markup, so a phone
+   reads title, then body, then image. On a wide screen the reversed
+   chapters put the photograph back on the left visually, without
+   disturbing that reading order. */
+@media (min-width: 769px) {
+  .discover-panel--reverse .discover-panel__media { order: -1; }
+}
