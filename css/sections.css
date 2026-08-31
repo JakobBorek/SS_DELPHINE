@@ -869,15 +869,15 @@ html.no-js .gallery__filters {
   box-shadow: var(--sp-2) var(--sp-2) 0 var(--hairline-gold);
 }
 .inquiry__panel {
-  width: min(100%, 37rem);
+  width: min(100%, 26rem);
   margin-inline: auto;
-  padding: var(--sp-5) var(--sp-4) var(--sp-4);
+  padding: var(--sp-4) var(--sp-3) var(--sp-3);
 }
-.inquiry__welcome,
 .inquiry__form-title {
   font-family: var(--font-display);
   font-variation-settings: 'wdth' var(--wdth-display);
-  font-size: var(--fs-display-m);
+  font-size: calc(var(--fs-display-m) * 0.7);
+  text-align: center;
   font-weight: var(--wt-display);
   line-height: var(--lh-display);
   letter-spacing: var(--tr-display);
@@ -892,10 +892,7 @@ html.no-js .gallery__filters {
   padding-top: var(--sp-4);
   border-top: var(--rule) solid var(--hairline-gold);
 }
-.inquiry__signature img {
-  width: auto;
-  height: var(--sp-6);
-}
+.inquiry__signature img { width: auto; height: 1.9rem; }
 .inquiry__signature p {
   font-family: var(--font-display);
   font-variation-settings: 'wdth' var(--wdth-display);
@@ -904,10 +901,6 @@ html.no-js .gallery__filters {
   letter-spacing: var(--tr-mono);
   text-transform: uppercase;
   color: var(--navy-deep);
-}
-
-.inquiry__form-title {
-  text-align: center;
 }
 .inquiry-form fieldset {
   display: grid;
@@ -1556,4 +1549,53 @@ html.no-js .gallery__filters {
     align-self: start;
     max-height: calc(100svh - var(--header-h) - var(--sp-8));
   }
+}
+
+/* ============================================================
+   GALLERY CHAPTERS ON A WIDE SCREEN
+   The overlay treatment crops the photographs, so on a desktop the
+   chapters go back to alternating columns: title one side, the whole
+   photograph the other, swapping down the page. Phones keep the
+   overlay, where a full-bleed preview reads better.
+   ============================================================ */
+@media (min-width: 769px) {
+  .gallery-chapters { gap: var(--sp-3); }
+
+  .gallery-chapter {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
+    min-height: 0;
+    background: none;
+    border-top: var(--rule) solid var(--hairline);
+  }
+  .gallery-chapters .gallery-chapter:last-child {
+    border-bottom: var(--rule) solid var(--hairline);
+  }
+
+  /* the photograph takes its own column rather than lying behind the type */
+  .gallery-chapter__media {
+    position: static;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+  .gallery-chapter__media img { object-position: 50% 50%; }
+
+  /* no scrim is needed once the type has its own column */
+  .gallery-chapter::after { content: none; }
+
+  .gallery-chapter__body {
+    position: static;
+    align-content: center;
+    justify-self: stretch;
+    text-align: left;
+    padding: var(--sp-5) var(--sp-4);
+    max-width: none;
+  }
+  .gallery-chapter:nth-child(even) .gallery-chapter__body {
+    justify-self: stretch;
+    text-align: left;
+  }
+
+  /* alternate which side the photograph sits on */
+  .gallery-chapter:nth-child(even) .gallery-chapter__media { order: 2; }
 }
