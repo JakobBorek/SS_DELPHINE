@@ -118,16 +118,16 @@ for (const unapprovedContact of ['charter@ssdelphne.com', '+377 97 97 97 97', 'M
   assert.doesNotMatch(home.body.textContent, new RegExp(unapprovedContact.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'), `unapproved mock contact must not ship: ${unapprovedContact}`);
 }
 const galleryItems = [...discover.querySelectorAll('[data-gallery-item]')];
-assert.equal(galleryItems.length, 33, 'the explore gallery must contain the thirty-three owned photographs');
+assert.equal(galleryItems.length, 32, 'the explore gallery must contain the thirty-two owned photographs');
 assert.deepEqual(
   Object.fromEntries(['deck', 'salons', 'cabins', 'wellness', 'heritage'].map((category) => [
     category,
     galleryItems.filter((item) => item.dataset.category === category).length
   ])),
-  { deck: 7, salons: 8, cabins: 8, wellness: 5, heritage: 5 },
+  { deck: 7, salons: 8, cabins: 7, wellness: 5, heritage: 5 },
   'gallery categories must keep their intended editorial balance'
 );
-assert.equal(new Set(galleryItems.map((item) => item.dataset.title)).size, 33, 'gallery titles must be unique');
+assert.equal(new Set(galleryItems.map((item) => item.dataset.title)).size, 32, 'gallery titles must be unique');
 
 // The archive opens as chapters, not as every photograph at once.
 assert.equal(discover.querySelectorAll('[data-gallery-open]').length, 5, 'the gallery must open as five chapter banners');
@@ -263,3 +263,6 @@ assert.ok(contrast(token('gold'), token('navy-deep')) >= 3, 'gold focus indicato
 
 for (const dom of doms.values()) dom.window.close();
 console.log(`Production checks passed: focused homepage, ${expectedDiscover.length - 1} deep chapters, ${localAssets.size} local assets and ${gzippedBytes} gzipped JS bytes.`);
+
+// The Blue guest suite duplicated the SS Delphine Suite under a different name.
+assert.doesNotMatch(discover.documentElement.outerHTML, /guest-suite-/, 'the duplicated cabin must not return');

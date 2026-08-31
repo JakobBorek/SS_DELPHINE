@@ -274,17 +274,17 @@ const createDom = (html = homeHtml, { reduced = false, cssDriven = false, url = 
   assert.ok(sets.every((set) => set.hidden), 'no intermediate chapter page may appear');
 
   assert.equal(document.querySelector('[data-lightbox-title]').textContent, 'H&A Dodge Suite', 'the carousel starts on the first photograph of the chapter');
-  assert.equal(document.querySelector('[data-lightbox-position]').textContent, '1 of 8', 'the carousel is scoped to the chosen chapter');
+  assert.equal(document.querySelector('[data-lightbox-position]').textContent, '1 of 7', 'the carousel is scoped to the chosen chapter');
   assert.equal(document.documentElement.style.overflow, 'hidden', 'the open carousel must lock page scrolling');
 
   document.querySelector('[data-lightbox-next]').click();
-  assert.equal(document.querySelector('[data-lightbox-position]').textContent, '2 of 8', 'Next must advance within the chapter');
-  assert.equal(document.querySelector('[data-lightbox-title]').textContent, 'Blue guest suite', 'Next must advance the photograph');
+  assert.equal(document.querySelector('[data-lightbox-position]').textContent, '2 of 7', 'Next must advance within the chapter');
+  assert.equal(document.querySelector('[data-lightbox-title]').textContent, 'SS Delphine Suite', 'Next must advance the photograph');
 
   lightbox.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
-  assert.equal(document.querySelector('[data-lightbox-position]').textContent, '1 of 8', 'Left arrow must reverse');
+  assert.equal(document.querySelector('[data-lightbox-position]').textContent, '1 of 7', 'Left arrow must reverse');
   lightbox.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
-  assert.equal(document.querySelector('[data-lightbox-position]').textContent, '8 of 8', 'the carousel wraps inside the chapter');
+  assert.equal(document.querySelector('[data-lightbox-position]').textContent, '7 of 7', 'the carousel wraps inside the chapter');
 
   document.querySelector('[data-lightbox-close]').click();
   assert.equal(lightbox.open, false, 'Close must dismiss the carousel');

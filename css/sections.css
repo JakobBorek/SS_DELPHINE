@@ -869,9 +869,9 @@ html.no-js .gallery__filters {
   box-shadow: var(--sp-2) var(--sp-2) 0 var(--hairline-gold);
 }
 .inquiry__panel {
-  width: min(100%, 46rem);
+  width: min(100%, 37rem);
   margin-inline: auto;
-  padding: var(--sp-6) var(--sp-5) var(--sp-5);
+  padding: var(--sp-5) var(--sp-4) var(--sp-4);
 }
 .inquiry__welcome,
 .inquiry__form-title {
@@ -1387,7 +1387,7 @@ html.no-js .gallery__filters {
   position: relative;
   display: grid;
   align-items: end;
-  min-height: 17rem;
+  min-height: 13.5rem;
   padding: 0;
   border: 0;
   background: var(--navy);
@@ -1447,7 +1447,7 @@ html.no-js .gallery__filters {
   font-family: var(--font-display);
   font-variation-settings: 'wdth' var(--wdth-display);
   font-weight: var(--wt-display);
-  font-size: var(--fs-display-m);
+  font-size: calc(var(--fs-display-m) * 0.8);
   line-height: var(--lh-display);
   letter-spacing: var(--tr-display);
   color: var(--cream);
@@ -1465,7 +1465,7 @@ html.no-js .gallery__filters {
 }
 
 @media (max-width: 768px) {
-  .gallery-chapter { min-height: 13rem; }
+  .gallery-chapter { min-height: 10.5rem; }
   .gallery-chapter__body { padding: var(--sp-3); max-width: none; }
   .gallery-chapter:nth-child(even) .gallery-chapter__body {
     justify-self: start;
@@ -1542,4 +1542,18 @@ html.no-js .gallery__filters {
    disturbing that reading order. */
 @media (min-width: 769px) {
   .discover-panel--reverse .discover-panel__media { order: -1; }
+}
+
+/* ---------- Cabins: the room holds while the description travels ----------
+   On a wide screen the carousel stays put, centred against the copy, so the
+   reader compares each room against the text rather than losing it off the
+   top of the screen. */
+@media (min-width: 769px) {
+  .discover-panel[id='cabins'] .discover-panel__frame { align-items: start; }
+  .cabin-carousel {
+    position: sticky;
+    top: calc(var(--header-h) + var(--sp-4));
+    align-self: start;
+    max-height: calc(100svh - var(--header-h) - var(--sp-8));
+  }
 }

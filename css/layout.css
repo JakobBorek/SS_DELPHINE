@@ -78,7 +78,7 @@
 .site-menu__shell {
   position: absolute;
   inset: 0 0 0 auto;
-  width: min(94%, 34rem);   /* the panel ends where the list ends */
+  width: min(92%, 27rem);   /* the panel ends where the list ends */
   height: 100%;
   min-height: 100%;
   display: grid;
@@ -101,7 +101,7 @@
   /* the mark sits centred above the list rather than pinned to a corner */
   display: grid;
   justify-items: center;
-  padding-block: var(--sp-6) var(--sp-4);
+  padding-block: var(--sp-4) var(--sp-3);
   align-items: center;
   justify-content: center;
   background: var(--navy-deep);
@@ -294,7 +294,7 @@ html.no-js .nojs-nav {
    so it keeps its own proportion. It replaces the monogram-plus-wordmark
    pairing in both the header and the menu. */
 .site-menu__logo {
-  height: clamp(3.25rem, 9vw, 5rem);
+  height: clamp(2.6rem, 7vw, 4rem);
 }
 @media (max-width: 520px) {
   .site-mark__logo { height: 2.7rem; }   /* 25% smaller on a phone */
@@ -309,7 +309,7 @@ html.no-js .nojs-nav {
   align-self: start;
   width: min(100%, 46rem);
   margin-inline: auto;
-  padding-block: var(--sp-4) var(--sp-10);
+  padding-block: var(--sp-2) var(--sp-8);
 }
 
 .site-menu__list {
@@ -324,15 +324,15 @@ html.no-js .nojs-nav {
   justify-content: center;
   gap: var(--sp-2);
   width: 100%;
-  min-block-size: var(--sp-10);
-  padding: var(--sp-3) var(--sp-2);
+  min-block-size: var(--sp-8);
+  padding: var(--sp-2) var(--sp-2);
   border: 0;
   background: none;
   cursor: pointer;
   font-family: var(--font-display);
   font-variation-settings: 'wdth' var(--wdth-display);
   font-weight: var(--wt-display);
-  font-size: calc(var(--fs-display-m) * 0.82);
+  font-size: calc(var(--fs-display-m) * 0.66);
   line-height: var(--lh-display);
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -363,7 +363,7 @@ html.no-js .nojs-nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-block-size: var(--sp-8);
+  min-block-size: var(--sp-6);
   padding: var(--sp-2);
   font-family: var(--font-body);
   font-variation-settings: 'wdth' var(--wdth-body);
@@ -378,7 +378,7 @@ html.no-js .nojs-nav {
 
 
 @media (max-width: 768px) {
-  .site-menu__top { font-size: calc(var(--fs-display-m) * 0.82); }
+  .site-menu__top { font-size: calc(var(--fs-display-m) * 0.66); }
   .site-menu__nav { padding-block: var(--sp-2) var(--sp-8); }
   .site-menu__header { padding-block: var(--sp-5) var(--sp-3); }
 }
