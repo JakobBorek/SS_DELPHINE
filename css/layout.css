@@ -48,7 +48,7 @@
 
 .site-mark__logo {
   width: auto;
-  height: 3rem;
+  height: 4.5rem;
   display: block;
 }
 
@@ -78,7 +78,7 @@
 .site-menu__shell {
   position: absolute;
   inset: 0 0 0 auto;
-  width: min(86%, var(--content-max));
+  width: min(94%, 34rem);   /* the panel ends where the list ends */
   height: 100%;
   min-height: 100%;
   display: grid;
@@ -104,7 +104,6 @@
   padding-block: var(--sp-6) var(--sp-4);
   align-items: center;
   justify-content: center;
-  border-bottom: var(--rule) solid var(--hairline);
   background: var(--navy-deep);
 }
 
@@ -298,7 +297,7 @@ html.no-js .nojs-nav {
   height: clamp(3.25rem, 9vw, 5rem);
 }
 @media (max-width: 520px) {
-  .site-mark__logo { height: 2.4rem; }
+  .site-mark__logo { height: 3.6rem; }
 }
 
 /* ============================================================
@@ -333,7 +332,7 @@ html.no-js .nojs-nav {
   font-family: var(--font-display);
   font-variation-settings: 'wdth' var(--wdth-display);
   font-weight: var(--wt-display);
-  font-size: var(--fs-display-m);
+  font-size: calc(var(--fs-display-m) * 0.82);
   line-height: var(--lh-display);
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -368,7 +367,7 @@ html.no-js .nojs-nav {
   padding: var(--sp-2);
   font-family: var(--font-body);
   font-variation-settings: 'wdth' var(--wdth-body);
-  font-size: var(--fs-body-l);
+  font-size: var(--fs-body);
   letter-spacing: 0.02em;
   color: var(--cream-muted);
   text-decoration: none;
@@ -379,7 +378,7 @@ html.no-js .nojs-nav {
 
 
 @media (max-width: 768px) {
-  .site-menu__top { font-size: var(--fs-display-m); }
+  .site-menu__top { font-size: calc(var(--fs-display-m) * 0.82); }
   .site-menu__nav { padding-block: var(--sp-2) var(--sp-8); }
   .site-menu__header { padding-block: var(--sp-5) var(--sp-3); }
 }

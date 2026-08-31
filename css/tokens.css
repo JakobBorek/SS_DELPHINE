@@ -161,7 +161,7 @@
   --gutter: clamp(1.25rem, 4vw, 3rem);
   --content-max: 87.5rem;  /* 1400 */
   --measure: 68ch;         /* text never exceeds ~70 characters */
-  --header-h: 4.5rem;
+  --header-h: 6.25rem;      /* taller, so the enlarged mark has room */
 
   /* ---------- Lines & motion ---------- */
   --rule: 1px;             /* hairline. Never thicker. */
