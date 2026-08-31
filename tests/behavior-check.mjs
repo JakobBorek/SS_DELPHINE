@@ -211,26 +211,28 @@ const createDom = (html = homeHtml, { reduced = false, cssDriven = false, url = 
 
 {
   const { dom, window } = createDom();
-  let top = 0;
+  let top = 900;   // below the point where filling begins
   const statement = window.document.querySelector('.statement');
   statement.getBoundingClientRect = () => ({ top, height: 1800 });
+  // The fill now begins as the opening line rises into view (top ~= 0.82vh),
+  // not once the section has locked to the top of the screen.
   Object.defineProperty(window, 'innerHeight', { configurable: true, value: 1000 });
   window.eval(scripts.statement);
   const chars = [...window.document.querySelectorAll('.statement__char')];
   assert.ok(chars.every((char) => char.dataset.lit === 'false'), 'fallback must begin unfilled');
 
-  top = -400;
+  top = 190;
   window.dispatchEvent(new window.Event('scroll'));
   const midpoint = chars.findIndex((char) => char.dataset.lit !== 'true');
   assert.ok(midpoint > chars.length * 0.4 && midpoint < chars.length * 0.6, 'mid-scroll must fill a character-level prefix');
   assert.ok(chars.slice(0, midpoint).every((char) => char.dataset.lit === 'true'), 'lit characters must form one contiguous prefix');
   assert.ok(chars.slice(midpoint).every((char) => char.dataset.lit === 'false'), 'unlit characters must follow the prefix');
 
-  top = -800;
+  top = -440;
   window.dispatchEvent(new window.Event('scroll'));
   assert.ok(chars.every((char) => char.dataset.lit === 'true'), 'full scroll must fill every character');
 
-  top = 0;
+  top = 900;
   window.dispatchEvent(new window.Event('scroll'));
   assert.ok(chars.every((char) => char.dataset.lit === 'false'), 'reverse scroll must un-fill every character');
   dom.window.close();

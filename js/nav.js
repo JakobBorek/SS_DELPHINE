@@ -170,3 +170,42 @@
     header.dataset.scrolled = 'true';
   }
 })();
+
+/* ---------- Hero video ----------
+   The attributes alone are not enough in practice. Safari and iOS will
+   refuse or silently defer autoplay, so set the properties in script as
+   well and ask for playback again on the events where the browser is
+   willing to grant it. Nothing here unmutes: a muted, inline video is the
+   only kind that is allowed to start on its own. */
+(() => {
+  const video = document.querySelector('[data-hero-video]');
+  if (!video) return;
+
+  video.muted = true;               // property, not just the attribute
+  video.defaultMuted = true;
+  video.playsInline = true;
+  video.setAttribute('muted', '');
+
+  let settled = false;
+  const attempt = () => {
+    if (settled) return;
+    const p = video.play();
+    if (p && typeof p.then === 'function') {
+      p.then(() => { settled = true; }).catch(() => { /* try again on the next cue */ });
+    } else {
+      settled = true;
+    }
+  };
+
+  ['loadedmetadata', 'loadeddata', 'canplay'].forEach((e) => video.addEventListener(e, attempt));
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) attempt(); });
+  window.addEventListener('pageshow', attempt);
+
+  /* Low Power Mode and some privacy settings block autoplay outright. If the
+     browser is still refusing, start on the reader's first gesture. */
+  const onGesture = () => { attempt(); };
+  ['pointerdown', 'touchstart', 'keydown', 'scroll'].forEach((e) =>
+    window.addEventListener(e, onGesture, { once: true, passive: true }));
+
+  attempt();
+})();

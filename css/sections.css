@@ -1053,7 +1053,9 @@ html.no-js .gallery__filters {
   }
   .editorial__media--aerial picture,
   .editorial__media--promenade picture {
-    width: calc(100% - var(--gutter));
+    /* edge to edge on a phone; the inset is a desktop device only */
+    width: 100%;
+    margin: 0;
   }
   .editorial__media--aerial picture {
     width: 100%;

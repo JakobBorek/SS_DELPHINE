@@ -72,8 +72,10 @@
       const rect = section.getBoundingClientRect();
       const viewport = window.innerHeight || document.documentElement.clientHeight;
       const distance = Math.max(1, (rect.height || viewport * 1.8) - viewport);
-      const progress = Math.min(1, Math.max(0, -rect.top / distance));
-      if (progress < 0.2) return;
+      const begin = viewport * 0.82;
+      const finish = -distance * 0.55;
+      const progress = Math.min(1, Math.max(0, (begin - rect.top) / (begin - finish)));
+      if (progress < 0.25) return;
 
       window.removeEventListener('scroll', checkTimeline);
       const first = getComputedStyle(chars[0]).color;
@@ -102,7 +104,12 @@
       const rect = section.getBoundingClientRect();
       const viewport = window.innerHeight || document.documentElement.clientHeight;
       const distance = Math.max(1, (rect.height || viewport * 1.8) - viewport);
-      const progress = Math.min(1, Math.max(0, -rect.top / distance));
+      /* Begin while the opening line is still rising into view, rather than
+         waiting for the section to lock to the top of the screen. A full
+         screen of unlit text reads as though the page has stopped. */
+      const begin = viewport * 0.82;
+      const finish = -distance * 0.55;
+      const progress = Math.min(1, Math.max(0, (begin - rect.top) / (begin - finish)));
       const lit = Math.round(progress * total);
 
       chars.forEach((char, index) => {

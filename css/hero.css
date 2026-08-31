@@ -141,8 +141,11 @@ html.no-js .statement__char {
   }
 
   html.statement-css .statement__char {
-    --fill-start: 36%;
-    --fill-span: 26.5;
+    /* Begin as the first line appears from under the hero, not once the
+       section has locked to a full screen of unlit text: a screen that is
+       entirely dim reads as though the page has stopped. */
+    --fill-start: 14%;
+    --fill-span: 34;
     --slice: calc(var(--fill-span) / var(--n, 100));
     animation: statement-lit 1s linear both;
     animation-timeline: --statement;
