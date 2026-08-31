@@ -633,6 +633,10 @@ html.no-js .gallery__filters {
 
 .gallery-lightbox__figure {
   position: relative;
+  /* A fixed viewing area. Without this the box resized to each
+     photograph's aspect ratio, so the header and footer jumped on every
+     step and the whole modal appeared to contract. */
+  block-size: min(68vh, 38rem);
   min-height: 0;
   min-width: 0;
   overflow: hidden;          /* the photograph can never spill onto the bars */

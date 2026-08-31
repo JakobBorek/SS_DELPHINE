@@ -23,6 +23,7 @@ html {
   /* Reserve the scrollbar so locking scroll for a modal cannot shift the
      page sideways, which is what made opening a photograph feel like a jump. */
   scrollbar-gutter: stable;
+  -webkit-tap-highlight-color: transparent;
 }
 body, h1, h2, h3, h4, p, figure, blockquote, dl, dd, ul, ol { margin: 0; }
 ul[class], ol[class] { list-style: none; padding: 0; }
@@ -248,4 +249,14 @@ html.no-js .readmore__toggle { display: none; }
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
+}
+
+/* No tap highlight. Touch devices paint a grey box over whatever was
+   tapped, which reads as a stray outline. Keyboard focus is unaffected:
+   the visible ring comes from :focus-visible above. */
+button,
+a,
+summary,
+[role='button'] {
+  -webkit-tap-highlight-color: transparent;
 }

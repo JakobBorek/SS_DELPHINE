@@ -97,24 +97,42 @@
   });
 
   /* ---------- Lightbox ---------- */
+  /* One image element for the life of the modal. Replacing the whole
+     figure on every step emptied it first, which is what produced the
+     flash between photographs. */
+  let plate = null;
+  const ensurePlate = () => {
+    if (plate || !figure) return plate;
+    plate = document.createElement('img');
+    plate.alt = '';
+    plate.decoding = 'async';
+    figure.replaceChildren(plate);
+    return plate;
+  };
+
+  const sourceFor = (item) => item?.getAttribute('href') || '';
+
+  /* Warm the neighbours so a step shows an image already in cache. */
+  const preload = () => {
+    if (scope.length < 2) return;
+    [index + 1, index - 1].forEach((n) => {
+      const neighbour = scope[(n + scope.length) % scope.length];
+      const url = sourceFor(neighbour);
+      if (url) { const img = new window.Image(); img.src = url; }
+    });
+  };
+
   const render = () => {
     const item = scope[index];
     if (!item || !figure) return;
-    const source = item.querySelector('picture')?.cloneNode(true);
-    figure.replaceChildren();
-    if (source) {
-      // The grid row sizes the image; see .gallery-lightbox__figure.
-      source.querySelectorAll('img').forEach((img) => {
-        img.removeAttribute('loading');
-        img.removeAttribute('sizes');
-        img.removeAttribute('srcset');
-        img.src = item.getAttribute('href');
-      });
-      figure.appendChild(source);
-    }
+    const img = ensurePlate();
+    const url = sourceFor(item);
+    if (img && img.getAttribute('src') !== url) img.src = url;
+    if (img) img.alt = item.querySelector('img')?.alt || '';
     if (titleEl) titleEl.textContent = item.dataset.title || '';
     if (categoryEl) categoryEl.textContent = (item.dataset.categoryLabel || '').replace('&amp;', '&');
     if (positionEl) positionEl.textContent = `${index + 1} of ${scope.length}`;
+    preload();
   };
 
   const step = (delta) => {
