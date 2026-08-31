@@ -864,19 +864,21 @@ html.no-js .gallery__filters {
 .inquiry__frame {
   /* single column now that the contact side is gone */
   display: block;
+  /* the card itself is the thing that shrinks, not its contents */
+  width: min(100%, 44rem);
+  margin-inline: auto;
   border: var(--sp-1) solid var(--gold);
   background: var(--cream);
   box-shadow: var(--sp-2) var(--sp-2) 0 var(--hairline-gold);
 }
 .inquiry__panel {
-  width: min(100%, 26rem);
-  margin-inline: auto;
-  padding: var(--sp-4) var(--sp-3) var(--sp-3);
+  width: 100%;
+  padding: var(--sp-6) var(--sp-5) var(--sp-5);
 }
 .inquiry__form-title {
   font-family: var(--font-display);
   font-variation-settings: 'wdth' var(--wdth-display);
-  font-size: calc(var(--fs-display-m) * 0.7);
+  font-size: var(--fs-display-m);
   text-align: center;
   font-weight: var(--wt-display);
   line-height: var(--lh-display);
@@ -892,7 +894,7 @@ html.no-js .gallery__filters {
   padding-top: var(--sp-4);
   border-top: var(--rule) solid var(--hairline-gold);
 }
-.inquiry__signature img { width: auto; height: 1.9rem; }
+.inquiry__signature img { width: auto; height: 2.4rem; }
 .inquiry__signature p {
   font-family: var(--font-display);
   font-variation-settings: 'wdth' var(--wdth-display);
