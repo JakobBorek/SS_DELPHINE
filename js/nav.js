@@ -159,6 +159,27 @@
     toggle?.setAttribute('aria-expanded', 'false');
   });
 
+  /* ---------- Menu groups ----------
+     About and Onboard open in place. Only one is open at a time, so the
+     list never grows past the screen. */
+  const disclosures = [...document.querySelectorAll('.site-menu__disclosure')];
+  disclosures.forEach((button) => {
+    const panel = document.getElementById(button.getAttribute('aria-controls'));
+    if (!panel) return;
+    button.addEventListener('click', () => {
+      const open = button.getAttribute('aria-expanded') === 'true';
+      disclosures.forEach((other) => {
+        const otherPanel = document.getElementById(other.getAttribute('aria-controls'));
+        other.setAttribute('aria-expanded', 'false');
+        if (otherPanel) otherPanel.hidden = true;
+      });
+      if (!open) {
+        button.setAttribute('aria-expanded', 'true');
+        panel.hidden = false;
+      }
+    });
+  });
+
   const header = document.querySelector('[data-site-header]');
   const hero = document.querySelector('.hero');
 

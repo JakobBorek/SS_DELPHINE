@@ -36,27 +36,36 @@
     </div>
     <h2 class="visually-hidden" id="site-menu-title">Site navigation</h2>
     <nav class="site-menu__nav" aria-label="Primary">
-      <div>
-        <p class="site-menu__label">Main journey</p>
-        <ul class="site-menu__primary">
-          <li><a href="/"><span>Home</span><span class="site-menu__index" aria-hidden="true">01</span></a></li>
-          <li><a href="/#the-yacht"><span>The Yacht</span><span class="site-menu__index" aria-hidden="true">02</span></a></li>
-          <li><a href="/#private-charter"><span>Private Charter</span><span class="site-menu__index" aria-hidden="true">03</span></a></li>
-          <li><a href="/#inquiry"><span>Inquiry</span><span class="site-menu__index" aria-hidden="true">04</span></a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="site-menu__label">Discover the yacht</p>
-        <ul class="site-menu__secondary">
-          <li><a href="/discover.html#technical-specifications"><span>Technical Specifications</span><span class="site-menu__index" aria-hidden="true">01</span></a></li>
-          <li><a href="/discover.html#the-refit"><span>The Refit</span><span class="site-menu__index" aria-hidden="true">02</span></a></li>
-          <li><a href="/discover.html#interiors"><span>Interiors</span><span class="site-menu__index" aria-hidden="true">03</span></a></li>
-          <li><a href="/discover.html#cabins"><span>Cabins</span><span class="site-menu__index" aria-hidden="true">04</span></a></li>
-          <li><a href="/discover.html#toys-and-tenders"><span>Toys and Tenders</span><span class="site-menu__index" aria-hidden="true">05</span></a></li>
-          <li><a href="/discover.html#charter"><span>Charter Details</span><span class="site-menu__index" aria-hidden="true">06</span></a></li>
-          <li><a href="/discover.html#gallery"><span>Gallery</span><span class="site-menu__index" aria-hidden="true">07</span></a></li>
-        </ul>
-      </div>
+      <ul class="site-menu__list">
+        <li><a class="site-menu__top" href="/">Home</a></li>
+
+        <li class="site-menu__group">
+          <button class="site-menu__top site-menu__disclosure" type="button" aria-expanded="false" aria-controls="menu-about">
+            About<span class="site-menu__caret" aria-hidden="true"></span>
+          </button>
+          <ul class="site-menu__sub" id="menu-about" hidden>
+            <li><a href="/#the-yacht">The Yacht</a></li>
+            <li><a href="/discover.html#the-refit">The Refit</a></li>
+            <li><a href="/discover.html#technical-specifications">Technical Specifications</a></li>
+          </ul>
+        </li>
+
+        <li class="site-menu__group">
+          <button class="site-menu__top site-menu__disclosure" type="button" aria-expanded="false" aria-controls="menu-onboard">
+            Onboard<span class="site-menu__caret" aria-hidden="true"></span>
+          </button>
+          <ul class="site-menu__sub" id="menu-onboard" hidden>
+            <li><a href="/discover.html#interiors">Interiors and Amenities</a></li>
+            <li><a href="/discover.html#cabins">Cabins</a></li>
+            <li><a href="/discover.html#toys-and-tenders">Toys and Tenders</a></li>
+            <li><a href="/#private-charter">Private Charter</a></li>
+            <li><a href="/discover.html#charter">Charter Details</a></li>
+          </ul>
+        </li>
+
+        <li><a class="site-menu__top" href="/discover.html#gallery">Gallery</a></li>
+        <li><a class="site-menu__top" href="/#inquiry">Inquiry</a></li>
+      </ul>
     </nav>
   </div>
 </dialog>
