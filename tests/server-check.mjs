@@ -17,7 +17,7 @@ const resources = new Map([
   ['/js/discover.js', 'text/javascript'],
   ['/js/gallery.js', 'text/javascript'],
   ['/assets/fonts/archivo-wdth-latin.woff2', 'font/woff2'],
-  ['/media/hero/delphine-hero-480.mp4', 'video/mp4'],
+  ['/media/hero/delphine-hero-2160.mp4', 'video/mp4'],
   ['/media/gallery/yacht-dusk-side-960.avif', 'image/avif'],
   ['/media/gallery/yacht-dusk-side-960.webp', 'image/webp'],
   ['/site.webmanifest', 'application/manifest+json'],

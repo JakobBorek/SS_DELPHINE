@@ -197,3 +197,17 @@ html.no-js .statement__char {
     --fill-span: 18.5;
   }
 }
+
+/* ---------- No start-playback affordance ----------
+   When Safari declines autoplay it draws its own play glyph over the
+   poster. The element has no controls, so this is the only way to remove
+   it; playback is still requested in script. */
+.hero__video::-webkit-media-controls,
+.hero__video::-webkit-media-controls-start-playback-button,
+.hero__video::-webkit-media-controls-panel,
+.hero__video::-webkit-media-controls-overlay-play-button {
+  display: none !important;
+  -webkit-appearance: none;
+  appearance: none;
+  opacity: 0;
+}
