@@ -700,8 +700,11 @@ html.no-js .gallery__filters {
   }
 
   .inquiry__frame {
-    grid-template-columns: 1fr;
-  }
+  display: block;
+  border: var(--sp-1) solid var(--gold);
+  background: var(--cream);
+  box-shadow: var(--sp-2) var(--sp-2) 0 var(--hairline-gold);
+}
 
   .inquiry__intro,
   .inquiry__panel {
@@ -859,21 +862,16 @@ html.no-js .gallery__filters {
 }
 
 .inquiry__frame {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* single column now that the contact side is gone */
+  display: block;
   border: var(--sp-1) solid var(--gold);
   background: var(--cream);
   box-shadow: var(--sp-2) var(--sp-2) 0 var(--hairline-gold);
 }
-.inquiry__intro,
 .inquiry__panel {
-  padding: var(--sp-8);
-  color: var(--navy-deep);
-}
-.inquiry__intro {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
+  width: min(100%, 46rem);
+  margin-inline: auto;
+  padding: var(--sp-6) var(--sp-5) var(--sp-5);
 }
 .inquiry__welcome,
 .inquiry__form-title {
@@ -886,58 +884,13 @@ html.no-js .gallery__filters {
   color: var(--navy-deep);
   text-wrap: balance;
 }
-.inquiry__lede {
-  margin-inline: auto;
-  font-size: var(--fs-body-s);
-  color: var(--navy-soft);
-  max-width: var(--measure);
-}
-.inquiry__details {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--sp-4);
-  width: 100%;
-  margin: var(--sp-6) 0 0;
-}
-.inquiry__details > div {
-  position: relative;
-  padding: var(--sp-2) 0 0 var(--sp-3);
-  border-top: var(--rule) solid var(--hairline-gold);
-  text-align: left;
-}
-.inquiry__details > div::before {
-  content: '';
-  position: absolute;
-  top: var(--sp-2);
-  left: 0;
-  width: var(--sp-1);
-  height: var(--sp-1);
-  border: var(--rule) solid var(--gold);
-  border-radius: 50%;
-}
-.inquiry__details dt {
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono-s);
-  letter-spacing: var(--tr-mono);
-  text-transform: uppercase;
-  color: var(--navy-soft);
-  margin-bottom: var(--sp-1);
-}
-.inquiry__details dd {
-  margin: 0;
-  font-size: var(--fs-body-s);
-  color: var(--navy-deep);
-}
-.inquiry__details a {
-  text-decoration-color: var(--gold);
-  text-underline-offset: 0.12em;
-}
 .inquiry__signature {
   display: grid;
   justify-items: center;
   gap: var(--sp-1);
-  margin-top: auto;
-  padding-top: var(--sp-8);
+  margin-top: var(--sp-5);
+  padding-top: var(--sp-4);
+  border-top: var(--rule) solid var(--hairline-gold);
 }
 .inquiry__signature img {
   width: auto;
@@ -953,13 +906,6 @@ html.no-js .gallery__filters {
   color: var(--navy-deep);
 }
 
-.inquiry__panel {
-  align-self: center;
-  margin: var(--sp-3);
-  border: var(--rule) solid var(--hairline-gold);
-  background: var(--cream);
-  box-shadow: 0 var(--sp-2) var(--sp-6) var(--panel-shadow);
-}
 .inquiry__form-title {
   text-align: center;
 }
@@ -1489,7 +1435,6 @@ html.no-js .gallery__filters {
   position: relative;
   z-index: 2;
   display: grid;
-  gap: var(--sp-1);
   padding: var(--sp-4);
   max-width: 46ch;
 }

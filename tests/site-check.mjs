@@ -97,13 +97,10 @@ assert.equal(inquiryForm?.hasAttribute('action'), false, 'the display-only form 
 assert.equal(inquiryForm?.hasAttribute('method'), false, 'the display-only form must not have a method');
 assert.ok(inquiryForm?.querySelector('fieldset[disabled]'), 'the display-only form must use a disabled fieldset');
 assert.ok(inquiryForm?.querySelector('button[type="submit"][disabled]'), 'the display-only submit button must remain disabled');
-const inquiryTerms = [...home.querySelectorAll('.inquiry__details dt')].map((n) => n.textContent.trim());
-assert.deepEqual(inquiryTerms, ['Email', 'Telephone', 'Location', 'Instagram'], 'inquiry must list email, telephone, location and Instagram');
-assert.ok(
-  [...home.querySelectorAll('.inquiry__details dd')].slice(0, 3).every((n) => n.textContent.trim() === 'To be confirmed'),
-  'unapproved inquiry details must remain explicit placeholders'
-);
-assert.equal(home.querySelector('.inquiry__details a')?.getAttribute('href'), 'https://www.instagram.com/ssdelphine', 'the inquiry Instagram detail must use the approved account');
+// The card carries the form alone; the contact column was removed.
+assert.equal(home.querySelectorAll('.inquiry__details').length, 0, 'the inquiry contact column must not return');
+assert.equal(home.querySelectorAll('.inquiry__welcome').length, 0, 'the inquiry welcome heading must not return');
+assert.ok(home.querySelector('.inquiry__panel .inquiry-form'), 'the inquiry card must carry the form');
 assert.equal(home.querySelector('.inquiry__signature img')?.getAttribute('src'), '/assets/logo/ss-delphine-d.svg', 'the inquiry must use the official monogram');
 const footerTerms = [...home.querySelectorAll('.site-footer__contact dt')].map((n) => n.textContent.trim());
 assert.deepEqual(footerTerms, ['Email', 'Telephone', 'Location'], 'the footer must carry the same placeholder details');
