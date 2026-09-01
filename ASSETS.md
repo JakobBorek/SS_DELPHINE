@@ -72,8 +72,7 @@ regenerates them.
 |---|---|---|
 | `delphine-hero-1080.mp4` | H.264, 1920x1080, CRF 28, faststart, no audio | 4.23 MB |
 | `delphine-hero-1080.webm` | VP9, 1920x1080, CRF 46 | 3.60 MB |
-| `delphine-hero-720.mp4` | H.264, 1280x720, CRF 29, for small screens | 1.65 MB |
-| `delphine-hero-480.mp4` | H.264, 854x480, CRF 30, for phone screens | 0.55 MB |
+| `delphine-hero-720.mp4` | H.264, 1280x720, served to screens up to 700px | 0.62 MB |
 | `delphine-hero-poster.jpg` | Poster, first frame of the loop (t=39) | 0.17 MB |
 | `delphine-hero-poster.webp` | Poster | 0.09 MB |
 | `delphine-hero-poster.avif` | Poster | 0.07 MB |

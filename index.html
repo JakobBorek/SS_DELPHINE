@@ -101,14 +101,15 @@
 
 <main id="main-content">
   <section class="hero" id="hero" aria-label="SS Delphine">
-    <img class="hero__still" src="/media/hero/delphine-hero-poster.webp" alt="" aria-hidden="true"
-         width="1920" height="1080" fetchpriority="high" decoding="async">
     <video class="hero__video" data-hero-video muted autoplay loop playsinline preload="auto" disablepictureinpicture disableremoteplayback
            poster="/media/hero/delphine-hero-poster.webp" aria-hidden="true" tabindex="-1">
       <source src="/media/hero/delphine-hero-2160.mp4" type="video/mp4" media="(min-width: 1200px)">
+      <source src="/media/hero/delphine-hero-720.mp4" type="video/mp4" media="(max-width: 700px)">
       <source src="/media/hero/delphine-hero-1080.mp4" type="video/mp4">
       <source src="/media/hero/delphine-hero-1080.webm" type="video/webm">
     </video>
+    <img class="hero__still" src="/media/hero/delphine-hero-poster.webp" alt="" aria-hidden="true"
+         width="1920" height="1080" fetchpriority="high" decoding="async">
     <div class="hero__scrim" aria-hidden="true"></div>
     <div class="hero__mark">
       <h1 class="hero__lockup"><span class="hero__wordmark">SS Delphine</span></h1>

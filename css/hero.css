@@ -12,17 +12,6 @@
   padding-bottom: clamp(3.5rem, 10vh, 7rem);
 }
 
-/* The still is what the reader sees until there is real playback. It carries
-   the same frame and the same framing as the video, so the swap is invisible. */
-.hero__still {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 42%;
-}
-
 .hero__video {
   position: absolute;
   inset: 0;
@@ -30,23 +19,31 @@
   height: 100%;
   object-fit: cover;
   object-position: 50% 42%;
-  /* THE PLAY BUTTON RULE. iOS refuses autoplay in Low Power Mode, Low Data Mode
-     and some privacy settings, and WebKit then paints its own start-playback
-     glyph over the frame. Hiding ::-webkit-media-controls-* does not reliably
-     remove it on iOS, which is why it kept coming back. So the video element
-     itself is transparent and untouchable until the `playing` event has
-     actually fired. A glyph drawn inside an element with opacity 0 cannot be
-     seen, and pointer-events: none means it cannot be tapped either. Do not
-     give this element a default opacity of 1. */
-  opacity: 0;
+  /* Never tappable, so WebKit's start-playback glyph cannot be pressed even in
+     the instant before the still covers it. Never transparent, though: Safari
+     will not autoplay a video it considers not visible, and opacity: 0 was
+     enough to stop it starting at all. */
   pointer-events: none;
 }
 
-.hero__video[data-playing='true'] { opacity: 1; }
+/* THE PLAY BUTTON RULE. iOS refuses autoplay under Low Power Mode, Low Data
+   Mode and some privacy settings, and WebKit then paints its own start-playback
+   glyph on the video. Hiding ::-webkit-media-controls-* does not reliably work
+   on iOS. So this still, which is the video's own first frame, sits ON TOP of
+   the video and covers whatever WebKit draws there. It is removed only once the
+   `playing` event has fired, which js/nav.js records on the section. Do not
+   solve this by making the video transparent: that stops autoplay. */
+.hero__still {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 42%;
+  pointer-events: none;
+}
 
-/* Without JavaScript nothing can set data-playing, so let the video show and
-   rely on the autoplay attribute; the still stays behind it either way. */
-html.no-js .hero__video { opacity: 1; }
+.hero[data-playing='true'] .hero__still { opacity: 0; }
 
 .hero__scrim {
   position: absolute;

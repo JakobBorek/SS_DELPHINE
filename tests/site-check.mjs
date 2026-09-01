@@ -190,9 +190,11 @@ assert.ok(home.querySelector('.hero .hero__still'), 'the hero must carry a still
 assert.equal(heroVideo?.hasAttribute('controls'), false, 'the hero video must never expose controls');
 {
   const heroCss = await readFile(path.join(root, 'css/hero.css'), 'utf8');
-  assert.match(heroCss, /\.hero__video\s*\{[^}]*opacity:\s*0;/, 'the hero video must start transparent so no start-playback glyph can show');
-  assert.match(heroCss, /\.hero__video\s*\{[^}]*pointer-events:\s*none;/, 'the hero video must not be tappable while it is standing in');
-  assert.match(heroCss, /\.hero__video\[data-playing='true'\]\s*\{\s*opacity:\s*1;/, 'the hero video must reveal itself only once it is playing');
+  assert.match(heroCss, /\.hero__video\s*\{[^}]*pointer-events:\s*none;/, 'the hero video must never be tappable');
+  assert.doesNotMatch(heroCss, /\.hero__video\s*\{[^}]*opacity:\s*0;/, 'the hero video must never be transparent: Safari will not autoplay a video it treats as invisible');
+  assert.match(heroCss, /\.hero\[data-playing='true'\]\s*\.hero__still\s*\{\s*opacity:\s*0;/, 'the still must cover the video until playback is real');
+  const stillAfterVideo = home.body.innerHTML.indexOf('hero__still') > home.body.innerHTML.indexOf('hero__video');
+  assert.ok(stillAfterVideo, 'the still must follow the video in the markup so it paints on top of it');
 }
 
 for (const dom of doms.values()) {

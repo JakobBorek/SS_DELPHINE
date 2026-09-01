@@ -207,12 +207,14 @@
   video.playsInline = true;
   video.setAttribute('muted', '');
 
-  /* The video only becomes visible once it is genuinely playing. Until then the
-     still behind it stands in, so WebKit's start-playback glyph is drawn inside
-     a transparent element and cannot be seen or tapped. See css/hero.css. */
-  video.addEventListener('playing', () => { video.dataset.playing = 'true'; });
-  video.addEventListener('pause', () => { delete video.dataset.playing; });
-  video.addEventListener('emptied', () => { delete video.dataset.playing; });
+  /* The still covering the video is removed only once playback is real. Until
+     then it hides whatever WebKit paints on the video, including its
+     start-playback glyph. The flag goes on the section, not the video, so no
+     style on the video itself can interfere with autoplay. See css/hero.css. */
+  const stage = video.closest('.hero') || video.parentElement;
+  video.addEventListener('playing', () => { if (stage) stage.dataset.playing = 'true'; });
+  video.addEventListener('pause', () => { if (stage) delete stage.dataset.playing; });
+  video.addEventListener('emptied', () => { if (stage) delete stage.dataset.playing; });
 
   let settled = false;
   const attempt = () => {
@@ -225,7 +227,14 @@
     }
   };
 
-  ['loadedmetadata', 'loadeddata', 'canplay'].forEach((e) => video.addEventListener(e, attempt));
+  ['loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough', 'suspend'].forEach(
+    (e) => video.addEventListener(e, attempt)
+  );
+
+  /* If the element never got as far as picking a source, ask again. */
+  if (video.readyState === 0) {
+    try { video.load(); } catch { /* nothing to reload */ }
+  }
   document.addEventListener('visibilitychange', () => { if (!document.hidden) attempt(); });
   window.addEventListener('pageshow', attempt);
 

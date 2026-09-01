@@ -193,12 +193,21 @@ settings. WebKit then paints its own start-playback glyph over the frame. Hiding
 had done since August, does not reliably remove it on iOS. That is why it kept
 coming back after each attempted fix.
 
-Mechanism: an `<img class="hero__still">` carrying the poster sits behind the
-video with identical framing, and `.hero__video` is `opacity: 0` with
-`pointer-events: none` until the `playing` event has actually fired, at which
-point js/nav.js sets `data-playing="true"`. A glyph drawn inside a transparent,
-untappable element cannot be seen or pressed, whatever WebKit decides to draw.
+Mechanism: an `<img class="hero__still">` carrying the video's own first frame
+sits **on top of** the video with identical `object-fit` and `object-position`,
+covering whatever WebKit paints there. It is removed only once the `playing`
+event has fired, which js/nav.js records as `data-playing` on the section. The
+video itself carries `pointer-events: none` so the glyph can never be pressed.
 
-Guarded by four assertions in tests/site-check.mjs: the still must exist and must
-not lazy-load, the video must carry no `controls`, and hero.css must keep
-`opacity: 0`, `pointer-events: none` and the `[data-playing='true']` reveal.
+**The video must never be given `opacity: 0`.** The first version of this fix did
+exactly that, hiding the video until it played, and it stopped autoplay outright:
+Safari will not autoplay a video it treats as not visible, so the clip only
+started after a tap. Cover the video, do not hide it.
+
+Phones also take `delphine-hero-720.mp4` (0.6 MB) rather than the 1080 encode
+(2.4 MB), because a video that is slow to buffer is a video iOS gives up on.
+
+Guarded by six assertions in tests/site-check.mjs: the still must exist, must not
+lazy-load and must follow the video in the markup; the video must carry no
+`controls`, must keep `pointer-events: none`, and must **not** carry
+`opacity: 0`.
