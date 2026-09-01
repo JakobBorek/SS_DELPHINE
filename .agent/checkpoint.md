@@ -1,22 +1,21 @@
-# Checkpoint 2026-09-01T16:20Z
+# Checkpoint 2026-09-01T20:10Z
+## Task: SS Delphine site — owner feedback rounds
+## Live: https://ss-delphine.vercel.app | repo JakobBorek/SS_DELPHINE | HEAD 7b70e12
 
-## Task: SS Delphine site, owner feedback rounds
-## Live: https://ss-delphine.vercel.app  (repo JakobBorek/SS_DELPHINE, HEAD 0418d33)
-
-## Done today
-- One paragraph per editorial section; brighter Yacht plate (0026 @ t=32); Charter
-  plate is the owner's deck-dining photo (5d30d80)
-- Julius's 18-item pass, 17 shipped (ed695d3, 09b6cb2, 9b8eebf)
-- Hammam -> Turkish bath; Inquiry -> Enquiry, #enquiry anchor + 308 from /inquiry (aa803ce)
-- Focus ring deleted entirely, at the owner's instruction (911da03)
-- Real contact details in the footer, Location row removed, new At anchor plate (0418d33)
+## Done this session
+- New supplied lockup on all four marks; card + footer wordmark de-duplicated (eeee821)
+- "Send an Enquiry" removed from the card; phone reads +33 688 89 45 75
+- Statement scroll-fill retuned: dead scroll after the fill 394px -> 102px (990d1c6)
+- Hero play button: still now sits ON TOP of the video, video never transparent (7b70e12)
 
 ## Next
-1. Item 11 still needs Max's 24 Aug video at media/gallery/at-anchor.mp4.
-   Markup + player are already wired; the slide shows its poster until the file lands.
-   DO NOT substitute ssdvideo.mp4 - it is AI-generated (encoder=Google, exactly
-   8.000s, same clip as two generator outputs in ~/Downloads).
-2. privacy.html and imprint.html are still placeholder legal text.
+1. Confirm with the client that the hero now autoplays on their phone. If it still
+   does not, the remaining cause is iOS Low Power Mode / Low Data Mode, which no
+   site can override — ask them to check Settings > Battery.
+2. Item 11 still needs Max's 24 Aug video at media/gallery/at-anchor.mp4.
+   NEVER substitute ssdvideo.mp4 — AI-generated (encoder=Google, exactly 8.000s).
+3. privacy.html / imprint.html are still placeholder legal text; needs client copy.
 
-## Don't redo
-Everything under "Done today" is committed, pushed and live.
+## Never do
+- Do NOT give .hero__video opacity: 0. It stops Safari autoplaying. Cover it with
+  .hero__still instead. tests/site-check.mjs fails the build if this returns.
