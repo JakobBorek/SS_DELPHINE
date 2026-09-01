@@ -104,12 +104,14 @@
     <video class="hero__video" data-hero-video muted autoplay loop playsinline preload="auto" disablepictureinpicture disableremoteplayback
            poster="/media/hero/delphine-hero-poster.webp" aria-hidden="true" tabindex="-1">
       <source src="/media/hero/delphine-hero-2160.mp4" type="video/mp4" media="(min-width: 1200px)">
-      <source src="/media/hero/delphine-hero-720.mp4" type="video/mp4" media="(max-width: 700px)">
       <source src="/media/hero/delphine-hero-1080.mp4" type="video/mp4">
       <source src="/media/hero/delphine-hero-1080.webm" type="video/webm">
     </video>
-    <img class="hero__still" src="/media/hero/delphine-hero-poster.webp" alt="" aria-hidden="true"
-         width="1920" height="1080" fetchpriority="high" decoding="async">
+    <picture>
+      <source srcset="/media/hero/delphine-hero-1080.mp4" type="video/mp4">
+      <img class="hero__still" data-hero-motion-fallback src="/media/hero/delphine-hero-poster.webp" alt="" aria-hidden="true"
+           width="1920" height="1080" fetchpriority="high" decoding="async">
+    </picture>
     <div class="hero__scrim" aria-hidden="true"></div>
     <div class="hero__mark">
       <h1 class="hero__lockup"><span class="hero__wordmark">SS Delphine</span></h1>
@@ -220,7 +222,7 @@
               <button type="submit" disabled>Send Enquiry</button>
             </fieldset>
           </form>
-          <p class="inquiry__form-note" id="enquiry-form-note">This preview form is not yet active. Please write to ssdelphineyacht@gmail.com or call +33 688 89 45 75.</p>
+          <p class="inquiry__form-note" id="enquiry-form-note">This preview form is not yet active. Please write to ssdelphineyacht@gmail.com or call +33&nbsp;688&nbsp;89&nbsp;45&nbsp;75.</p>
           <div class="inquiry__signature">
             <img src="/assets/logo/ss-delphine-lockup.svg" alt="" width="442" height="274" loading="lazy" aria-hidden="true">
           </div>
@@ -277,7 +279,7 @@
 
     <dl class="site-footer__contact">
       <div><dt>Email</dt><dd><a href="mailto:ssdelphineyacht@gmail.com">ssdelphineyacht@gmail.com</a></dd></div>
-      <div><dt>Telephone</dt><dd><a href="tel:+33688894575">+33 688 89 45 75</a></dd></div>
+      <div><dt>Telephone</dt><dd><a href="tel:+33688894575">+33&nbsp;688&nbsp;89&nbsp;45&nbsp;75</a></dd></div>
     </dl>
 
     <div class="site-footer__end">

@@ -11,6 +11,7 @@ const pages = new Map([
   ['/discover.html', await read('discover.html')]
 ]);
 const tokensCss = await read('css/tokens.css');
+const navJs = await read('js/nav.js');
 const cspConfig = JSON.parse(await read('vercel.json'));
 const doms = new Map(
   [...pages].map(([pathname, html]) => [
@@ -183,18 +184,25 @@ for (const attribute of ['muted', 'autoplay', 'loop', 'playsinline', 'poster']) 
 }
 assert.equal(heroVideo?.getAttribute('preload'), 'auto', 'hero video must preload eagerly so autoplay is not waiting on the network');
 
-/* No play button, ever. iOS paints its own when autoplay is refused, so the
-   video is transparent until it is playing and a still stands in behind it.
-   These three assertions are the contract; do not relax them. */
-assert.ok(home.querySelector('.hero .hero__still'), 'the hero must carry a still behind the video');
+/* No play button or user gesture, ever. Safari can select the silent MP4 as an
+   automatically looping image when its video policy refuses autoplay. Other
+   browsers retain the static first frame until normal video playback is real. */
+const heroFallback = home.querySelector('[data-hero-motion-fallback]');
+const fallbackSources = [...(heroFallback?.closest('picture')?.querySelectorAll('source[type="video/mp4"]') || [])];
+assert.ok(heroFallback, 'the hero must carry an automatic motion fallback');
+assert.equal(fallbackSources.length, 1, 'the hero motion fallback must use one 1080p MP4 at every viewport');
+assert.match(fallbackSources[0]?.getAttribute('srcset') || '', /delphine-hero-1080\.mp4$/, 'the automatic motion fallback must never drop below 1080p');
+assert.doesNotMatch(heroVideo?.outerHTML || '', /delphine-hero-720\.mp4/, 'the standard hero video must never drop below 1080p');
 assert.equal(heroVideo?.hasAttribute('controls'), false, 'the hero video must never expose controls');
+const heroMotionScript = navJs.slice(navJs.indexOf('/* ---------- Hero motion ----------'));
+assert.doesNotMatch(heroMotionScript, /\b(?:pointerdown|touchstart|keydown|scroll)\b/u, 'hero motion must never wait for a reader gesture');
 {
   const heroCss = await readFile(path.join(root, 'css/hero.css'), 'utf8');
   assert.match(heroCss, /\.hero__video\s*\{[^}]*pointer-events:\s*none;/, 'the hero video must never be tappable');
   assert.doesNotMatch(heroCss, /\.hero__video\s*\{[^}]*opacity:\s*0;/, 'the hero video must never be transparent: Safari will not autoplay a video it treats as invisible');
-  assert.match(heroCss, /\.hero\[data-playing='true'\]\s*\.hero__still\s*\{\s*opacity:\s*0;/, 'the still must cover the video until playback is real');
+  assert.match(heroCss, /\.hero\[data-playing='true'\]:not\(\[data-image-motion='true'\]\)\s*\.hero__still\s*\{\s*opacity:\s*0;/, 'the poster must uncover only a genuinely playing video, never Safari image motion');
   const stillAfterVideo = home.body.innerHTML.indexOf('hero__still') > home.body.innerHTML.indexOf('hero__video');
-  assert.ok(stillAfterVideo, 'the still must follow the video in the markup so it paints on top of it');
+  assert.ok(stillAfterVideo, 'the motion fallback must follow the video in the markup so it paints on top of it');
 }
 
 for (const dom of doms.values()) {

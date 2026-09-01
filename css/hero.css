@@ -26,13 +26,13 @@
   pointer-events: none;
 }
 
-/* THE PLAY BUTTON RULE. iOS refuses autoplay under Low Power Mode, Low Data
-   Mode and some privacy settings, and WebKit then paints its own start-playback
-   glyph on the video. Hiding ::-webkit-media-controls-* does not reliably work
-   on iOS. So this still, which is the video's own first frame, sits ON TOP of
-   the video and covers whatever WebKit draws there. It is removed only once the
-   `playing` event has fired, which js/nav.js records on the section. Do not
-   solve this by making the video transparent: that stops autoplay. */
+/* THE AUTOPLAY RULE. WebKit supports a silent MP4 as an automatically looping
+   image, including when its media autoplay policy refuses a <video>. The
+   surrounding <picture> therefore selects the same clip in Safari and this
+   element becomes motion without a gesture. Browsers that do not implement
+   MP4 images use the static first frame until the normal video is playing.
+   Either way this layer sits above the video, covering any native play glyph.
+   Do not make the video transparent: Safari will then decline normal autoplay. */
 .hero__still {
   position: absolute;
   inset: 0;
@@ -43,7 +43,7 @@
   pointer-events: none;
 }
 
-.hero[data-playing='true'] .hero__still { opacity: 0; }
+.hero[data-playing='true']:not([data-image-motion='true']) .hero__still { opacity: 0; }
 
 .hero__scrim {
   position: absolute;
@@ -233,9 +233,8 @@ html.no-js .statement__char {
 }
 
 /* ---------- No start-playback affordance ----------
-   When Safari declines autoplay it draws its own play glyph over the
-   poster. The element has no controls, so this is the only way to remove
-   it; playback is still requested in script. */
+   The motion image above is the durable iOS path. These rules keep WebKit from
+   painting a transient control over the underlying video while sources settle. */
 .hero__video::-webkit-media-controls,
 .hero__video::-webkit-media-controls-start-playback-button,
 .hero__video::-webkit-media-controls-panel,

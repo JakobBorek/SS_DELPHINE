@@ -192,12 +192,10 @@
   }
 })();
 
-/* ---------- Hero video ----------
-   The attributes alone are not enough in practice. Safari and iOS will
-   refuse or silently defer autoplay, so set the properties in script as
-   well and ask for playback again on the events where the browser is
-   willing to grant it. Nothing here unmutes: a muted, inline video is the
-   only kind that is allowed to start on its own. */
+/* ---------- Hero motion ----------
+   Browsers get the normal muted, inline video path. WebKit can select the same
+   silent MP4 inside the fallback <picture>, where it behaves as a looping image
+   and is not dependent on video autoplay permission. No path waits for input. */
 (() => {
   const video = document.querySelector('[data-hero-video]');
   if (!video) return;
@@ -207,23 +205,58 @@
   video.playsInline = true;
   video.setAttribute('muted', '');
 
-  /* The still covering the video is removed only once playback is real. Until
-     then it hides whatever WebKit paints on the video, including its
-     start-playback glyph. The flag goes on the section, not the video, so no
-     style on the video itself can interfere with autoplay. See css/hero.css. */
   const stage = video.closest('.hero') || video.parentElement;
-  video.addEventListener('playing', () => { if (stage) stage.dataset.playing = 'true'; });
-  video.addEventListener('pause', () => { if (stage) delete stage.dataset.playing; });
-  video.addEventListener('emptied', () => { if (stage) delete stage.dataset.playing; });
+  const imageFallback = stage?.querySelector('[data-hero-motion-fallback]');
+  let imageMotion = false;
+  let playPending = false;
 
-  let settled = false;
+  /* Safari 11.1+ treats an MP4 selected for <img> as an automatically looping
+     image. If it chose that source, leave the image layer visible and stop the
+     redundant video decoder. Other engines report the WebP poster here. */
+  const useImageMotion = () => {
+    const source = imageFallback?.currentSrc || '';
+    if (!/\.mp4(?:[?#]|$)/iu.test(source)) return;
+
+    imageMotion = true;
+    if (stage) {
+      stage.dataset.imageMotion = 'true';
+      delete stage.dataset.playing;
+    }
+    video.pause();
+  };
+
+  imageFallback?.addEventListener('load', useImageMotion);
+  if (imageFallback?.complete) useImageMotion();
+
+  /* The poster layer is removed only once normal video playback is real. */
+  video.addEventListener('playing', () => {
+    if (stage && !imageMotion) stage.dataset.playing = 'true';
+  });
+  video.addEventListener('pause', () => {
+    playPending = false;
+    if (stage) delete stage.dataset.playing;
+  });
+  video.addEventListener('emptied', () => {
+    playPending = false;
+    if (stage) delete stage.dataset.playing;
+  });
+
   const attempt = () => {
-    if (settled) return;
-    const p = video.play();
+    if (imageMotion || playPending || (!video.paused && !video.ended)) return;
+
+    playPending = true;
+    let p;
+    try {
+      p = video.play();
+    } catch {
+      playPending = false;
+      return;
+    }
+
     if (p && typeof p.then === 'function') {
-      p.then(() => { settled = true; }).catch(() => { /* the still stands in; try again on the next cue */ });
+      p.then(() => { playPending = false; }).catch(() => { playPending = false; });
     } else {
-      settled = true;
+      playPending = false;
     }
   };
 
@@ -237,12 +270,6 @@
   }
   document.addEventListener('visibilitychange', () => { if (!document.hidden) attempt(); });
   window.addEventListener('pageshow', attempt);
-
-  /* Low Power Mode and some privacy settings block autoplay outright. If the
-     browser is still refusing, start on the reader's first gesture. */
-  const onGesture = () => { attempt(); };
-  ['pointerdown', 'touchstart', 'keydown', 'scroll'].forEach((e) =>
-    window.addEventListener(e, onGesture, { once: true, passive: true }));
 
   attempt();
 })();

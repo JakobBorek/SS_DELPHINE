@@ -38,6 +38,10 @@ const createDom = (html = homeHtml, { reduced = false, cssDriven = false, url = 
   window.CSS = { supports: () => cssDriven };
   window.IntersectionObserver = ObserverMock;
   window.requestAnimationFrame = (callback) => callback();
+  window.scrollTo = () => {};
+  window.HTMLMediaElement.prototype.load = () => {};
+  window.HTMLMediaElement.prototype.play = () => Promise.resolve();
+  window.HTMLMediaElement.prototype.pause = () => {};
 
   const dialogPrototype = window.HTMLDialogElement.prototype;
   dialogPrototype.showModal = function showModal() {
@@ -193,6 +197,66 @@ const createDom = (html = homeHtml, { reduced = false, cssDriven = false, url = 
 }
 
 {
+  const { dom, window } = createDom();
+  const video = window.document.querySelector('[data-hero-video]');
+  const fallback = window.document.querySelector('[data-hero-motion-fallback]');
+  const stage = video.closest('.hero');
+  let paused = true;
+  let playCalls = 0;
+
+  Object.defineProperty(fallback, 'currentSrc', { configurable: true, value: 'https://local.test/media/hero/delphine-hero-poster.webp' });
+  Object.defineProperty(fallback, 'complete', { configurable: true, value: true });
+  Object.defineProperty(video, 'paused', { configurable: true, get: () => paused });
+  Object.defineProperty(video, 'ended', { configurable: true, get: () => false });
+  Object.defineProperty(video, 'readyState', { configurable: true, get: () => 4 });
+  video.load = () => {};
+  video.play = () => {
+    playCalls += 1;
+    paused = false;
+    video.dispatchEvent(new window.Event('playing'));
+    return Promise.resolve();
+  };
+
+  window.eval(scripts.nav);
+  await Promise.resolve();
+  assert.equal(playCalls, 1, 'normal browsers must attempt hero playback immediately');
+  assert.equal(stage.dataset.playing, 'true', 'real video playback must uncover the video');
+
+  paused = true;
+  video.dispatchEvent(new window.Event('pause'));
+  window.dispatchEvent(new window.PageTransitionEvent('pageshow'));
+  await Promise.resolve();
+  assert.equal(playCalls, 2, 'a later page restore must retry playback instead of remaining permanently settled');
+  dom.window.close();
+}
+
+{
+  const { dom, window } = createDom();
+  const video = window.document.querySelector('[data-hero-video]');
+  const fallback = window.document.querySelector('[data-hero-motion-fallback]');
+  const stage = video.closest('.hero');
+  let playCalls = 0;
+  let pauseCalls = 0;
+
+  Object.defineProperty(fallback, 'currentSrc', { configurable: true, value: 'https://local.test/media/hero/delphine-hero-1080.mp4' });
+  Object.defineProperty(fallback, 'complete', { configurable: true, value: true });
+  video.load = () => {};
+  video.play = () => {
+    playCalls += 1;
+    return Promise.resolve();
+  };
+  video.pause = () => { pauseCalls += 1; };
+
+  window.eval(scripts.nav);
+  await Promise.resolve();
+  assert.equal(stage.dataset.imageMotion, 'true', 'Safari MP4 image playback must own hero motion automatically');
+  assert.equal(playCalls, 0, 'the Safari image path must not start a redundant video decoder');
+  assert.equal(pauseCalls, 1, 'the Safari image path must stop the redundant video element');
+  assert.equal(stage.hasAttribute('data-playing'), false, 'Safari image motion must remain visible above the video');
+  dom.window.close();
+}
+
+{
   const { dom, window } = createDom(homeHtml, { reduced: true });
   window.eval(scripts.statement);
   const document = window.document;
@@ -297,4 +361,4 @@ const createDom = (html = homeHtml, { reduced = false, cssDriven = false, url = 
   dom.window.close();
 }
 
-console.log('Behaviour checks passed: animated Menu, no-JS paths, character scroll-fill, reduced motion, isolated chapters, focused specifications and filtered Gallery lightbox.');
+console.log('Behaviour checks passed: automatic hero motion, animated Menu, no-JS paths, character scroll-fill, reduced motion, isolated chapters, focused specifications and filtered Gallery lightbox.');
