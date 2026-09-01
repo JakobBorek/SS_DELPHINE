@@ -45,12 +45,27 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* ---------- Focus. Never removed, only replaced. ---------- */
-:focus-visible {
+/* ---------- Focus. Never removed, only narrowed. ----------
+   The gold ring belongs to keyboard navigation. It was also painting a box
+   around whatever the reader had just tapped, because script moves focus after
+   almost every navigation: to a section heading after a menu jump, to a dialog
+   title when the specifications open, to a Close button when the menu or the
+   lightbox opens. None of those are the reader asking to see where they are.
+
+   So the ring waits for evidence of a keyboard. js/root.js records the first
+   Tab, arrow or Enter in html[data-keyboard] and drops it again on the next
+   pointer press. Without JavaScript the ring is always on, which is the safe
+   default. A scroll destination carrying tabindex="-1" is never ringed at all:
+   it is a landing place, not a control. */
+html:not(.js) :focus-visible,
+html[data-keyboard] :focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 3px;
 }
-:focus:not(:focus-visible) { outline: none; }
+:focus { outline: none; }
+html:not(.js) [tabindex='-1']:focus-visible,
+html[data-keyboard] [tabindex='-1']:focus-visible,
+[tabindex='-1']:focus { outline: none; }
 
 .skip-link {
   position: absolute;
