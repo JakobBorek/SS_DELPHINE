@@ -205,6 +205,9 @@ html.no-js .statement__char {
 .hero__video::-webkit-media-controls,
 .hero__video::-webkit-media-controls-start-playback-button,
 .hero__video::-webkit-media-controls-panel,
+.hero__video::-webkit-media-controls-container,
+.hero__video::-webkit-media-controls-enclosure,
+.hero__video::-webkit-media-controls-overlay-enclosure,
 .hero__video::-webkit-media-controls-overlay-play-button {
   display: none !important;
   -webkit-appearance: none;

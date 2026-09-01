@@ -112,7 +112,7 @@ assert.ok(inquiryForm?.querySelector('button[type="submit"][disabled]'), 'the di
 assert.equal(home.querySelectorAll('.inquiry__details').length, 0, 'the inquiry contact column must not return');
 assert.equal(home.querySelectorAll('.inquiry__welcome').length, 0, 'the inquiry welcome heading must not return');
 assert.ok(home.querySelector('.inquiry__panel .inquiry-form'), 'the inquiry card must carry the form');
-assert.equal(home.querySelector('.inquiry__signature img')?.getAttribute('src'), '/assets/logo/ss-delphine-d.svg', 'the inquiry must use the official monogram');
+assert.equal(home.querySelector('.inquiry__signature img')?.getAttribute('src'), '/assets/logo/ss-delphine-lockup.svg', 'the inquiry must use the supplied lockup');
 const footerTerms = [...home.querySelectorAll('.site-footer__contact dt')].map((n) => n.textContent.trim());
 assert.deepEqual(footerTerms, ['Email', 'Telephone'], 'the footer carries the two supplied contact routes and no location');
 assert.equal(home.querySelector('.site-footer__contact a[href^="mailto:"]')?.getAttribute('href'), 'mailto:ssdelphineyacht@gmail.com', 'the footer email must be the supplied address');
@@ -181,7 +181,7 @@ const heroVideo = home.querySelector('[data-hero-video]');
 for (const attribute of ['muted', 'autoplay', 'loop', 'playsinline', 'poster']) {
   assert.ok(heroVideo?.hasAttribute(attribute), `hero video must include ${attribute}`);
 }
-assert.equal(heroVideo?.getAttribute('preload'), 'metadata', 'hero video must preload metadata only');
+assert.equal(heroVideo?.getAttribute('preload'), 'auto', 'hero video must preload eagerly so autoplay is not waiting on the network');
 
 for (const dom of doms.values()) {
   for (const image of dom.window.document.querySelectorAll('main img')) {

@@ -898,7 +898,9 @@ html.no-js .gallery__filters {
   padding-top: var(--sp-4);
   border-top: var(--rule) solid var(--hairline-gold);
 }
-.inquiry__signature img { width: auto; height: 2.4rem; }
+/* The signature is now the full lockup, not the monogram alone, so it needs
+   the height its wordmark can be read at. */
+.inquiry__signature img { width: auto; height: 3.5rem; }
 .inquiry__signature p {
   font-family: var(--font-display);
   font-variation-settings: 'wdth' var(--wdth-display);
@@ -1123,7 +1125,7 @@ html.no-js .gallery__filters {
   text-align: center;
 }
 .site-footer__brand { display: grid; justify-items: center; gap: var(--sp-1); }
-.site-footer__mark { width: auto; height: 2rem; flex: none; }
+.site-footer__mark { width: auto; height: 2.75rem; flex: none; }
 .site-footer__name {
   font-family: var(--font-display);
   font-variation-settings: 'wdth' var(--wdth-display);
