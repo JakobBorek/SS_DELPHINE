@@ -42,7 +42,10 @@ for (const [pathname, html] of pages) {
   assert.doesNotMatch(html, /\son[a-z]+=/i, `${pathname} cannot contain inline event handlers`);
   assert.doesNotMatch(html, /<iframe\b/i, `${pathname} cannot contain iframes`);
   assert.doesNotMatch(html, /(?:_source\/|ssdvideo\.mp4)/i, `${pathname} cannot reference source-only media`);
-  assert.doesNotMatch(html, /(?:mailto:|tel:)/i, `${pathname} cannot ship unapproved contact links`);
+  /* The owner supplied these on 2026-09-01. Any other mailto: or tel: is still
+     an invention and still fails. */
+  const approvedContacts = /(?:mailto:ssdelphineyacht@gmail\.com|tel:\+33688894575)/g;
+  assert.doesNotMatch(html.replace(approvedContacts, ''), /(?:mailto:|tel:)/i, `${pathname} cannot ship unapproved contact links`);
 
   const visibleCopy = document.body.textContent.replace(/\s+/g, ' ').trim();
   assert.doesNotMatch(visibleCopy, /—/, `${pathname} visible copy cannot contain em dashes`);
@@ -111,7 +114,9 @@ assert.equal(home.querySelectorAll('.inquiry__welcome').length, 0, 'the inquiry 
 assert.ok(home.querySelector('.inquiry__panel .inquiry-form'), 'the inquiry card must carry the form');
 assert.equal(home.querySelector('.inquiry__signature img')?.getAttribute('src'), '/assets/logo/ss-delphine-d.svg', 'the inquiry must use the official monogram');
 const footerTerms = [...home.querySelectorAll('.site-footer__contact dt')].map((n) => n.textContent.trim());
-assert.deepEqual(footerTerms, ['Email', 'Telephone', 'Location'], 'the footer must carry the same placeholder details');
+assert.deepEqual(footerTerms, ['Email', 'Telephone'], 'the footer carries the two supplied contact routes and no location');
+assert.equal(home.querySelector('.site-footer__contact a[href^="mailto:"]')?.getAttribute('href'), 'mailto:ssdelphineyacht@gmail.com', 'the footer email must be the supplied address');
+assert.equal(home.querySelector('.site-footer__contact a[href^="tel:"]')?.getAttribute('href'), 'tel:+33688894575', 'the footer telephone must be the supplied number');
 assert.ok(home.querySelector('.site-footer__social .icon-instagram'), 'the footer must carry a clickable Instagram icon');
 assert.equal(
   home.querySelector('.site-footer__social')?.getAttribute('href'),
