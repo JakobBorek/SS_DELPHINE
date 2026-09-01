@@ -24,6 +24,11 @@
     Cache-Control = "public, max-age=0, must-revalidate"
 
 [[redirects]]
+  from = "/inquiry"
+  to = "/#enquiry"
+  status = 308
+
+[[redirects]]
   from = "/cabins"
   to = "/discover#suites-and-cabins"
   status = 308

@@ -39,6 +39,11 @@
       "source": "/cabins",
       "destination": "/discover#suites-and-cabins",
       "permanent": true
+    },
+    {
+      "source": "/inquiry",
+      "destination": "/#enquiry",
+      "permanent": true
     }
   ]
 }

@@ -167,3 +167,17 @@ have, so it was inert.
 
 Two tiles were added, Delphine Lounge and Smoking room, reusing the Gallery photographs of
 the same rooms.
+
+
+## Copy, 2026-09-01 (second pass)
+
+"Hammam" is now "Turkish bath" everywhere a reader sees it: the Interiors tile, the
+Wellness gallery slide, both alt strings and the intro line, which now reads "An
+eight-seat Turkish bath". The image files keep their `hammam-*` names.
+
+"Inquiry" is now "Enquiry" throughout, including the section heading, the kicker, the
+form title, its legend, the enquiry-type options and the submit button. The section
+anchor moved from `#inquiry` to `#enquiry`, with a 308 from `/inquiry` on both hosts.
+The `.inquiry*` CSS classes and the `.inquiry-form` hooks keep their names: this was a
+copy change, not a refactor, and renaming them would touch four stylesheets for no
+visible difference.
