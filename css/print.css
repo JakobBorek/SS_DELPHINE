@@ -138,8 +138,8 @@
     grid-row: auto;
   }
 
-  .gallery-card[data-title='Underway'],
-  .gallery-card[data-title='Red salon'],
+  .gallery-card[data-title='At anchor'],
+  .gallery-card[data-title='Delphine Lounge'],
   .gallery-card[data-title='H&A Dodge Suite'],
   .gallery-card[data-title='Gym'],
   .gallery-card[data-title='Wheelhouse'] {

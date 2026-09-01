@@ -33,5 +33,12 @@
     }
   ],
   "outputDirectory": "dist",
-  "buildCommand": "npm run build"
+  "buildCommand": "npm run build",
+  "redirects": [
+    {
+      "source": "/cabins",
+      "destination": "/discover#suites-and-cabins",
+      "permanent": true
+    }
+  ]
 }

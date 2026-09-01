@@ -106,8 +106,25 @@
     plate = document.createElement('img');
     plate.alt = '';
     plate.decoding = 'async';
-    figure.replaceChildren(plate);
     return plate;
+  };
+
+  /* A slide carrying data-gallery-video plays footage instead of a still. The
+     element is built here rather than in the markup so a slide whose file has
+     not landed yet simply shows its poster, which is the still the slide used
+     before. Nothing 404s into an empty frame. */
+  let reel = null;
+  const ensureReel = () => {
+    if (reel || !figure) return reel;
+    reel = document.createElement('video');
+    reel.muted = true;
+    reel.defaultMuted = true;
+    reel.playsInline = true;
+    reel.loop = true;
+    reel.autoplay = true;
+    ['muted', 'loop', 'autoplay', 'playsinline'].forEach((a) => reel.setAttribute(a, ''));
+    reel.setAttribute('preload', 'metadata');
+    return reel;
   };
 
   const sourceFor = (item) => item?.getAttribute('href') || '';
@@ -122,13 +139,34 @@
     });
   };
 
+  /* Footage left running behind a closed modal keeps decoding. */
+  const stopReel = () => { if (reel) reel.pause(); };
+
   const render = () => {
     const item = scope[index];
     if (!item || !figure) return;
-    const img = ensurePlate();
     const url = sourceFor(item);
-    if (img && img.getAttribute('src') !== url) img.src = url;
-    if (img) img.alt = item.querySelector('img')?.alt || '';
+    const footage = item.dataset.galleryVideo || '';
+
+    if (footage) {
+      const video = ensureReel();
+      if (video) {
+        if (video.getAttribute('poster') !== url) video.setAttribute('poster', url);
+        if (video.getAttribute('src') !== footage) video.setAttribute('src', footage);
+        if (video.parentNode !== figure) figure.replaceChildren(video);
+        const started = video.play();
+        if (started && typeof started.catch === 'function') started.catch(() => { /* poster stands in */ });
+      }
+    } else {
+      if (reel) reel.pause();
+      const img = ensurePlate();
+      if (img) {
+        if (img.getAttribute('src') !== url) img.src = url;
+        img.alt = item.querySelector('img')?.alt || '';
+        if (img.parentNode !== figure) figure.replaceChildren(img);
+      }
+    }
+
     if (titleEl) titleEl.textContent = item.dataset.title || '';
     if (categoryEl) categoryEl.textContent = (item.dataset.categoryLabel || '').replace('&amp;', '&');
     if (positionEl) positionEl.textContent = `${index + 1} of ${scope.length}`;
@@ -181,6 +219,7 @@
   });
 
   dialog?.addEventListener('close', () => {
+    stopReel();
     document.documentElement.style.overflow = '';
     /* return the reader exactly where they were, not to the top or the foot */
     (lastOpener || scope[index])?.focus({ preventScroll: true });

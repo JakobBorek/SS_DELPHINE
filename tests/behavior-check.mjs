@@ -253,9 +253,9 @@ const createDom = (html = homeHtml, { reduced = false, cssDriven = false, url = 
   const { dom, window } = createDom(discoverHtml, { url: 'https://local.test/discover.html#gallery' });
   window.eval(scripts.discover);
   assert.equal(window.document.body.dataset.chapterView, 'gallery', 'deep route must isolate the selected chapter');
-  window.history.pushState(null, '', '#cabins');
+  window.history.pushState(null, '', '#suites-and-cabins');
   window.dispatchEvent(new window.HashChangeEvent('hashchange'));
-  assert.equal(window.document.body.dataset.chapterView, 'cabins', 'chapter isolation must follow hash changes');
+  assert.equal(window.document.body.dataset.chapterView, 'suites-and-cabins', 'chapter isolation must follow hash changes');
   window.history.pushState(null, '', '/discover.html');
   window.dispatchEvent(new window.HashChangeEvent('hashchange'));
   assert.equal(window.document.body.hasAttribute('data-chapter-view'), false, 'the unselected route must restore the Explore index');

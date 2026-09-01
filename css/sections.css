@@ -1548,7 +1548,7 @@ html.no-js .gallery__filters {
    reader compares each room against the text rather than losing it off the
    top of the screen. */
 @media (min-width: 769px) {
-  .discover-panel[id='cabins'] .discover-panel__frame { align-items: start; }
+  .discover-panel[id='suites-and-cabins'] .discover-panel__frame { align-items: start; }
   .cabin-carousel {
     position: sticky;
     top: calc(var(--header-h) + var(--sp-4));

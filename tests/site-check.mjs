@@ -22,7 +22,7 @@ const home = doms.get('/index.html').window.document;
 const discover = doms.get('/discover.html').window.document;
 
 const expectedHome = ['hero', 'statement', 'the-yacht', 'private-charter', 'inquiry'];
-const expectedDiscover = ['discover', 'the-refit', 'interiors', 'cabins', 'toys-and-tenders', 'charter', 'gallery', 'technical-specifications'];
+const expectedDiscover = ['discover', 'the-refit', 'interiors', 'suites-and-cabins', 'toys-and-tenders', 'charter', 'gallery', 'technical-specifications'];
 
 /* The vessel is always "SS Delphine". Two rooms aboard her are not: the owner's
    representative named them "Delphine Suite" and "Delphine Lounge" on 2026-09-01,
@@ -94,7 +94,7 @@ for (const document of [home, discover]) {
 assert.match(home.querySelector('.editorial--yacht img')?.getAttribute('src') || '', /yacht-daylight-side-1600\.webp$/, 'The Yacht must use the responsive broadside exterior');
 assert.equal(home.querySelector('#the-refit'), null, 'refit detail must not remain in the main-page scroll');
 assert.equal(home.querySelector('#interiors'), null, 'interior detail must not remain in the main-page scroll');
-assert.equal(home.querySelector('#cabins'), null, 'cabin detail must not remain in the main-page scroll');
+assert.equal(home.querySelector('#suites-and-cabins'), null, 'cabin detail must not remain in the main-page scroll');
 assert.equal(home.querySelector('#toys-and-tenders'), null, 'tender detail must not remain in the main-page scroll');
 assert.equal(home.querySelector('#contact'), null, 'the closing section must not be named Contact');
 assert.equal(home.querySelector('#inquiry-title')?.textContent.trim(), 'Inquiry', 'the closing section must be Inquiry');
