@@ -24,6 +24,14 @@ const discover = doms.get('/discover.html').window.document;
 const expectedHome = ['hero', 'statement', 'the-yacht', 'private-charter', 'inquiry'];
 const expectedDiscover = ['discover', 'the-refit', 'interiors', 'cabins', 'toys-and-tenders', 'charter', 'gallery', 'technical-specifications'];
 
+/* The vessel is always "SS Delphine". Two rooms aboard her are not: the owner's
+   representative named them "Delphine Suite" and "Delphine Lounge" on 2026-09-01,
+   so those two proper names are lifted out before the guard runs and every other
+   bare "Delphine" still fails. */
+/* No trailing \b: textContent glues a <dt> to its <dd>, so the name can arrive
+   as "Delphine SuiteKing bed..." with no boundary after "Suite". */
+const shipOnly = (text) => text.replace(/\bDelphine (?:Suite|Lounge)/g, 'room');
+
 for (const [pathname, html] of pages) {
   const document = doms.get(pathname).window.document;
   assert.match(html, /^<!DOCTYPE html>/, `${pathname} must use an HTML5 doctype`);
@@ -38,11 +46,11 @@ for (const [pathname, html] of pages) {
 
   const visibleCopy = document.body.textContent.replace(/\s+/g, ' ').trim();
   assert.doesNotMatch(visibleCopy, /—/, `${pathname} visible copy cannot contain em dashes`);
-  assert.doesNotMatch(visibleCopy, /(?<!SS )\bDelphine\b/, `${pathname} must not shorten SS Delphine`);
+  assert.doesNotMatch(shipOnly(visibleCopy), /(?<!SS )\bDelphine\b/, `${pathname} must not shorten SS Delphine`);
 
   for (const image of document.querySelectorAll('img[alt]')) {
     assert.doesNotMatch(image.alt, /—/, `${pathname} alt text cannot contain em dashes`);
-    assert.doesNotMatch(image.alt, /(?<!SS )\bDelphine\b/, `${pathname} alt text must not shorten SS Delphine`);
+    assert.doesNotMatch(shipOnly(image.alt), /(?<!SS )\bDelphine\b/, `${pathname} alt text must not shorten SS Delphine`);
   }
 }
 
@@ -118,16 +126,16 @@ for (const unapprovedContact of ['charter@ssdelphne.com', '+377 97 97 97 97', 'M
   assert.doesNotMatch(home.body.textContent, new RegExp(unapprovedContact.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'), `unapproved mock contact must not ship: ${unapprovedContact}`);
 }
 const galleryItems = [...discover.querySelectorAll('[data-gallery-item]')];
-assert.equal(galleryItems.length, 32, 'the explore gallery must contain the thirty-two owned photographs');
+assert.equal(galleryItems.length, 28, 'the explore gallery must contain the twenty-eight owned photographs');
 assert.deepEqual(
   Object.fromEntries(['deck', 'salons', 'cabins', 'wellness', 'heritage'].map((category) => [
     category,
     galleryItems.filter((item) => item.dataset.category === category).length
   ])),
-  { deck: 7, salons: 8, cabins: 7, wellness: 5, heritage: 5 },
+  { deck: 7, salons: 4, cabins: 7, wellness: 5, heritage: 5 },
   'gallery categories must keep their intended editorial balance'
 );
-assert.equal(new Set(galleryItems.map((item) => item.dataset.title)).size, 32, 'gallery titles must be unique');
+assert.equal(new Set(galleryItems.map((item) => item.dataset.title)).size, 28, 'gallery titles must be unique');
 
 // The archive opens as chapters, not as every photograph at once.
 assert.equal(discover.querySelectorAll('[data-gallery-open]').length, 5, 'the gallery must open as five chapter banners');

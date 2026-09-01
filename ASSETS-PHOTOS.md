@@ -31,7 +31,7 @@ Each selected deck photograph has AVIF and WebP derivatives at a maximum width o
 
 ## Expanded Gallery edit
 
-The Gallery now carries 34 photographs in five explicit categories: Deck & Exterior (8), Salons & Dining (8), Cabins (8), Wellness (5), and Heritage & Engineering (5). Eighteen new subjects were selected from the supplied archive and exported in the same AVIF/WebP pipeline: pool deck, aft-deck lounge, alfresco dining, promenade landing, wide leather salon, main-salon lounge, wide formal dining, wide blue suite, cream guest cabin, striped guest cabin, cream double cabin, blue-banquette cabin, red guest cabin, hair salon, Jacuzzi, hammam, bridge controls and engine-room cylinder tops.
+The Gallery carries 28 photographs in five explicit categories: Deck & Exterior (7), Salons & Dining (4), Suites & Cabins (7), Wellness (5), and Heritage & Engineering (5). Eighteen new subjects were selected from the supplied archive and exported in the same AVIF/WebP pipeline: pool deck, aft-deck lounge, alfresco dining, promenade landing, wide leather salon, main-salon lounge, wide formal dining, wide blue suite, cream guest cabin, striped guest cabin, cream double cabin, blue-banquette cabin, red guest cabin, hair salon, Jacuzzi, hammam, bridge controls and engine-room cylinder tops.
 
 ## Rejected from the production page
 
@@ -46,3 +46,38 @@ The Gallery now carries 34 photographs in five explicit categories: Deck & Exter
 ## Removed — do not reuse
 
 `yacht-aerial-*` (titled "Underway", top-down in vivid blue water) was AI-generated, not owned photography of SS Delphine. Deleted 2026-08-30. Do not reintroduce it or regenerate derivatives from `delphine-ref-clean.png` / `delphine-ref-2x.*`, which are the same synthetic source. The genuine top-down frame is `yacht-topview-*`, taken from drone clip DJI_20260808171215_0027.
+
+
+## Room names, 2026-09-01
+
+The owner's representative went through the site and renamed the rooms. The photographs
+did not change; only what they are called did.
+
+| Was | Is | File (unchanged) |
+|---|---|---|
+| Red salon | Delphine Lounge | `red-salon-*` |
+| Leather salon | Smoking room | `leather-salon-*` |
+| Main salon | Music Room | `main-salon-*` |
+| Formal dining room | Dining Room | `dining-room-*` |
+| SS Delphine Suite | Delphine Suite | `blue-suite-wide-*` |
+| Cream guest cabin | Horace Dodge Junior Suite | `cream-guest-cabin-*` |
+| Striped guest cabin | Cabin 1 | `striped-guest-cabin-*` |
+| Double cabin | Cabin 5 | `cream-double-cabin-*` |
+| Blue banquette cabin | Cabin 6 | `blue-banquette-cabin-*` |
+| Red guest cabin | Cabin 7 | `red-guest-cabin-*` |
+
+The chapter "Cabins" is now "Suites & Cabins" everywhere a reader sees it. The internal
+keys (`data-gallery-set="cabins"`, `id="cabins"`) are unchanged, so links already shared
+as `discover.html#cabins` still land correctly.
+
+**"Delphine Suite" and "Delphine Lounge" are the only sanctioned bare uses of the name.**
+The vessel is always "SS Delphine". `tests/site-check.mjs` lifts those two proper names
+out before the guard runs, so every other bare "Delphine" still fails the build.
+
+Four Salons & Dining photographs left the Gallery at the same request: promenade landing,
+club salon (`leather-salon-wide`), main lounge (`main-salon-lounge`) and dinner setting
+(`formal-dining-wide`). **The derivative files were kept**, unreferenced, so restoring a
+slide is a markup change rather than a re-export.
+
+`red-salon-*` and `leather-salon-*` now appear twice: once in the Gallery and once as
+Interiors and Amenities tiles, which the same request asked for.

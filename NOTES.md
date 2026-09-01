@@ -53,7 +53,7 @@ Both editorial sections now carry their copy as a single paragraph rather than t
 
 Menu is the only top-right navigation control at every width. It opens a native modal `dialog` as a shadowed right-hand drawer with a visible gold leading edge. The fixed two-line control remains in place while its bars morph into an X, and internal navigation waits for the exit transition before changing pages. Menu and Close have 48 pixel minimum targets. On short 320 pixel screens the menu begins at the top and scrolls without losing its first or last link.
 
-`discover.html` begins with a seven-chapter index. Selecting a chapter hides that index and reveals only the chosen material, so users cannot scroll back into “Explore SS Delphine” while reading a deep route. CSS handles the no-JavaScript route; a tiny hash synchronizer covers browsers without `:has()`. The Gallery is a 34-image editorial mosaic with five categories, filter controls and an accessible native-dialog lightbox. It never advances automatically; keyboard arrows and explicit previous/next controls remain available.
+`discover.html` begins with a seven-chapter index. Selecting a chapter hides that index and reveals only the chosen material, so users cannot scroll back into “Explore SS Delphine” while reading a deep route. CSS handles the no-JavaScript route; a tiny hash synchronizer covers browsers without `:has()`. The Gallery is a 28-image editorial mosaic with five categories, filter controls and an accessible native-dialog lightbox. It never advances automatically; keyboard arrows and explicit previous/next controls remain available.
 
 Technical Specifications now sits directly below The Yacht copy as a body-font link with a close gold underline and an open arrow. A normal click opens all thirteen rows in a native modal dialog with a dark backdrop, offset shadow, sticky Close control, focus restoration and Escape handling. The same facts remain available at `discover.html#technical-specifications` through the Menu, modifier-clicks, unsupported-dialog browsers and JavaScript-off navigation.
 
@@ -154,3 +154,16 @@ Menu control at every width.
 supplied late in the build (`SS_Delphine_D_vector.svg`, the Dodge blackletter
 monogram) and is used instead, so the mark stays sharp at every density. It
 appears in the header and favicons; the hero carries the wordmark alone.
+
+
+## Interiors and Amenities, 2026-09-01
+
+The heading, back link and intro copy used to render below the amenity tiles, so the page
+opened on photographs with no explanation. The copy block now precedes the grid in the
+markup, which fixes the reading order on a phone and puts the copy on the left on a wide
+screen, matching the Suites & Cabins panel. The `discover-panel--reverse` class was dropped
+from this panel: it only ever targeted `.discover-panel__media`, which this panel does not
+have, so it was inert.
+
+Two tiles were added, Delphine Lounge and Smoking room, reusing the Gallery photographs of
+the same rooms.

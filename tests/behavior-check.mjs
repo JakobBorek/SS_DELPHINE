@@ -279,7 +279,7 @@ const createDom = (html = homeHtml, { reduced = false, cssDriven = false, url = 
 
   document.querySelector('[data-lightbox-next]').click();
   assert.equal(document.querySelector('[data-lightbox-position]').textContent, '2 of 7', 'Next must advance within the chapter');
-  assert.equal(document.querySelector('[data-lightbox-title]').textContent, 'SS Delphine Suite', 'Next must advance the photograph');
+  assert.equal(document.querySelector('[data-lightbox-title]').textContent, 'Delphine Suite', 'Next must advance the photograph');
 
   lightbox.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
   assert.equal(document.querySelector('[data-lightbox-position]').textContent, '1 of 7', 'Left arrow must reverse');
