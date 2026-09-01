@@ -54,3 +54,7 @@ ruvector.db
 *.sqlite-wal
 .agent/
 .vercel
+
+# ruflo local state
+agentdb.rvf
+agentdb.rvf.lock

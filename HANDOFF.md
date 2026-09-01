@@ -28,9 +28,9 @@
 
 ## Assets
 
-- The homepage references new `yacht-dusk-side-960` and `yacht-dusk-side-1600` AVIF/WebP derivatives. Both top-down views remain in the Gallery.
+- The homepage references `yacht-daylight-side-960` and `yacht-daylight-side-1600` AVIF/WebP derivatives, cut from `DJI_20260808170912_0026_D.MP4` at t=32. Both top-down views remain in the Gallery.
 - Added 960 and 1600 pixel AVIF/WebP derivatives for 18 archive subjects used by the expanded Gallery. Source photographs were not duplicated or modified.
-- No owned photograph depicts a crowd or event, so the current Private Charter image remains until the owner or crew supplies or approves a rights-cleared replacement.
+- Private Charter now uses `deck-dining-set-960` and `deck-dining-set-1200`, from a photograph the owner supplied on 2026-09-01 of the deck table laid for dinner. It arrived at 1200x1600, so the plate tops out at 1200 pixels wide rather than the 1600 used elsewhere; a camera original would sharpen it. No owned photograph yet depicts guests themselves.
 - Existing selected photography, hero encodes, palette, logo files and fonts remain unchanged.
 
 ## Tests and evidence

@@ -83,7 +83,7 @@ for (const document of [home, discover]) {
   assert.equal(menuMark?.querySelector('img')?.getAttribute('src'), headerMark?.querySelector('img')?.getAttribute('src'), 'Menu and header must use the same official monogram');
   assert.equal(menuMark?.querySelector('.site-mark__text')?.textContent.trim(), headerMark?.querySelector('.site-mark__text')?.textContent.trim(), 'Menu and header must use the same wordmark');
 }
-assert.match(home.querySelector('.editorial--yacht img')?.getAttribute('src') || '', /yacht-dusk-side-1600\.webp$/, 'The Yacht must use the responsive broadside exterior');
+assert.match(home.querySelector('.editorial--yacht img')?.getAttribute('src') || '', /yacht-daylight-side-1600\.webp$/, 'The Yacht must use the responsive broadside exterior');
 assert.equal(home.querySelector('#the-refit'), null, 'refit detail must not remain in the main-page scroll');
 assert.equal(home.querySelector('#interiors'), null, 'interior detail must not remain in the main-page scroll');
 assert.equal(home.querySelector('#cabins'), null, 'cabin detail must not remain in the main-page scroll');

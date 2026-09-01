@@ -38,14 +38,16 @@ The statement is the only scroll-driven animation. It fills forward and un-fills
 
 ## Homepage imagery
 
-The Yacht uses a broadside dusk frame from the supplied `DJI_20260808202557_0098_D.MP4` at 44 seconds. The vessel occupies most of the wide frame, keeping its complete silhouette legible in the desktop split and at phone width without becoming a tall inserted slab. Production derivatives:
+The Yacht uses a daylight broadside frame from the supplied `DJI_20260808170912_0026_D.MP4` at 32 seconds, replacing the dusk frame the owner found too dark. The vessel occupies most of the wide frame, keeping its complete silhouette legible in the desktop split and at phone width without becoming a tall inserted slab. Production derivatives:
 
-- `media/gallery/yacht-dusk-side-1600.avif`
-- `media/gallery/yacht-dusk-side-1600.webp`
-- `media/gallery/yacht-dusk-side-960.avif`
-- `media/gallery/yacht-dusk-side-960.webp`
+- `media/gallery/yacht-daylight-side-1600.avif`
+- `media/gallery/yacht-daylight-side-1600.webp`
+- `media/gallery/yacht-daylight-side-960.avif`
+- `media/gallery/yacht-daylight-side-960.webp`
 
-The portrait `topviewssd.png` remains available as a vertical composition in the Gallery. Private Charter uses the supplied promenade-deck photograph. On mobile its copy now precedes its image, preventing two photographs from stacking between the editorial sections. None of the 168 supplied stills depicts guests, a crowd or an event, so an authentic rights-cleared event photograph is still needed before replacing it.
+The portrait `topviewssd.png` remains available as a vertical composition in the Gallery. Private Charter uses a client-supplied photograph of the deck table laid for dinner at sea, which replaced the promenade-deck frame. It is the first homepage image that shows the yacht dressed for guests rather than empty, which is what the section is selling. The promenade-deck photograph stays in the Gallery. Still no supplied still depicts guests themselves, so a rights-cleared photograph with people in it remains outstanding.
+
+Both editorial sections now carry their copy as a single paragraph rather than three or four separate ones, at the owner's request: the gaps between short paragraphs read as disconnected fragments against the very large section titles.
 
 ## Navigation and deeper content
 

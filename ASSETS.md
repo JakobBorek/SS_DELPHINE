@@ -36,8 +36,8 @@ Frame-by-frame checks that shaped the in-point:
 1. `DJI_20260808202557_0098_D.MP4` t=20-44. A genuinely beautiful dusk orbit, and the strongest
    *mood* in the set. Rejected as hero because the usable portion is dark enough that the navy
    scrim plus cream type over it would either wash the picture out or fail the contrast floor.
-   It descends into deck close-ups after t=50. The broadside frame at t=44 now illustrates The
-   Yacht: the complete vessel fills most of a 16:9 frame and stays readable on a phone.
+   It descends into deck close-ups after t=50. Its broadside frame at t=44 illustrated The Yacht
+   until 2026-09-01, when the owner asked for something brighter; see the note below.
 2. `DJI_20260808103538_0018_D.MP4`. Correct angle and daylight, but a white superyacht and a
    tender sit in frame throughout, and the coastline is busy.
 3. `ssdvideo.mp4`. A top-down of the yacht underway in deep blue water with a full wake, and one of
@@ -48,6 +48,23 @@ Frame-by-frame checks that shaped the in-point:
    the city dominates.
 5. `DJI_20260808171215_0027_D.MP4`. Top-down at anchor. Useful for the deck-plan or layout
    context, not for a hero.
+
+### The Yacht plate: DJI_20260808170912_0026_D.MP4, t=32.0
+
+The dusk broadside that first illustrated The Yacht read as dark and shadowed against the navy
+ground, so it was replaced on 2026-09-01 with a daylight frame from the same clip the hero is cut
+from, taken **seven seconds before the hero's in-point** so the two are not the same picture.
+
+Why t=32: it is the last part of the orbit where the sea and sky are the only backdrop. From t=52
+the Monaco coastline and a white superyacht enter frame, and every frame of
+`DJI_20260808103538_0018_D.MP4` has both. The hull is lit from the front quarter, the funnel and
+both masts clear the horizon, and the tender alongside gives the scale a reference.
+
+Cropped 2880x1620 from +590+315 of the 3840x2160 frame, a 1.33x tightening so the complete vessel
+fills the 16:9 plate, then resized to 1600x900 and 960x540. Derivatives:
+`media/gallery/yacht-daylight-side-{960,1600}.{avif,webp}`. The superseded
+`yacht-dusk-side-*` derivatives were deleted; the master clip is untouched and the frame above
+regenerates them.
 
 ### Hero derivatives, in `media/hero/`
 
