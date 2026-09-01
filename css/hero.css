@@ -67,9 +67,15 @@
   color: var(--cream-muted);
 }
 
-/* The statement owns extra scroll distance while the sentence remains still. */
+/* The statement owns extra scroll distance while the sentence remains still.
+   That distance is deliberately short. At 180svh the sentence finished filling
+   roughly half a screen before the pin released, so the reader kept scrolling
+   into a sentence that was already complete and the page felt stuck. The
+   geometry below lands the last character about ten viewport-percent before
+   release: long enough for the finished line to register, short enough that
+   nobody has to scroll twice to get moving again. */
 .statement {
-  min-height: 180svh;
+  min-height: 145svh;
   position: relative;
   background: var(--navy-deep);
   padding-inline: var(--gutter);
@@ -144,8 +150,10 @@ html.no-js .statement__char {
     /* Begin as the first line appears from under the hero, not once the
        section has locked to a full screen of unlit text: a screen that is
        entirely dim reads as though the page has stopped. */
+    /* cover range is 145svh + 100svh = 245svh. The pin releases at 59% of it,
+       so the last character finishes at 14 + 40 + 1 = 55%. */
     --fill-start: 14%;
-    --fill-span: 34;
+    --fill-span: 40;
     --slice: calc(var(--fill-span) / var(--n, 100));
     animation: statement-lit 1s linear both;
     animation-timeline: --statement;
@@ -185,7 +193,7 @@ html.no-js .statement__char {
   }
 
   .statement {
-    min-height: 150svh;
+    min-height: 140svh;
   }
 
   .statement__text {
@@ -193,8 +201,10 @@ html.no-js .statement__char {
   }
 
   html.statement-css .statement__char {
-    --fill-start: 40%;
-    --fill-span: 18.5;
+    /* cover range 240svh, pin releases at 58%. Starting at 32 rather than 40
+       also cuts the stretch where a pinned screen sat entirely unlit. */
+    --fill-start: 32%;
+    --fill-span: 22;
   }
 }
 

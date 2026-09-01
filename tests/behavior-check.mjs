@@ -213,9 +213,12 @@ const createDom = (html = homeHtml, { reduced = false, cssDriven = false, url = 
   const { dom, window } = createDom();
   let top = 900;   // below the point where filling begins
   const statement = window.document.querySelector('.statement');
-  statement.getBoundingClientRect = () => ({ top, height: 1800 });
-  // The fill now begins as the opening line rises into view (top ~= 0.82vh),
-  // not once the section has locked to the top of the screen.
+  // 1450 mirrors the shipped .statement min-height of 145svh at a 1000px
+  // viewport, so the fallback is measured against the real geometry.
+  statement.getBoundingClientRect = () => ({ top, height: 1450 });
+  // The fill begins as the opening line rises into view (top ~= 0.82vh), not
+  // once the section has locked to the top of the screen, and it completes just
+  // before the section unpins rather than half a screen early.
   Object.defineProperty(window, 'innerHeight', { configurable: true, value: 1000 });
   window.eval(scripts.statement);
   const chars = [...window.document.querySelectorAll('.statement__char')];

@@ -73,7 +73,7 @@
       const viewport = window.innerHeight || document.documentElement.clientHeight;
       const distance = Math.max(1, (rect.height || viewport * 1.8) - viewport);
       const begin = viewport * 0.82;
-      const finish = -distance * 0.55;
+      const finish = -distance * 0.82;
       const progress = Math.min(1, Math.max(0, (begin - rect.top) / (begin - finish)));
       if (progress < 0.25) return;
 
@@ -108,7 +108,9 @@
          waiting for the section to lock to the top of the screen. A full
          screen of unlit text reads as though the page has stopped. */
       const begin = viewport * 0.82;
-      const finish = -distance * 0.55;
+      /* 0.82 of the pinned distance, not 0.55: the sentence should finish just
+         before the section unpins, not half a screen early. */
+      const finish = -distance * 0.82;
       const progress = Math.min(1, Math.max(0, (begin - rect.top) / (begin - finish)));
       const lit = Math.round(progress * total);
 
