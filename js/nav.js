@@ -192,6 +192,36 @@
   }
 })();
 
+/* ---------- Hero top boundary ----------
+   Root overscroll remains a WebKit special case on iPhone, so cancel only a
+   downward single-finger pull that began at the very top. Upward scrolling and
+   every gesture away from the top remain native. */
+(() => {
+  const hero = document.querySelector('.hero');
+  if (!hero) return;
+
+  let startY = 0;
+  let startedAtTop = false;
+  const finish = () => { startedAtTop = false; };
+
+  window.addEventListener('touchstart', (event) => {
+    if (event.touches.length !== 1) {
+      finish();
+      return;
+    }
+    startY = event.touches[0].clientY;
+    startedAtTop = window.scrollY <= 0;
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (event) => {
+    if (!startedAtTop || event.touches.length !== 1 || window.scrollY > 0) return;
+    if (event.touches[0].clientY > startY && event.cancelable) event.preventDefault();
+  }, { passive: false });
+
+  window.addEventListener('touchend', finish, { passive: true });
+  window.addEventListener('touchcancel', finish, { passive: true });
+})();
+
 /* ---------- Hero motion ----------
    Browsers get the normal muted, inline video path. WebKit can select the same
    silent MP4 inside the fallback <picture>, where it behaves as a looping image

@@ -11,6 +11,7 @@ const pages = new Map([
   ['/discover.html', await read('discover.html')]
 ]);
 const tokensCss = await read('css/tokens.css');
+const baseCss = await read('css/base.css');
 const navJs = await read('js/nav.js');
 const cspConfig = JSON.parse(await read('vercel.json'));
 const doms = new Map(
@@ -88,6 +89,24 @@ assert.equal(deepSpecs?.querySelectorAll('.plate__row').length, 13, 'the deep ro
 const serialisePlate = (scope) => [...scope.querySelectorAll('.plate__row')]
   .map((row) => [...row.children].map((cell) => cell.textContent.replace(/\s+/g, ' ').trim()));
 assert.deepEqual(serialisePlate(specsDialog), serialisePlate(deepSpecs), 'modal and deep-route specification facts must not drift');
+
+const cabinPanel = discover.querySelector('#suites-and-cabins');
+const cabinShowcase = cabinPanel?.querySelector('.cabin-showcase');
+const cabinCarousel = cabinShowcase?.querySelector('[data-cabin-carousel]');
+const cabinDetailsTrigger = cabinShowcase?.querySelector('[data-cabin-details-open]');
+const cabinDetailsDialog = discover.querySelector('#suites-and-cabins-details-dialog');
+const visibleCabinChildren = [...(cabinShowcase?.children || [])]
+  .filter((element) => !element.classList.contains('visually-hidden'));
+assert.equal(visibleCabinChildren[0], cabinCarousel, 'Suites & Cabins must show photographs before any visible copy');
+assert.equal(cabinPanel?.querySelector('.discover-panel__copy'), null, 'cabin facts must not precede the photographs');
+assert.equal(cabinCarousel?.nextElementSibling?.querySelector('[data-cabin-details-open]'), cabinDetailsTrigger, 'room details link must sit directly below the photographs');
+assert.equal(cabinDetailsTrigger?.tagName, 'A', 'room details control must retain a durable fallback link');
+assert.equal(cabinDetailsTrigger?.getAttribute('href'), '#suites-and-cabins-details-dialog', 'room details fallback must target its details surface');
+assert.equal(cabinDetailsTrigger?.getAttribute('aria-controls'), 'suites-and-cabins-details-dialog', 'room details link must expose the controlled dialog');
+assert.equal(cabinDetailsDialog?.tagName, 'DIALOG', 'room details must use the established native modal surface');
+assert.equal(cabinDetailsDialog?.querySelectorAll('.manifest > div').length, 5, 'room details must retain all five supplied accommodation facts');
+assert.equal(cabinDetailsDialog?.querySelector('.prose')?.textContent.trim(), 'Twelve guest cabins with fifteen beds sleep twenty-six guests.', 'room details must retain the supplied capacity statement');
+assert.ok(discover.querySelector('script[src="/js/specs.js"]'), 'the explore page must load the shared focused-view controller');
 for (const document of [home, discover]) {
   assert.ok(document.querySelector('.site-menu a[href="/discover.html#technical-specifications"]'), 'Menu must expose the dedicated technical specifications route');
   const headerMark = document.querySelector('.site-header .site-mark');
@@ -113,7 +132,7 @@ assert.ok(inquiryForm?.querySelector('button[type="submit"][disabled]'), 'the di
 assert.equal(home.querySelectorAll('.inquiry__details').length, 0, 'the inquiry contact column must not return');
 assert.equal(home.querySelectorAll('.inquiry__welcome').length, 0, 'the inquiry welcome heading must not return');
 assert.ok(home.querySelector('.inquiry__panel .inquiry-form'), 'the inquiry card must carry the form');
-assert.equal(home.querySelector('.inquiry__signature img')?.getAttribute('src'), '/assets/logo/ss-delphine-lockup.svg', 'the inquiry must use the supplied lockup');
+assert.equal(home.querySelector('.inquiry__signature'), null, 'the inquiry card must not contain a signature logo');
 const footerTerms = [...home.querySelectorAll('.site-footer__contact dt')].map((n) => n.textContent.trim());
 assert.deepEqual(footerTerms, ['Email', 'Telephone'], 'the footer carries the two supplied contact routes and no location');
 assert.equal(home.querySelector('.site-footer__contact a[href^="mailto:"]')?.getAttribute('href'), 'mailto:ssdelphineyacht@gmail.com', 'the footer email must be the supplied address');
@@ -196,6 +215,9 @@ assert.doesNotMatch(heroVideo?.outerHTML || '', /delphine-hero-720\.mp4/, 'the s
 assert.equal(heroVideo?.hasAttribute('controls'), false, 'the hero video must never expose controls');
 const heroMotionScript = navJs.slice(navJs.indexOf('/* ---------- Hero motion ----------'));
 assert.doesNotMatch(heroMotionScript, /\b(?:pointerdown|touchstart|keydown|scroll)\b/u, 'hero motion must never wait for a reader gesture');
+assert.match(baseCss, /html\s*\{[^}]*overscroll-behavior-y:\s*none;/, 'the document root must suppress supported browser overscroll');
+assert.match(baseCss, /body\s*\{[^}]*overscroll-behavior-y:\s*none;/, 'the page body must suppress supported browser overscroll');
+assert.match(navJs, /Hero top boundary[\s\S]*touchmove[\s\S]*preventDefault\(\)/, 'the homepage must guard the iPhone top-edge pull that CSS does not suppress');
 {
   const heroCss = await readFile(path.join(root, 'css/hero.css'), 'utf8');
   assert.match(heroCss, /\.hero__video\s*\{[^}]*pointer-events:\s*none;/, 'the hero video must never be tappable');

@@ -74,6 +74,8 @@ const createDom = (html = homeHtml, { reduced = false, cssDriven = false, url = 
   assert.match(layoutCss, /html\.no-js \.nojs-nav\s*\{[\s\S]*display:\s*block/, 'no-JS mode must expose a normal-flow index');
   assert.match(sectionsCss, /\.discover-panel:target\s*\{\s*display:\s*block/, 'hash navigation must reveal one deep chapter without JavaScript');
   assert.match(sectionsCss, /\.discover-page:has\(\.discover-panel:target\) \.discover-intro/, 'a selected deep chapter must remove the Explore index above it without JavaScript');
+  assert.match(sectionsCss, /\.cabin-details-modal:target:not\(\[open\]\)\s*\{[\s\S]*display:\s*block/, 'room details must remain reachable as a hash target without native dialog support');
+  assert.match(sectionsCss, /\.site-footer__contact\s*\{[^}]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/, 'the two footer contact routes must share a centered two-column grid');
 
   homeDom.window.close();
   discoverDom.window.close();
@@ -118,6 +120,28 @@ const createDom = (html = homeHtml, { reduced = false, cssDriven = false, url = 
 }
 
 {
+  const { dom, window } = createDom(discoverHtml, { url: 'https://local.test/discover.html#suites-and-cabins' });
+  window.eval(scripts.specs);
+  const document = window.document;
+  const trigger = document.querySelector('[data-cabin-details-open]');
+  const dialog = document.querySelector('#suites-and-cabins-details-dialog');
+  const title = document.querySelector('#suites-and-cabins-details-dialog-title');
+
+  const openEvent = new window.MouseEvent('click', { button: 0, bubbles: true, cancelable: true });
+  assert.equal(trigger.dispatchEvent(openEvent), false, 'room details link must enhance into the focused view');
+  assert.equal(openEvent.defaultPrevented, true, 'enhanced room details activation must prevent hash navigation');
+  assert.equal(dialog.open, true, 'room details dialog must open');
+  assert.equal(document.activeElement, title, 'room details must announce the focused view heading first');
+  assert.equal(document.documentElement.style.overflow, 'hidden', 'room details must lock page scrolling while open');
+
+  document.querySelector('[data-cabin-details-close]').click();
+  assert.equal(dialog.open, false, 'Close must dismiss room details');
+  assert.equal(document.activeElement, trigger, 'closing room details must restore trigger focus');
+  assert.equal(document.documentElement.style.overflow, '', 'closing room details must release page scrolling');
+  dom.window.close();
+}
+
+{
   const { dom, window } = createDom();
   window.HTMLDialogElement.prototype.showModal = undefined;
   window.eval(scripts.specs);
@@ -125,6 +149,29 @@ const createDom = (html = homeHtml, { reduced = false, cssDriven = false, url = 
   const fallbackEvent = new window.MouseEvent('click', { button: 0, bubbles: true, cancelable: true });
   assert.equal(trigger.dispatchEvent(fallbackEvent), true, 'unsupported browsers must retain native link navigation');
   assert.equal(fallbackEvent.defaultPrevented, false, 'unsupported browsers must not intercept the deep link');
+  dom.window.close();
+}
+
+{
+  const { dom, window } = createDom();
+  window.eval(scripts.nav);
+
+  const makeTouchEvent = (type, clientY) => {
+    const event = new window.Event(type, { cancelable: true });
+    Object.defineProperty(event, 'touches', { value: [{ clientY }] });
+    return event;
+  };
+
+  window.dispatchEvent(makeTouchEvent('touchstart', 100));
+  const downwardPull = makeTouchEvent('touchmove', 150);
+  assert.equal(window.dispatchEvent(downwardPull), false, 'a downward pull from the hero top edge must be cancelled');
+  assert.equal(downwardPull.defaultPrevented, true, 'the hero top edge must not reveal Safari rubber-band space');
+
+  window.dispatchEvent(new window.Event('touchend'));
+  window.dispatchEvent(makeTouchEvent('touchstart', 100));
+  const upwardScroll = makeTouchEvent('touchmove', 50);
+  assert.equal(window.dispatchEvent(upwardScroll), true, 'upward scrolling from the hero must remain native');
+  assert.equal(upwardScroll.defaultPrevented, false, 'the hero lock must never trap normal page scrolling');
   dom.window.close();
 }
 
@@ -361,4 +408,4 @@ const createDom = (html = homeHtml, { reduced = false, cssDriven = false, url = 
   dom.window.close();
 }
 
-console.log('Behaviour checks passed: automatic hero motion, animated Menu, no-JS paths, character scroll-fill, reduced motion, isolated chapters, focused specifications and filtered Gallery lightbox.');
+console.log('Behaviour checks passed: automatic hero motion, locked hero top edge, animated Menu, no-JS paths, character scroll-fill, reduced motion, isolated chapters, focused specifications, cabin details and filtered Gallery lightbox.');

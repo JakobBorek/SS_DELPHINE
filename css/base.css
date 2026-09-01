@@ -20,6 +20,7 @@
 *, *::before, *::after { box-sizing: border-box; }
 html {
   -webkit-text-size-adjust: 100%;
+  overscroll-behavior-y: none;
   /* Reserve the scrollbar so locking scroll for a modal cannot shift the
      page sideways, which is what made opening a photograph feel like a jump. */
   scrollbar-gutter: stable;
@@ -33,6 +34,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 /* ---------- Ground ---------- */
 body {
+  overscroll-behavior-y: none;
   background: var(--navy-deep);
   color: var(--cream);
   font-family: var(--font-body);

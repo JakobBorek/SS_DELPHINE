@@ -161,19 +161,8 @@
   </section>
 
   <section class="discover-panel" id="suites-and-cabins" aria-labelledby="suites-and-cabins-title">
-    <div class="discover-panel__frame">
-      <div class="discover-panel__copy">
-        <a class="panel-back" href="/" data-panel-back><span class="panel-back__arrow" aria-hidden="true">&#8592;</span><span class="panel-back__label">Back</span></a>
-        <h2 class="section-title" id="suites-and-cabins-title">Suites &amp; Cabins</h2>
-        <p class="discover-panel__lead prose">Twelve guest cabins with fifteen beds sleep twenty-six guests.</p>
-        <dl class="manifest">
-          <div><dt>H&amp;A Dodge Suite</dt><dd>King bed, 50 inch smart television, safe, sound system, iPad, mini bar, bathtub, separate shower, bidet, toilet and double sinks.</dd></div>
-          <div><dt>Delphine Suite</dt><dd>King bed, 50 inch smart television, safe, sound system, iPad, mini bar, combined bathtub and shower, bidet, toilet and double sinks.</dd></div>
-          <div><dt>Horace Dodge Junior Suite and Cabins 1 to 8</dt><dd>Double beds, 24 inch smart television, safe, sound system, iPad, mini bar, combined bathtub and shower, bidet and toilet.</dd></div>
-          <div><dt>Cabin 9</dt><dd>Four single beds with the same equipment as the Horace Dodge Junior Suite and Cabins 1 to 8.</dd></div>
-          <div><dt>Bed configuration</dt><dd>Two king beds, nine double beds and four single beds.</dd></div>
-        </dl>
-      </div>
+    <div class="cabin-showcase">
+      <h2 class="visually-hidden" id="suites-and-cabins-title">Suites &amp; Cabins</h2>
       <div class="cabin-carousel" data-cabin-carousel>
         <ul class="cabin-carousel__track" data-cabin-track>
             <li class="cabin-slide" data-cabin-slide><picture><source type="image/avif" srcset="/media/gallery/dodge-suite-960.avif 960w, /media/gallery/dodge-suite-1600.avif 1600w" sizes="(max-width: 900px) 100vw, 60vw"><img src="/media/gallery/dodge-suite-1600.webp" srcset="/media/gallery/dodge-suite-960.webp 960w, /media/gallery/dodge-suite-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 60vw" width="1600" height="1067" loading="lazy" alt="The H&amp;A Dodge Suite centred on its king bed."></picture><p class="cabin-slide__name">H&amp;A Dodge Suite</p></li>
@@ -190,8 +179,37 @@
           <button type="button" data-cabin-next aria-label="Next cabin">&#8594;</button>
         </div>
       </div>
+      <div class="cabin-showcase__footer">
+        <a class="specs-trigger" href="#suites-and-cabins-details-dialog" data-cabin-details-open
+           aria-haspopup="dialog" aria-controls="suites-and-cabins-details-dialog">
+          <span class="specs-trigger__label">What Each Room Includes</span>
+          <svg class="specs-trigger__icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+            <path d="M5 15 15 5M7 5h8v8"></path>
+          </svg>
+        </a>
+      </div>
     </div>
   </section>
+
+  <dialog class="specs-modal cabin-details-modal" id="suites-and-cabins-details-dialog" aria-labelledby="suites-and-cabins-details-dialog-title">
+    <div class="specs-modal__header">
+      <h2 class="section-title section-title--m" id="suites-and-cabins-details-dialog-title" tabindex="-1">Suites &amp; Cabins</h2>
+      <button class="specs-modal__close" type="button" data-cabin-details-close aria-label="Close suites and cabins details">Close</button>
+    </div>
+    <div class="specs-modal__body">
+      <p class="prose">Twelve guest cabins with fifteen beds sleep twenty-six guests.</p>
+      <dl class="manifest">
+        <div><dt>H&amp;A Dodge Suite</dt><dd>King bed, 50 inch smart television, safe, sound system, iPad, mini bar, bathtub, separate shower, bidet, toilet and double sinks.</dd></div>
+        <div><dt>Delphine Suite</dt><dd>King bed, 50 inch smart television, safe, sound system, iPad, mini bar, combined bathtub and shower, bidet, toilet and double sinks.</dd></div>
+        <div><dt>Horace Dodge Junior Suite and Cabins 1 to 8</dt><dd>Double beds, 24 inch smart television, safe, sound system, iPad, mini bar, combined bathtub and shower, bidet and toilet.</dd></div>
+        <div><dt>Cabin 9</dt><dd>Four single beds with the same equipment as the Horace Dodge Junior Suite and Cabins 1 to 8.</dd></div>
+        <div><dt>Bed configuration</dt><dd>Two king beds, nine double beds and four single beds.</dd></div>
+      </dl>
+      <a class="specs-trigger cabin-details-modal__fallback" href="#suites-and-cabins">
+        <span class="specs-trigger__label">Back to Photographs</span>
+      </a>
+    </div>
+  </dialog>
 
   <section class="discover-panel discover-panel--manifest" id="toys-and-tenders" aria-labelledby="toys-title">
     <div class="wrap discover-panel__manifest">
@@ -424,6 +442,7 @@
 
 
 <script src="/js/nav.js" defer></script>
+<script src="/js/specs.js" defer></script>
 <script src="/js/discover.js" defer></script>
 <script src="/js/gallery.js" defer></script>
 

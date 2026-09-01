@@ -1,7 +1,6 @@
-/* Progressive enhancement for the focus views: technical specifications on
-   The Yacht, and charter information on Private Charter. Both open in place
-   rather than sending the reader to another page; without JavaScript the
-   links still resolve to their chapters on discover.html. */
+/* Progressive enhancement for the focused information views. Each opens in
+   place rather than sending the reader to another page, while its trigger
+   remains a durable link without JavaScript. */
 (() => {
   'use strict';
 
@@ -52,4 +51,5 @@
 
   wire('technical-specifications-dialog', 'data-specs-open', 'data-specs-close', 'technical-specifications-dialog-title');
   wire('charter-dialog', 'data-charter-open', 'data-charter-close', 'charter-dialog-title');
+  wire('suites-and-cabins-details-dialog', 'data-cabin-details-open', 'data-cabin-details-close', 'suites-and-cabins-details-dialog-title');
 })();

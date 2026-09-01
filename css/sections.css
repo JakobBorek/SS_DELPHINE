@@ -890,26 +890,6 @@ html.no-js .gallery__filters {
   color: var(--navy-deep);
   text-wrap: balance;
 }
-.inquiry__signature {
-  display: grid;
-  justify-items: center;
-  gap: var(--sp-1);
-  margin-top: var(--sp-5);
-  padding-top: var(--sp-4);
-  border-top: var(--rule) solid var(--hairline-gold);
-}
-/* The signature is now the full lockup, not the monogram alone, so it needs
-   the height its wordmark can be read at. */
-.inquiry__signature img { width: auto; height: 3.5rem; }
-.inquiry__signature p {
-  font-family: var(--font-display);
-  font-variation-settings: 'wdth' var(--wdth-display);
-  font-weight: var(--wt-display);
-  font-size: var(--fs-body-s);
-  letter-spacing: var(--tr-mono);
-  text-transform: uppercase;
-  color: var(--navy-deep);
-}
 .inquiry-form fieldset {
   display: grid;
   gap: var(--sp-2);
@@ -1137,7 +1117,7 @@ html.no-js .gallery__filters {
 }
 .site-footer__contact {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--sp-4);
   width: 100%;
   max-width: 44rem;
@@ -1247,14 +1227,23 @@ html.no-js .gallery__filters {
   color: var(--cream-muted);
 }
 
-/* ---------- Cabins: one room at a time, uncropped ---------- */
+/* ---------- Cabins: photographs first, details on request ---------- */
+.cabin-showcase {
+  width: min(100%, var(--content-max));
+  min-height: 100svh;
+  margin-inline: auto;
+  padding: calc(var(--header-h) + var(--sp-3)) var(--gutter) var(--section-pad-tight);
+  display: grid;
+  align-content: center;
+  gap: var(--sp-3);
+}
+
 .cabin-carousel {
   display: grid;
   gap: var(--sp-2);
   min-width: 0;
   align-content: center;
   align-self: center;
-  padding: var(--sp-4);
 }
 .cabin-carousel__track {
   display: flex;
@@ -1311,6 +1300,45 @@ html.no-js .gallery__filters {
   letter-spacing: var(--tr-mono);
   text-transform: uppercase;
   color: var(--cream-muted);
+}
+
+.cabin-showcase__footer {
+  display: flex;
+  justify-content: center;
+}
+
+.cabin-showcase__footer .specs-trigger,
+.cabin-details-modal__fallback {
+  margin-top: 0;
+}
+
+.cabin-details-modal .manifest {
+  margin-top: var(--sp-4);
+}
+
+.cabin-details-modal__fallback {
+  display: none;
+}
+
+/* A hash-targeted fallback keeps the details reachable when native dialogs or
+   JavaScript are unavailable. Scripted activation never changes the hash. */
+.cabin-details-modal:target:not([open]) {
+  position: fixed;
+  inset: var(--sp-4);
+  z-index: var(--z-menu);
+  display: block;
+  width: auto;
+  max-height: calc(100dvh - (var(--sp-4) * 2));
+  margin: 0;
+}
+
+.cabin-details-modal:target:not([open]) .cabin-details-modal__fallback {
+  display: inline-flex;
+  margin-top: var(--sp-4);
+}
+
+.discover-page:has(.cabin-details-modal:target) .discover-intro {
+  display: none;
 }
 
 /* ---------- A chapter opens as a carousel, not a wall of thumbnails ---------- */
@@ -1543,20 +1571,6 @@ html.no-js .gallery__filters {
    disturbing that reading order. */
 @media (min-width: 769px) {
   .discover-panel--reverse .discover-panel__media { order: -1; }
-}
-
-/* ---------- Cabins: the room holds while the description travels ----------
-   On a wide screen the carousel stays put, centred against the copy, so the
-   reader compares each room against the text rather than losing it off the
-   top of the screen. */
-@media (min-width: 769px) {
-  .discover-panel[id='suites-and-cabins'] .discover-panel__frame { align-items: start; }
-  .cabin-carousel {
-    position: sticky;
-    top: calc(var(--header-h) + var(--sp-4));
-    align-self: start;
-    max-height: calc(100svh - var(--header-h) - var(--sp-8));
-  }
 }
 
 /* ============================================================
