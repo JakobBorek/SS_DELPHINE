@@ -183,9 +183,27 @@ for (const attribute of ['muted', 'autoplay', 'loop', 'playsinline', 'poster']) 
 }
 assert.equal(heroVideo?.getAttribute('preload'), 'auto', 'hero video must preload eagerly so autoplay is not waiting on the network');
 
+/* No play button, ever. iOS paints its own when autoplay is refused, so the
+   video is transparent until it is playing and a still stands in behind it.
+   These three assertions are the contract; do not relax them. */
+assert.ok(home.querySelector('.hero .hero__still'), 'the hero must carry a still behind the video');
+assert.equal(heroVideo?.hasAttribute('controls'), false, 'the hero video must never expose controls');
+{
+  const heroCss = await readFile(path.join(root, 'css/hero.css'), 'utf8');
+  assert.match(heroCss, /\.hero__video\s*\{[^}]*opacity:\s*0;/, 'the hero video must start transparent so no start-playback glyph can show');
+  assert.match(heroCss, /\.hero__video\s*\{[^}]*pointer-events:\s*none;/, 'the hero video must not be tappable while it is standing in');
+  assert.match(heroCss, /\.hero__video\[data-playing='true'\]\s*\{\s*opacity:\s*1;/, 'the hero video must reveal itself only once it is playing');
+}
+
 for (const dom of doms.values()) {
   for (const image of dom.window.document.querySelectorAll('main img')) {
     if (image.src.includes('/assets/logo/')) continue;
+    /* The hero still is the first thing on the screen and stands in for the
+       video until it plays. Lazy-loading it would leave the hero blank. */
+    if (image.classList.contains('hero__still')) {
+      assert.equal(image.getAttribute('loading'), null, 'the hero still must not lazy-load');
+      continue;
+    }
     assert.equal(image.getAttribute('loading'), 'lazy', `below-fold image ${image.src} must lazy-load`);
     assert.ok(image.hasAttribute('width') && image.hasAttribute('height'), `below-fold image ${image.src} needs dimensions`);
     assert.ok(image.closest('picture')?.querySelector('source[type="image/avif"]'), `below-fold image ${image.src} needs AVIF`);

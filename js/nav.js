@@ -207,12 +207,19 @@
   video.playsInline = true;
   video.setAttribute('muted', '');
 
+  /* The video only becomes visible once it is genuinely playing. Until then the
+     still behind it stands in, so WebKit's start-playback glyph is drawn inside
+     a transparent element and cannot be seen or tapped. See css/hero.css. */
+  video.addEventListener('playing', () => { video.dataset.playing = 'true'; });
+  video.addEventListener('pause', () => { delete video.dataset.playing; });
+  video.addEventListener('emptied', () => { delete video.dataset.playing; });
+
   let settled = false;
   const attempt = () => {
     if (settled) return;
     const p = video.play();
     if (p && typeof p.then === 'function') {
-      p.then(() => { settled = true; }).catch(() => { /* try again on the next cue */ });
+      p.then(() => { settled = true; }).catch(() => { /* the still stands in; try again on the next cue */ });
     } else {
       settled = true;
     }

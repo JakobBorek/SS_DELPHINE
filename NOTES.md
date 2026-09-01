@@ -181,3 +181,24 @@ anchor moved from `#inquiry` to `#enquiry`, with a 308 from `/inquiry` on both h
 The `.inquiry*` CSS classes and the `.inquiry-form` hooks keep their names: this was a
 copy change, not a refactor, and renaming them would touch four stylesheets for no
 visible difference.
+
+
+## The hero play button, 2026-09-01 (permanent)
+
+**It must never appear again. Do not undo the mechanism below.**
+
+Cause: iOS refuses autoplay under Low Power Mode, Low Data Mode and some privacy
+settings. WebKit then paints its own start-playback glyph over the frame. Hiding
+`::-webkit-media-controls-start-playback-button` and its siblings, which this site
+had done since August, does not reliably remove it on iOS. That is why it kept
+coming back after each attempted fix.
+
+Mechanism: an `<img class="hero__still">` carrying the poster sits behind the
+video with identical framing, and `.hero__video` is `opacity: 0` with
+`pointer-events: none` until the `playing` event has actually fired, at which
+point js/nav.js sets `data-playing="true"`. A glyph drawn inside a transparent,
+untappable element cannot be seen or pressed, whatever WebKit decides to draw.
+
+Guarded by four assertions in tests/site-check.mjs: the still must exist and must
+not lazy-load, the video must carry no `controls`, and hero.css must keep
+`opacity: 0`, `pointer-events: none` and the `[data-playing='true']` reveal.
