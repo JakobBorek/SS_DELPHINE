@@ -66,6 +66,11 @@ did not change; only what they are called did.
 | Blue banquette cabin | Cabin 6 | `blue-banquette-cabin-*` |
 | Red guest cabin | Cabin 7 | `red-guest-cabin-*` |
 
+The cabin manifest follows the same naming: "Horace Junior Suite and Cabins 1 to 8"
+is now "Horace Dodge Junior Suite and Cabins 1 to 8", in the entry itself and in the
+Cabin 9 entry that refers back to it. The owner's representative set the room names,
+so his wording supersedes the brief's.
+
 The chapter "Cabins" is now "Suites & Cabins" everywhere a reader sees it. The internal
 keys (`data-gallery-set="cabins"`, `id="cabins"`) are unchanged, so links already shared
 as `discover.html#cabins` still land correctly.
