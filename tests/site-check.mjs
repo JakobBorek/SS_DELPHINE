@@ -120,7 +120,7 @@ assert.equal(home.querySelector('#interiors'), null, 'interior detail must not r
 assert.equal(home.querySelector('#suites-and-cabins'), null, 'cabin detail must not remain in the main-page scroll');
 assert.equal(home.querySelector('#toys-and-tenders'), null, 'tender detail must not remain in the main-page scroll');
 assert.equal(home.querySelector('#contact'), null, 'the closing section must not be named Contact');
-assert.equal(home.querySelector('#enquiry-title')?.textContent.trim(), 'Enquiry', 'the closing section must be Enquiry');
+assert.equal(home.querySelector('#enquiry-title')?.textContent.trim(), 'Inquiry', 'the closing section must be Inquiry');
 assert.equal(discover.querySelectorAll('form').length, 0, 'the deeper page must not contain an enquiry form');
 const inquiryForm = home.querySelector('.inquiry-form');
 assert.equal(home.querySelectorAll('form').length, 1, 'the homepage must contain one enquiry form');
