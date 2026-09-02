@@ -86,3 +86,22 @@ slide is a markup change rather than a re-export.
 
 `red-salon-*` and `leather-salon-*` now appear twice: once in the Gallery and once as
 Interiors and Amenities tiles, which the same request asked for.
+
+
+## "At anchor", 2026-09-02
+
+Replaced with a frame from `DJI_20260808171215_0027_D.MP4` at t=22.0, the top-down
+clip at anchor. The previous file was a phone photograph the owner supplied, and it
+was a tight crop of the bow: the vessel ran out of frame.
+
+The drone holds a heading, not a compass bearing, so the hull sat at +4 degrees in
+the raw frame. Rotated 84.5 degrees to bring it upright, measured rather than
+guessed: a warm-deck colour mask (R minus B) isolates the vessel from the water,
+and the second moments of that mask give the hull axis. A brightness threshold does
+not work here, because sun glitter is as bright as the deck and drags the axis off
+by ten degrees.
+
+Rotated on a transparent field so the fill could be told from dark water, then
+cropped to the widest window opaque across every row, 1630x2819 centred on the
+hull. Derivatives keep their existing names, `yacht-topview-{640,959}`, so the Deck
+chapter card picks the new frame up as well. Intrinsic height changes 1185 to 1659.

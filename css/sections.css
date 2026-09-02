@@ -660,6 +660,19 @@ html.no-js .gallery__filters {
   object-fit: contain;
 }
 
+/* A slide that carries footage was escaping this box and showing a cropped
+   fragment of its poster: only img was constrained, and on a video Chrome
+   does not resolve max-height: 100% against the grid area, so the element
+   took its poster's full 959x1659. Sizing it to the box explicitly and
+   letting object-fit do the letterboxing is what actually holds. */
+.gallery-lightbox__figure video {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  object-fit: contain;
+}
+
 .legal__body {
   margin-top: var(--sp-8);
 }
