@@ -218,10 +218,19 @@ Live. A visitor submits, `api/enquiry.js` sends one email, and it lands in
 `inquiries.ssdelphine@gmail.com`. The visitor is never emailed: they get an
 on-page confirmation instead, which is what removes the need for a domain.
 
-Routed through Resend. Its free tier will only send to the address that opened
-the account, which is exactly why the account was opened with the enquiries
-address rather than a personal one. Nothing had to be verified by anyone holding
-`ssdelphineyacht@gmail.com`, and no DNS was touched.
+Routed through Gmail SMTP, sending from `inquiries.ssdelphine@gmail.com` and
+delivering straight to `ssdelphineyacht@gmail.com`. No forwarding hop, nothing
+for the owner of that inbox to confirm, and no DNS.
+
+Getting there needed two-step verification on the sending account, because
+Google issues app passwords only to accounts that have it, and it has refused
+password SMTP since 2022. The account password will not authenticate. Passkey
+satisfies 2SV without a phone number.
+
+Resend was the intermediate step and stays configured behind Gmail. It can only
+send to the address that opened the account, so it reached
+`inquiries.ssdelphine@gmail.com` but never the yacht's own inbox; going further
+would need a verified domain.
 
 Two earlier routes are still wired behind it and pick themselves up from whatever
 credentials are present, in this order: Gmail SMTP (`GMAIL_USER` plus
@@ -248,9 +257,12 @@ and `SITE_ORIGIN` are optional overrides.
 
 ### At handover
 
-Max needs the `inquiries.ssdelphine@gmail.com` login and the Resend account that
-sits on it. If he wants enquiries in `ssdelphineyacht@gmail.com` as well, that is
-Gmail forwarding set from inside the enquiries account, not a code change.
+Enquiries already arrive in `ssdelphineyacht@gmail.com`, so the owner needs to do
+nothing to receive them. What should still change hands is the
+`inquiries.ssdelphine@gmail.com` login, since that account sends every enquiry and
+holds a copy of each in Sent. Its app password can be revoked from
+`myaccount.google.com/apppasswords` without disturbing the account itself; doing
+so stops the form until `GMAIL_APP_PASSWORD` is replaced.
 
 Sending straight to `ssdelphineyacht@gmail.com` needs a verified domain in
 Resend, which needs the GoDaddy DNS for `ssdelphineyacht.com`. See the note on
