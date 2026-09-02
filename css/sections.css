@@ -959,6 +959,32 @@ html.no-js .gallery__filters {
   color: var(--navy-deep);
   opacity: 1;
 }
+/* The honeypot. Off-screen rather than display:none, because a bot that
+   reads the stylesheet skips anything hidden; this one it fills in. */
+.inquiry-form__trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.inquiry-form__status {
+  margin-top: var(--sp-3);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-s);
+  line-height: var(--lh-body);
+  text-align: center;
+  color: var(--navy-deep);
+}
+.inquiry-form__status:empty { margin-top: 0; }
+.inquiry-form__status[data-state='sent'] {
+  padding-block: var(--sp-2);
+  border-top: var(--rule) solid var(--hairline-gold);
+  border-bottom: var(--rule) solid var(--hairline-gold);
+}
+.inquiry-form__status[data-state='failed'] { color: var(--navy-soft); }
+
 .inquiry__form-note {
   margin-top: var(--sp-2);
   font-family: var(--font-mono);

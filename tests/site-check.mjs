@@ -121,13 +121,20 @@ assert.equal(home.querySelector('#suites-and-cabins'), null, 'cabin detail must 
 assert.equal(home.querySelector('#toys-and-tenders'), null, 'tender detail must not remain in the main-page scroll');
 assert.equal(home.querySelector('#contact'), null, 'the closing section must not be named Contact');
 assert.equal(home.querySelector('#enquiry-title')?.textContent.trim(), 'Enquiry', 'the closing section must be Enquiry');
-assert.equal(discover.querySelectorAll('form').length, 0, 'the deeper page must not contain an inquiry form');
+assert.equal(discover.querySelectorAll('form').length, 0, 'the deeper page must not contain an enquiry form');
 const inquiryForm = home.querySelector('.inquiry-form');
-assert.equal(home.querySelectorAll('form').length, 1, 'the homepage must contain one display-only inquiry form');
-assert.equal(inquiryForm?.hasAttribute('action'), false, 'the display-only form must not have an action');
-assert.equal(inquiryForm?.hasAttribute('method'), false, 'the display-only form must not have a method');
-assert.ok(inquiryForm?.querySelector('fieldset[disabled]'), 'the display-only form must use a disabled fieldset');
-assert.ok(inquiryForm?.querySelector('button[type="submit"][disabled]'), 'the display-only submit button must remain disabled');
+assert.equal(home.querySelectorAll('form').length, 1, 'the homepage must contain one enquiry form');
+
+// The form went live on 2026-09-02 at the owner's instruction, superseding the
+// brief's display-only rule. It posts to this site's own function and nowhere
+// else: no third-party form service, and no address exposed in the markup.
+assert.equal(inquiryForm?.getAttribute('action'), '/api/enquiry', 'the form must post to the site own handler');
+assert.equal(inquiryForm?.getAttribute('method'), 'post', 'the form must post');
+assert.equal(inquiryForm?.querySelector('fieldset[disabled]'), null, 'the form must no longer be disabled');
+assert.ok(inquiryForm?.querySelector('button[type="submit"]:not([disabled])'), 'the submit button must be live');
+assert.ok(inquiryForm?.querySelector('.inquiry-form__trap input[name="company"]'), 'the form must carry its honeypot');
+assert.ok(inquiryForm?.querySelector('[data-enquiry-status][aria-live]'), 'the outcome must be announced');
+assert.ok(home.querySelector('script[src="/js/enquiry.js"]'), 'the homepage must load the enquiry script');
 // The card carries the form alone; the contact column was removed.
 assert.equal(home.querySelectorAll('.inquiry__details').length, 0, 'the inquiry contact column must not return');
 assert.equal(home.querySelectorAll('.inquiry__welcome').length, 0, 'the inquiry welcome heading must not return');

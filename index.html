@@ -191,8 +191,9 @@
         <div class="inquiry__panel">
           <div class="inquiry__ornament inquiry__ornament--dark inquiry__ornament--compact" aria-hidden="true"><span></span></div>
 
-          <form class="inquiry-form" aria-label="Enquiry" aria-describedby="enquiry-form-note">
-            <fieldset disabled>
+          <form class="inquiry-form" method="post" action="/api/enquiry" data-enquiry
+                aria-label="Enquiry" aria-describedby="enquiry-form-note">
+            <fieldset>
               <legend class="visually-hidden">Enquiry details</legend>
               <div class="inquiry-form__row">
                 <label>Full name
@@ -219,10 +220,16 @@
               <label>Your message
                 <textarea name="message" rows="4" required></textarea>
               </label>
-              <button type="submit" disabled>Send Enquiry</button>
+              <p class="inquiry-form__trap" aria-hidden="true">
+                <label>Company
+                  <input type="text" name="company" tabindex="-1" autocomplete="off">
+                </label>
+              </p>
+              <button type="submit">Send Enquiry</button>
             </fieldset>
+            <p class="inquiry-form__status" data-enquiry-status role="status" aria-live="polite"></p>
           </form>
-          <p class="inquiry__form-note" id="enquiry-form-note">This preview form is not yet active. Please write to ssdelphineyacht@gmail.com or call +33&nbsp;688&nbsp;89&nbsp;45&nbsp;75.</p>
+          <p class="inquiry__form-note" id="enquiry-form-note">We reply to every enquiry. You can also write to ssdelphineyacht@gmail.com or call +33&nbsp;688&nbsp;89&nbsp;45&nbsp;75.</p>
         </div>
       </div>
     </div>
@@ -294,6 +301,7 @@
 
 <script src="/js/nav.js" defer></script>
 <script src="/js/statement.js" defer></script>
+<script src="/js/enquiry.js" defer></script>
 <script src="/js/specs.js" defer></script>
 </body>
 </html>
