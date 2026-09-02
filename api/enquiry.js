@@ -1,3 +1,5 @@
+import nodemailer from 'nodemailer';
+
 /* ============================================================
    SS DELPHINE — ENQUIRY HANDLER
    A Vercel function. The only server-side code on the site.
@@ -141,6 +143,41 @@ const plain = (data, meta) => [
    is the better choice later, once ssdelphineyacht.com is set up. Whichever
    key is present is the one used. */
 const pickProvider = () => {
+  /* Gmail over SMTP. No third-party account, no company details to invent:
+     the sending address is a Gmail the developer already owns, authorised with
+     an app password rather than the account password. Google caps this at
+     roughly 500 messages a day, which is far beyond what a charter site sends.
+     Port 465 is implicit TLS, so there is no STARTTLS upgrade to negotiate. */
+  if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
+    return {
+      name: 'Gmail',
+      send: async (m) => {
+        const post = nodemailer.createTransport({
+          host: 'smtp.gmail.com',
+          port: 465,
+          secure: true,
+          auth: {
+            user: process.env.GMAIL_USER,
+            /* Google prints app passwords in groups of four; the spaces are
+               presentational and must not be sent. */
+            pass: process.env.GMAIL_APP_PASSWORD.replace(/\s+/g, '')
+          }
+        });
+        await post.sendMail({
+          from: { name: FROM_NAME, address: process.env.GMAIL_USER },
+          to: TO,
+          replyTo: { name: m.replyToName, address: m.replyTo },
+          subject: m.subject,
+          html: m.html,
+          text: m.text
+        });
+        /* nodemailer throws on failure, so reaching here is success. The
+           shape matches the fetch-based providers below. */
+        return { ok: true };
+      }
+    };
+  }
+
   if (process.env.BREVO_API_KEY) {
     return {
       name: 'Brevo',
@@ -195,7 +232,7 @@ export default async function handler(request, response) {
 
   const provider = pickProvider();
   if (!provider) {
-    console.error('No mail provider key is set (BREVO_API_KEY or RESEND_API_KEY)');
+    console.error('No mail provider is configured (GMAIL_USER + GMAIL_APP_PASSWORD, BREVO_API_KEY, or RESEND_API_KEY)');
     return response.status(503).json({ error: 'The enquiry form is not configured yet.' });
   }
 

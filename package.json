@@ -19,5 +19,8 @@
     "html-validate": "10.10.0",
     "jsdom": "26.1.0",
     "stylelint": "16.23.1"
+  },
+  "dependencies": {
+    "nodemailer": "^9.1.1"
   }
 }
