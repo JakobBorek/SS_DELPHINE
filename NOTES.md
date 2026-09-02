@@ -211,3 +211,47 @@ Guarded by six assertions in tests/site-check.mjs: the still must exist, must no
 lazy-load and must follow the video in the markup; the video must carry no
 `controls`, must keep `pointer-events: none`, and must **not** carry
 `opacity: 0`.
+
+## The enquiry form, 2026-09-02
+
+Live. A visitor submits, `api/enquiry.js` sends one email, and it lands in
+`inquiries.ssdelphine@gmail.com`. The visitor is never emailed: they get an
+on-page confirmation instead, which is what removes the need for a domain.
+
+Routed through Resend. Its free tier will only send to the address that opened
+the account, which is exactly why the account was opened with the enquiries
+address rather than a personal one. Nothing had to be verified by anyone holding
+`ssdelphineyacht@gmail.com`, and no DNS was touched.
+
+Two earlier routes are still wired behind it and pick themselves up from whatever
+credentials are present, in this order: Gmail SMTP (`GMAIL_USER` plus
+`GMAIL_APP_PASSWORD`), then Brevo (`BREVO_API_KEY`), then Resend
+(`RESEND_API_KEY`). Gmail SMTP was abandoned because Google would not enable
+two-step verification on the new account, and without that there is no app
+password; the account password will not authenticate, Google having withdrawn
+password SMTP in 2022. Brevo was abandoned because it demands company name and
+registered address, which are a client's details to invent.
+
+Configuration is entirely in Vercel's environment, so none of it needs a code
+change: `RESEND_API_KEY`, and `ENQUIRY_TO` for the destination. `ENQUIRY_FROM`
+and `SITE_ORIGIN` are optional overrides.
+
+### Verified live on the deployed endpoint
+
+| Case | Result |
+|---|---|
+| Genuine enquiry | 200, delivered |
+| Honeypot field filled | 200, nothing sent, so a bot learns nothing |
+| Required fields empty | 400 |
+| Malformed address | 400 |
+| GET | 405 |
+
+### At handover
+
+Max needs the `inquiries.ssdelphine@gmail.com` login and the Resend account that
+sits on it. If he wants enquiries in `ssdelphineyacht@gmail.com` as well, that is
+Gmail forwarding set from inside the enquiries account, not a code change.
+
+Sending straight to `ssdelphineyacht@gmail.com` needs a verified domain in
+Resend, which needs the GoDaddy DNS for `ssdelphineyacht.com`. See the note on
+that domain's existing SPF and DMARC before touching it.
