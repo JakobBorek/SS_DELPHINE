@@ -8,9 +8,17 @@
    their address so a reply in Gmail reaches them directly.
    ============================================================ */
 
-const TO = 'ssdelphineyacht@gmail.com';
-const FROM = 'SS Delphine Enquiries <onboarding@resend.dev>';
-const SITE = 'https://ss-delphine.vercel.app';
+/* Where enquiries land. The owner reads this inbox. */
+const TO = process.env.ENQUIRY_TO || 'ssdelphineyacht@gmail.com';
+
+/* Who they come from. Brevo verifies a single address rather than a whole
+   domain, so this is the address that owns the sending account, not the
+   yacht's. It is only ever seen in the owner's inbox: the visitor is never
+   emailed. Set ENQUIRY_FROM to the address verified with the provider. */
+const FROM_ADDRESS = process.env.ENQUIRY_FROM || '';
+const FROM_NAME = 'SS Delphine Enquiries';
+
+const SITE = process.env.SITE_ORIGIN || 'https://ss-delphine.vercel.app';
 
 /* Six colours, matching css/tokens.css. Email clients have no
    custom properties, so the values are repeated here by necessity. */
@@ -126,15 +134,68 @@ const plain = (data, meta) => [
   `Sent from the enquiry form on ${meta.at}.`
 ].filter((line) => line !== null).join('\n');
 
+/* ---------- Providers ----------
+   Brevo verifies a single sender address, so it can send to the yacht's inbox
+   without anyone owning that inbox doing anything, and without DNS. Resend
+   needs a verified domain before it will send to an arbitrary recipient, so it
+   is the better choice later, once ssdelphineyacht.com is set up. Whichever
+   key is present is the one used. */
+const pickProvider = () => {
+  if (process.env.BREVO_API_KEY) {
+    return {
+      name: 'Brevo',
+      send: (m) => fetch('https://api.brevo.com/v3/smtp/email', {
+        method: 'POST',
+        headers: {
+          'api-key': process.env.BREVO_API_KEY,
+          'Content-Type': 'application/json',
+          accept: 'application/json'
+        },
+        body: JSON.stringify({
+          sender: { email: FROM_ADDRESS, name: FROM_NAME },
+          to: [{ email: TO }],
+          replyTo: { email: m.replyTo, name: m.replyToName },
+          subject: m.subject,
+          htmlContent: m.html,
+          textContent: m.text
+        })
+      })
+    };
+  }
+
+  if (process.env.RESEND_API_KEY) {
+    return {
+      name: 'Resend',
+      send: (m) => fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          from: `${FROM_NAME} <${FROM_ADDRESS || 'onboarding@resend.dev'}>`,
+          to: [TO],
+          reply_to: m.replyTo,
+          subject: m.subject,
+          html: m.html,
+          text: m.text
+        })
+      })
+    };
+  }
+
+  return null;
+};
+
 export default async function handler(request, response) {
   if (request.method !== 'POST') {
     response.setHeader('Allow', 'POST');
     return response.status(405).json({ error: 'Method not allowed' });
   }
 
-  const key = process.env.RESEND_API_KEY;
-  if (!key) {
-    console.error('RESEND_API_KEY is not set');
+  const provider = pickProvider();
+  if (!provider) {
+    console.error('No mail provider key is set (BREVO_API_KEY or RESEND_API_KEY)');
     return response.status(503).json({ error: 'The enquiry form is not configured yet.' });
   }
 
@@ -169,26 +230,22 @@ export default async function handler(request, response) {
     })
   };
 
-  try {
-    const sent = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        from: FROM,
-        to: [TO],
-        reply_to: singleLine(data.email),
-        subject: `Charter enquiry — ${singleLine(data.name)}`,
-        html: render(data, meta),
-        text: plain(data, meta)
-      })
-    });
+  const message = {
+    replyTo: singleLine(data.email),
+    replyToName: singleLine(data.name),
+    subject: `Charter enquiry: ${singleLine(data.name)}`,
+    html: render(data, meta),
+    text: plain(data, meta)
+  };
 
+  try {
+    const sent = await provider.send(message);
     if (!sent.ok) {
-      console.error('Resend rejected the message', sent.status, await sent.text());
+      console.error(`${provider.name} rejected the message`, sent.status, await sent.text());
       return response.status(502).json({ error: 'The message could not be sent. Please email us directly.' });
     }
   } catch (error) {
-    console.error('Resend request failed', error);
+    console.error(`${provider.name} request failed`, error);
     return response.status(502).json({ error: 'The message could not be sent. Please email us directly.' });
   }
 
