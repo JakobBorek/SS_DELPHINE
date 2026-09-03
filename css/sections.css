@@ -1660,3 +1660,168 @@ html.no-js .gallery__filters {
   /* alternate which side the photograph sits on */
   .gallery-chapter:nth-child(even) .gallery-chapter__media { order: 2; }
 }
+
+
+/* ============================================================
+   THE LONG READ
+   The refit account runs far longer than any other section, so
+   it opens at the same height as its neighbours and the rest is
+   held back. The cut is a blur rather than a hard edge: the last
+   two lines soften and lift away instead of stopping mid-word,
+   which reads as "there is more" without a gradient bar drawn
+   over the text. No box, no shadow, no border.
+   ============================================================ */
+.longread {
+  margin-top: var(--sp-6);
+}
+
+.longread__body {
+  position: relative;
+  overflow: hidden;
+  /* the same depth as the prose beside it, so the columns agree */
+  max-height: 21em;
+  transition: max-height var(--dur-expand) var(--ease);
+}
+
+/* The fade itself. A mask leaves the text fully opaque until the
+   last stretch, so nothing legible is dimmed prematurely. */
+.longread[data-open='false'] .longread__body {
+  mask-image: linear-gradient(to bottom,
+    var(--mask-keep) 0%, var(--mask-keep) 62%,
+    var(--mask-fade) 88%, var(--mask-drop) 100%);
+}
+
+/* The glassy part: a pane of blur sitting over the softened tail. It
+   is inert, so the text underneath stays selectable and the reader
+   can still drag through it. */
+.longread[data-open='false'] .longread__body::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 7em;
+  pointer-events: none;
+  backdrop-filter: blur(2.5px);
+  mask-image: linear-gradient(to bottom, var(--mask-drop) 0%, var(--mask-keep) 72%);
+}
+
+.longread[data-open='true'] .longread__body {
+  max-height: 200em;
+}
+
+.longread__more {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin-top: var(--sp-3);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-s);
+  color: var(--cream);
+  text-decoration: underline;
+  text-underline-offset: 0.35em;
+  text-decoration-thickness: var(--rule);
+  transition: color var(--dur-hover) var(--ease);
+}
+.longread__more:hover { color: var(--gold); }
+
+/* No JavaScript: nothing can expand, so nothing is held back. */
+html.no-js .longread__body { max-height: none; mask-image: none; }
+html.no-js .longread__body::after { content: none; }
+html.no-js .longread__more { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .longread__body { transition: none; }
+}
+
+/* ---------- Attribution ----------
+   A signature, not a card. Three lines on a hairline, the name
+   carrying the weight and the rest stepping back. */
+.attribution {
+  margin: var(--sp-6) 0 0;
+  padding-top: var(--sp-3);
+  border-top: var(--rule) solid var(--hairline-gold);
+}
+.attribution figcaption {
+  display: grid;
+  gap: 0.15em;
+}
+.attribution__name {
+  font-family: var(--font-display);
+  font-variation-settings: 'wdth' var(--wdth-body);
+  font-weight: var(--wt-body-strong);
+  font-size: var(--fs-body);
+  color: var(--cream);
+}
+.attribution__role,
+.attribution__firm {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-s);
+  line-height: var(--lh-mono);
+  letter-spacing: var(--tr-mono);
+  text-transform: uppercase;
+  color: var(--cream-muted);
+}
+
+/* ============================================================
+   REFIT CAROUSEL
+   The same scroll-snapped track as the cabins, so the two deep
+   chapters behave alike.
+   ============================================================ */
+.refit-carousel {
+  display: grid;
+  align-content: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--gutter);
+  min-width: 0;
+}
+.refit-carousel__track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  gap: var(--sp-2);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.refit-carousel__track::-webkit-scrollbar { display: none; }
+.refit-slide { scroll-snap-align: center; min-width: 0; }
+.refit-slide img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+.refit-carousel__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-3);
+}
+.refit-carousel__controls button {
+  appearance: none;
+  background: none;
+  border: var(--rule) solid var(--hairline);
+  color: var(--cream);
+  width: 2.75rem;
+  height: 2.75rem;
+  cursor: pointer;
+  transition: border-color var(--dur-hover) var(--ease);
+}
+.refit-carousel__controls button:hover { border-color: var(--hairline-gold); }
+.refit-carousel__count {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-s);
+  letter-spacing: var(--tr-mono);
+  color: var(--cream-muted);
+}
+
+@media (max-width: 768px) {
+  .refit-carousel { padding-inline: 0; }
+  .refit-slide img { border-radius: 0; }
+}

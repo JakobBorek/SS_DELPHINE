@@ -190,8 +190,8 @@ const combinedCopy = [...doms.values()]
   .map((dom) => dom.window.document.body.textContent.replace(/\s+/g, ' '))
   .join(' ');
 for (const fact of [
-  'Maxime Berisset of VIENA MB',
-  'completed in July 2025',
+  'Maxime Berisset and his team at Cobrera Yacht Consulting MC',
+  'By mid-July 2026, SS Delphine was once again Classed',
   '2 × Horace Dodge quadruple expansion steam engines',
   '1,500 HP per engine',
   '3,000 NM economical, 4,000 NM at cruising speed',

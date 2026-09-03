@@ -105,6 +105,13 @@
   --panel-shadow:    rgb(10 22 40 / 0.16);
   --disabled-opacity: 0.64;
 
+  /* Mask stencils. Not palette: in a mask, black means keep and
+     transparent means drop, so these carry no colour at all. They live
+     here because tokens.css is the only file allowed literal values. */
+  --mask-keep: rgb(0 0 0 / 1);
+  --mask-fade: rgb(0 0 0 / 0.35);
+  --mask-drop: rgb(0 0 0 / 0);
+
   /* ---------- Type ---------- */
   --font-display: 'Archivo', ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
   --font-body:    'Archivo', ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;

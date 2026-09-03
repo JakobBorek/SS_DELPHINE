@@ -236,35 +236,63 @@
   showChapters();
 })();
 
-/* ---------- Cabins carousel ----------
-   One room at a time, scroll-snapped, with the position announced. */
+/* ---------- Panel carousels ----------
+   One frame at a time, scroll-snapped, with the position announced.
+   The cabins and the refit account share this: two chapters that
+   behave differently would be a defect, not a distinction. */
 (() => {
-  const carousel = document.querySelector('[data-cabin-carousel]');
-  if (!carousel) return;
-  const track = carousel.querySelector('[data-cabin-track]');
-  const slides = [...carousel.querySelectorAll('[data-cabin-slide]')];
-  const position = carousel.querySelector('[data-cabin-position]');
-  if (!track || !slides.length) return;
+  const wire = (key) => {
+    const carousel = document.querySelector(`[data-${key}-carousel]`);
+    if (!carousel) return;
+    const track = carousel.querySelector(`[data-${key}-track]`);
+    const slides = [...carousel.querySelectorAll(`[data-${key}-slide]`)];
+    const position = carousel.querySelector(`[data-${key}-position]`);
+    if (!track || !slides.length) return;
 
-  let at = 0;
-  const go = (n) => {
-    at = Math.min(slides.length - 1, Math.max(0, n));
-    track.scrollTo({ left: slides[at].offsetLeft - track.offsetLeft, behavior: 'smooth' });
-    if (position) position.textContent = String(at + 1);
+    let at = 0;
+    const go = (n) => {
+      at = Math.min(slides.length - 1, Math.max(0, n));
+      track.scrollTo({ left: slides[at].offsetLeft - track.offsetLeft, behavior: 'smooth' });
+      if (position) position.textContent = String(at + 1);
+    };
+
+    carousel.querySelector(`[data-${key}-prev]`)?.addEventListener('click', () => go(at - 1));
+    carousel.querySelector(`[data-${key}-next]`)?.addEventListener('click', () => go(at + 1));
+
+    // Keep the counter honest when the reader swipes instead of using the buttons.
+    let raf = 0;
+    track.addEventListener('scroll', () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const mid = track.scrollLeft + track.clientWidth / 2;
+        const i = slides.findIndex((s) => s.offsetLeft - track.offsetLeft + s.clientWidth > mid);
+        if (i >= 0 && i !== at) { at = i; if (position) position.textContent = String(at + 1); }
+      });
+    }, { passive: true });
   };
 
-  carousel.querySelector('[data-cabin-prev]')?.addEventListener('click', () => go(at - 1));
-  carousel.querySelector('[data-cabin-next]')?.addEventListener('click', () => go(at + 1));
+  ['cabin', 'refit'].forEach(wire);
+})();
 
-  // Keep the counter honest when the reader swipes instead of using the buttons.
-  let raf = 0;
-  track.addEventListener('scroll', () => {
-    if (raf) return;
-    raf = requestAnimationFrame(() => {
-      raf = 0;
-      const mid = track.scrollLeft + track.clientWidth / 2;
-      const i = slides.findIndex((s) => s.offsetLeft - track.offsetLeft + s.clientWidth > mid);
-      if (i >= 0 && i !== at) { at = i; if (position) position.textContent = String(at + 1); }
-    });
-  }, { passive: true });
+/* ---------- The long read ----------
+   The refit account opens at the height of its neighbours. The rest is
+   held behind a blurred cut rather than a hard one, and the control is
+   text with a rule under it, not a button in a box. */
+(() => {
+  const holder = document.querySelector('[data-longread]');
+  if (!holder) return;
+  const toggle = holder.querySelector('[data-longread-toggle]');
+  if (!toggle) return;
+
+  holder.dataset.open = 'false';
+  toggle.addEventListener('click', () => {
+    const open = holder.dataset.open === 'true';
+    holder.dataset.open = open ? 'false' : 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    toggle.textContent = open ? 'Read more' : 'Read less';
+    /* Collapsing from below the fold would otherwise leave the reader
+       staring at whatever now occupies that scroll position. */
+    if (open) holder.scrollIntoView({ block: 'nearest' });
+  });
 })();
